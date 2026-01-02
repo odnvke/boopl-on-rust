@@ -44,6 +44,9 @@ fn tokenize(input: &str) -> Result<Vec<Vec<Token>>, String> {
         if !buffer.is_empty() {
             tokens.push(parse_token(&buffer)?);
         }
+        if tokens.len() > 4 {
+            return Err(format!("   >>  ! Слишком много токенов в строке: '{}'", line));
+        }
         
         all_tokens.push(tokens);
     }
