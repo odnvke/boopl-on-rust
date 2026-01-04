@@ -7,6 +7,7 @@ use std::process;
 //use std::str::Chars;
 
 mod tokens;
+mod to_bytecode;
 
 fn main() {
     // Получаем аргументы
@@ -22,7 +23,27 @@ fn main() {
     
     // Читаем файл
     match fs::read_to_string(filename) {
-        Ok(content) => tokens::start(content),
+        Ok(content) => {
+            let tokens = tokens::start(content);
+            match tokens {
+                Ok(tokens) => {
+                    let bytecode = to_bytecode::to_bytecode(tokens);
+                    match bytecode {
+                        Ok(bytecode) => {
+                            println!("перевод в байткод успешен: \n{:?}", bytecode)
+                        }
+                        Err(e) => {
+                            eprintln!("ошибка перевода в байткод: \n{}", e)
+                        }
+                    }
+                }
+
+                Err(e) => {
+                    eprintln!("ошибка токенизации: {e}");
+                }
+            }
+        }
+
         Err(e) => {
             eprintln!("Ошибка при чтении файла '{}': {}", filename, e);
             process::exit(1);
