@@ -1,0 +1,22 @@
+{
+  "name": "boopl-vscode",
+  "displayName": "Boopl Language",
+  "version": "0.1.0",
+  "publisher": "user",
+  "engines": {
+    "vscode": "^1.0.0"
+  },
+  "contributes": {
+    "languages": [{
+      "id": "boopl",
+      "aliases": ["Boopl"],
+      "extensions": [".bpl"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "boopl",
+      "scopeName": "source.boopl",
+      "path": "./syntaxes/boopl.tmLanguage.json"
+    }]
+  }
+}

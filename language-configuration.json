@@ -1,0 +1,52 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "Boopl",
+  "scopeName": "source.boopl",
+  "patterns": [
+    {"include": "#comments"},
+    {"include": "#labels"},
+    {"include": "#addresses"},
+    {"include": "#commands"},
+    {"include": "#numbers"},
+    {"include": "#metavariables"}
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [
+        {
+          "name": "comment.line.double-slash.boopl",
+          "match": "//.*$"
+        },
+        {
+          "name": "comment.block.boopl",
+          "begin": "/\\*",
+          "end": "\\*/"
+        }
+      ]
+    },
+    "labels": {
+      "name": "entity.name.label.boopl",
+      "match": "\\bP\\.\\d+\\b"
+    },
+    "addresses": {
+      "name": "constant.numeric.address.boopl",
+      "match": "^\\s*\\d+"
+    },
+    "commands": {
+      "patterns": [
+        {
+          "name": "keyword.command.boopl",
+          "match": "\\b(A|O|X|N|I|G|IC|E|P)\\b"
+        }
+      ]
+    },
+    "numbers": {
+      "name": "constant.numeric.boopl",
+      "match": "\\b\\d+\\b"
+    },
+    "metavariables": {
+      "name": "variable.parameter.boopl",
+      "match": "\\bT\\b|\\bF\\b"
+    }
+  }
+}
