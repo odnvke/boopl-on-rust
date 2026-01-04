@@ -1,4 +1,4 @@
-use std::{fmt::format, i32};
+//use std::{fmt::format, i32};
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Token {
@@ -12,13 +12,15 @@ pub enum Token {
 
 
 pub fn start(content: String) -> Result<Vec<Vec<Token>>, String> {
+    let content = remove_comments(content);
+    
     match tokenize(&content) {
         Ok(tokens) => {
-            println!("Токены: {:?}", tokens);
+            println!("\nТокены: {:?} \n", tokens);
             Ok(tokens)
         }
         Err(e) => {
-            eprintln!("   >>  ! Ошибка токенизации: {}", e);
+            eprintln!("   >>  ! Ошибка токенизации: {} \n", e);
             Err(e)
         }
     }
@@ -111,4 +113,33 @@ fn parse_token(s: &str) -> Result<Token, String> {
     }
 
     Err(format!("   >>  ! Невалидный токен: '{}'", s))
+}
+
+fn remove_comments(string: String) -> String {
+    let mut new_string = "".to_string();
+    let mut flag_multi = false;
+
+    let string = 
+    string.replace("/*", " /* ").replace("*/", " */ ").replace("//", " //");
+    
+
+    for i in string.split(' ') {
+        if i.starts_with("//") {println!("удалён комментарий: {}", i)}
+        else if i.starts_with("/*") {
+            flag_multi = true;
+            print!("  >>  замечено начало мульти строчного комментария: '{}' удаляется: ", i)
+        }
+        else if i.ends_with("*/") {
+            flag_multi = false;
+            println!("  >>  замечен конец мульти строчного комментария: '{}'", i)
+        }
+        else if flag_multi {print!(" {}", i)}
+
+        else {
+            new_string.push(' ');
+            new_string.push_str(i);
+        }
+    }
+
+    new_string
 }

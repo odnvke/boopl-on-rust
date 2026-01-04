@@ -30,7 +30,7 @@ fn main() {
                     let bytecode = to_bytecode::to_bytecode(tokens);
                     match bytecode {
                         Ok(bytecode) => {
-                            println!("перевод в байткод успешен: \n{:?}", bytecode)
+                            println!("перевод в байткод успешен: \n{:?} \n", bytecode)
                         }
                         Err(e) => {
                             eprintln!("ошибка перевода в байткод: \n{}", e)
