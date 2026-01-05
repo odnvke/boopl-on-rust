@@ -6,6 +6,7 @@ use std::process;
 // use std::collections::HashMap;
 //use std::str::Chars;
 
+mod vm;
 mod tokens;
 mod to_bytecode;
 
@@ -30,7 +31,10 @@ fn main() {
                     let bytecode = to_bytecode::to_bytecode(tokens);
                     match bytecode {
                         Ok(bytecode) => {
-                            println!("перевод в байткод успешен: \n{:?} \n", bytecode)
+                            if bytecode.is_empty() {println!("байткод пустой")}
+                            else {println!("перевод в байткод успешен: \n{:?} \n", bytecode)}
+                            vm::start(bytecode);
+
                         }
                         Err(e) => {
                             eprintln!("ошибка перевода в байткод: \n{}", e)

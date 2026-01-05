@@ -16,7 +16,8 @@ pub fn start(content: String) -> Result<Vec<Vec<Token>>, String> {
     
     match tokenize(&content) {
         Ok(tokens) => {
-            println!("\nТокены: {:?} \n", tokens);
+            if tokens[0].len() == 0 {println!("\nТокенов нет")}
+            else {println!("\nТокены: {:?} \n", tokens);}
             Ok(tokens)
         }
         Err(e) => {
@@ -118,13 +119,24 @@ fn parse_token(s: &str) -> Result<Token, String> {
 fn remove_comments(string: String) -> String {
     let mut new_string = "".to_string();
     let mut flag_multi = false;
+    let mut flag_single = false;
 
     let string = 
-    string.replace("/*", " /* ").replace("*/", " */ ").replace("//", " //");
+    string.replace("/*", " /* ").replace("*/", " */ ").replace("//", " // ");
     
 
     for i in string.split(' ') {
-        if i.starts_with("//") {println!("удалён комментарий: {}", i)}
+        if flag_single {
+            print!("{} ", i);
+        }
+        else if i.starts_with("//") {
+            print!("удалён комментарий: {}", i);
+            flag_single = true
+        }
+        else if flag_single && i.ends_with("\n") {
+                flag_single = false;
+        }
+
         else if i.starts_with("/*") {
             flag_multi = true;
             print!("  >>  замечено начало мульти строчного комментария: '{}' удаляется: ", i)
