@@ -120,38 +120,58 @@ fn remove_comments(string: String) -> String {
     let mut new_string = "".to_string();
     let mut flag_multi = false;
     let mut flag_single = false;
+    let mut flag = false;
 
-    let string = 
-    string.replace("/*", " /* ").replace("*/", " */ ").replace("//", " // ");
-    
+    let mut string = string.replace("\r\n", "\n");
+
+    string = string.replace("/*", " /* ").replace("*/", " */ ").replace("//", " // ").replace("\n", " | ").replace(";", " ; ");
 
     for i in string.split(' ') {
-        if flag_single {
-            print!("{} ", i);
-        }
-        else if i.starts_with("//") {
-            print!("удалён комментарий: {}", i);
+        let mut flag = false;
+
+        if i == "//" {
+            // print!("удалён комментарий: ");
             flag_single = true
         }
-        else if flag_single && i.ends_with("\n") {
-                flag_single = false;
+        if flag_single || i == "|" {
+            flag = true;
         }
+        
+        if i == "|" {
+            flag_single = false;
+            //println!()
+        }
+        
+        if flag_single {
+            // print!("{}", i)
+        }
+        
 
-        else if i.starts_with("/*") {
+        if i == "/*" {
             flag_multi = true;
             print!("  >>  замечено начало мульти строчного комментария: '{}' удаляется: ", i)
         }
-        else if i.ends_with("*/") {
+
+        if flag_multi {
+            flag = true;
+        }
+
+        if i.contains("*/") {
+            println!(" '{}'", i);
             flag_multi = false;
             println!("  >>  замечен конец мульти строчного комментария: '{}'", i)
         }
-        else if flag_multi {print!(" {}", i)}
+        if flag_multi {
+            //print!(" {}", i)
+        }
 
-        else {
+        if !flag {
             new_string.push(' ');
             new_string.push_str(i);
+            //println!("add: '{}'", i)
+        } else { 
+            //println!("not add: '{}'", i)
         }
     }
-
     new_string
 }

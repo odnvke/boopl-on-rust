@@ -14,7 +14,7 @@ pub fn pre_run(mut program: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
             // если ещё не обьявлен, обьявлаем
             if !memory_p.contains_key(&i[1]) {
                 n_pointer += 1;
-                memory_p.insert(i[1], counter-n_pointer);
+                memory_p.insert(i[1], counter-n_pointer-1);
             } 
             // иначе ошибка
             else {panic!("   >>  ! переобьявление статического указателя, {:?}", i)}
@@ -33,11 +33,11 @@ pub fn pre_run(mut program: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
         }
         // для  PD.10 P.10
         else if i[0] == 260 {
-            if !memory_p.contains_key(&i[1]) {
-                panic!("   >>  ! попытка присвоить значение неопределённого указателя: {}; динамическому: {:?}", i[1], i)
+            if !memory_p.contains_key(&i[2]) {
+                panic!("   >>  ! попытка присвоить значение неопределённого указателя: {}; динамическому: {:?}", i[2], i)
             } else {
-                println!("замена: {} на {}", i[1], memory_p[&i[1]]);
-                i[1] = memory_p[&i[1]];
+                println!("замена: {} на {}", i[2], memory_p[&i[2]]);
+                i[2] = memory_p[&i[2]];
             }
         }
         // для  IG 10 P.10
@@ -68,9 +68,9 @@ pub fn pre_run(mut program: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
 
                 for i2 in i+1..new_program.len() {
                     if new_program[i2][0] == 300 {level += 1;}    
-                    else if new_program[i2][0] == 50 {
+                    else if new_program[i2][0] == 50 || new_program[i2][0] == 51 {
                         level -= 1;
-                        if level >= 0 && new_program[i2].len() == 1 {new_program[i2].push(1);}
+                        if level >= 0 && new_program[i2].len() == 1 {new_program[i2][0] = 51}
                     }
                     
                     if level == 0 {pointer = i2 as i32; break;}
@@ -83,8 +83,8 @@ pub fn pre_run(mut program: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
                 }       
             }
         }
-        if all_if_replaced {break;}
+        if all_if_replaced {break}
     }
 
-    return new_program;
+    new_program
 }
