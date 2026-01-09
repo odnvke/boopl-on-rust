@@ -1,13 +1,18 @@
 use std::collections::{HashMap};
 
-pub fn pre_run(mut program: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
+use crate::name_map::IdentNameMap;
+
+pub fn pre_run(mut program: Vec<(Vec<i32>, i32)>, i_n_m: &IdentNameMap) -> (Vec<Vec<i32>>, Vec<i32>) {
     let mut memory_p: HashMap<i32, i32> = HashMap::new();
     let mut n_pointer = 0;
     let mut counter = 0;
     let mut new_program: Vec<Vec<i32>> = Vec::new();
+    let mut lines_n: Vec<i32> = Vec::new();
 
-    for i in program.iter() {
+
+    for (i , line_n) in program.iter() {
         counter += 1;
+        
         // для P.10
         if i[0] == 200 {
             // если ещё не обьявлен, обьявлаем
@@ -16,41 +21,45 @@ pub fn pre_run(mut program: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
                 memory_p.insert(i[1], counter-n_pointer-1);
             } 
             // иначе ошибка
-            else {panic!("   >>  ! переобьявление статического указателя, {:?}", i)}
+            else {panic!("   >>  ! переобьявление статического указателя: P.{}  ({})", i_n_m.get_name(i[1]), line_n)}
         }
     }
 
-    for i in program.iter_mut() {
+    for (i , line_n) in program.iter_mut() {
         // для  G P.10
         if i[0] == 230 {
             if !memory_p.contains_key(&i[1]) {
-                panic!("   >>  ! попытка перейти по не определённому указателю: {}; в строке: {:?}", i[1], i)
+                panic!("   >>  ! попытка перейти по не определённому указателю: P.{}; в строке: {:?}  ({})",
+                         i_n_m.get_name(i[1]), i, line_n)
             } else {
-                println!("замена: {} на {}", i[1], memory_p[&i[1]]);
+                println!("замена: P.{} на номер строки {} ", i_n_m.get_name(i[1]), memory_p[&i[1]]);
                 i[1] = memory_p[&i[1]];
             }
         }
         // для  PD.10 P.10
         else if i[0] == 260 {
             if !memory_p.contains_key(&i[2]) {
-                panic!("   >>  ! попытка присвоить значение неопределённого указателя: {}; динамическому: {:?}", i[2], i)
+                panic!("   >>  ! попытка присвоить значение неопределённого указателя: P.{}; динамическому: {:?}  ({})",
+                        i_n_m.get_name(i[2]), i, line_n)
             } else {
-                println!("замена: {} на {}", i[2], memory_p[&i[2]]);
+                println!("замена: P.{} на номер строки {}", i_n_m.get_name(i[2]), memory_p[&i[2]]);
                 i[2] = memory_p[&i[2]];
             }
         }
         // для  IG 10 P.10
         else if i[0] == 302 {
             if !memory_p.contains_key(&i[2]) {
-                panic!("   >>  ! попытка перейти по не определённому указателю после if: {}; в строке: {:?}", i[2], i)
+                panic!("   >>  ! попытка перейти по неопределённому указателю после if: P.{}; в строке: {:?}  ({})",
+                        i_n_m.get_name(i[2]), i, line_n)
             } else {
-                println!("замена: {} на {}", i[2], memory_p[&i[2]]);
+                println!("замена: P.{} на номер строки {}", i_n_m.get_name(i[2]), memory_p[&i[2]]);
                 i[2] = memory_p[&i[2]];
             }
         }
 
         if i[0] != 200 {
             new_program.push(i.to_vec());
+            lines_n.push(*line_n);
         }
     }   
     
@@ -76,7 +85,8 @@ pub fn pre_run(mut program: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
                 }
 
                 if level > 0 {
-                    panic!("   >>  ! не найдаен end для if: I {}", new_program[i][1])
+                    let (_, line_n) = program[i];
+                    panic!("   >>  ! не найдаен end для if: I P.{}  ({})", i_n_m.get_name(new_program[i][1]), line_n)
                 } else {
                     new_program[i].push(pointer);
                 }       
@@ -85,5 +95,5 @@ pub fn pre_run(mut program: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
         if all_if_replaced {break}
     }
 
-    new_program
+    (new_program, lines_n)
 }

@@ -2,24 +2,24 @@
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Token {
-    Bool(bool),
-    Keyword(String),
-    LabelP(i32),     // P.10
-    LabelPD(i32),    // PD.10
-    Number(i32)
+    Bool(bool, i32),
+    Keyword(String, i32),
+    LabelP(i32, i32),     // P.10
+    LabelPD(i32, i32),    // PD.10
+    Number(i32, i32)
 }
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum RawToken {
-    Bool(bool),
-    Keyword(String),
-    LabelP(String),     // P.10
-    LabelPD(String),    // PD.10
-    Number(String)
+    Bool(bool, i32),
+    Keyword(String, i32),
+    LabelP(String, i32),     // P.10
+    LabelPD(String, i32),    // PD.10
+    Number(String, i32)
 }
 
-pub fn start(content: String) -> Result<Vec<Vec<RawToken>>, String> {
-    let content = remove_comments(content);
+pub fn start(content: String) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
+    //let content = remove_comments(content);
     
     match tokenize(&content) {
         Ok(tokens) => {
@@ -28,60 +28,136 @@ pub fn start(content: String) -> Result<Vec<Vec<RawToken>>, String> {
             Ok(tokens)
         }
         Err(e) => {
-            eprintln!("   >>  ! Ошибка токенизации: {} \n", e);
             Err(e)
         }
     }
 }
-// fn is_num(s: &str) -> bool {
-//     s.chars().all(|c| c.is_ascii_digit())
-// }
 
-fn tokenize(input: &str) -> Result<Vec<Vec<RawToken>>, String> {
+
+fn tokenize(input: &str) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
     let mut all_tokens = Vec::new();
+    let mut current_line = 1;
+    let mut in_single_comment = false;
+    let mut in_multi_comment = false;
+    let mut current_instruction = String::new();
+    let mut instruction_line = 1;
     
-    // Разбиваем входной текст на строки по ';'
-    // filter() убирает пустые строки после последней ';'
-    for line in input.split(';').filter(|s| !s.is_empty()) {
-        let mut tokens = Vec::new();
-        let mut buffer = String::new();
+    let mut chars = input.chars().peekable();
+    
+    while let Some(ch) = chars.next() {
+        // Считаем строки
+        if ch == '\n' {
+            current_line += 1;
+            in_single_comment = false;
+        }
         
-        for ch in line.chars() {
-            if ch.is_whitespace() {
-                if !buffer.is_empty() {
-                    tokens.push(parse_token(&buffer)?);
-                    buffer.clear();
+        // Пропускаем комментарии
+        if in_single_comment {
+            continue;
+        }
+        
+        if in_multi_comment {
+            if ch == '*' && chars.peek() == Some(&'/') {
+                chars.next(); // пропускаем '/'
+                in_multi_comment = false;
+            }
+            continue;
+        }
+        
+        // Проверяем начало комментариев
+        if ch == '/' {
+            match chars.peek() {
+                Some(&'/') => {
+                    chars.next(); // пропускаем второй '/'
+                    in_single_comment = true;
+                    continue;
                 }
-            } else {
-                buffer.push(ch);
+                Some(&'*') => {
+                    chars.next(); // пропускаем '*'
+                    in_multi_comment = true;
+                    continue;
+                }
+                _ => {}
             }
         }
         
-        // Обрабатываем последний токен в строке
-        if !buffer.is_empty() {
-            tokens.push(parse_token(&buffer)?);
+        // Обрабатываем инструкции
+        match ch {
+            ';' => {
+                // Конец инструкции
+                if !current_instruction.trim().is_empty() {
+                    match parse_instruction(&current_instruction, instruction_line) {
+                        Ok(tokens) => {
+                            all_tokens.push(tokens);
+                        }
+                        Err(e) => return Err((e, instruction_line)),
+                    }
+                }
+                current_instruction.clear();
+                instruction_line = current_line; // СЛЕДУЮЩАЯ инструкция начнётся с текущей строки
+            }
+            _ => {
+                // Если инструкция пустая (только что начали), запоминаем строку
+                if current_instruction.trim().is_empty() && !ch.is_whitespace() {
+                    instruction_line = current_line;
+                }
+                current_instruction.push(ch);
+            }
         }
-        if tokens.len() > 4 {
-            return Err(format!("   >>  ! Слишком много токенов в строке: '{}'", line));
+    }
+    
+    // Последняя инструкция (если нет ';' в конце)
+    if !current_instruction.trim().is_empty() {
+        match parse_instruction(&current_instruction, instruction_line) {
+            Ok(tokens) => {
+                all_tokens.push(tokens);
+            }
+            Err(e) => return Err((e, instruction_line)),
         }
-        
-        all_tokens.push(tokens);
     }
     
     Ok(all_tokens)
 }
 
-fn parse_token(s: &str) -> Result<RawToken, String> {
+fn parse_instruction(instruction: &str, line_num: i32) -> Result<Vec<RawToken>, String> {
+    let mut tokens = Vec::new();
+    let mut buffer = String::new();
+    
+    for ch in instruction.chars() {
+        if ch.is_whitespace() {
+            if !buffer.is_empty() {
+                tokens.push(parse_token(&buffer, &line_num)?);
+                buffer.clear();
+            }
+        } else {
+            buffer.push(ch);
+        }
+    }
+    
+    if !buffer.is_empty() {
+        tokens.push(parse_token(&buffer, &line_num)?);
+    }
+    
+    if tokens.len() > 4 {
+        return Err(format!("Слишком много токенов: '{}'", instruction));
+    }
+    
+    Ok(tokens)
+}
+
+// parse_token оставить как был, но он получает реальный line_num
+
+fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
     // Булевы: "T", "F"
     if s == "T" || s == "F" {
-        return Ok(RawToken::Bool(s == "T"));
+        return Ok(RawToken::Bool(s == "T", *line_n));
     }
 
     // Односимвольные ключевые слова: "X", "A", "N", "I", "G", "P", "E", "L", "S"
     if s.len() == 1 {
         let c = s.chars().next().unwrap();
         if matches!(c, 'X' | 'A' | 'O' | 'N' | 'I' | 'G' | 'P' | 'E' | 'L' | 'S' | 'U' | ';') {
-            return Ok(RawToken::Keyword(c.to_string()));
+            return Ok(RawToken::Keyword(c.to_string(), *line_n));
         }
     }
     
@@ -92,84 +168,94 @@ fn parse_token(s: &str) -> Result<RawToken, String> {
             let parts: Vec<&str> = s.split('.').collect();
             if parts.len() == 2 {
                 return match parts[0] {
-                    "P" => Ok(RawToken::LabelP(parts[1].to_string())),
-                    "PD" => Ok(RawToken::LabelPD(parts[1].to_string())),
-                    _ => Err(format!("не удальсь обработать тип указателя {}", parts[0]))                         
-                }
-                
+                    "P" => Ok(RawToken::LabelP(parts[1].to_string(), *line_n)),
+                    "PD" => Ok(RawToken::LabelPD(parts[1].to_string(), *line_n)),
+                    _ => Err(format!("   >>  ! не удальсь обработать указатель {}  ({})", s, line_n))                         
+                }   
             }
-        }
-        if matches!(s, "IC") {
-            return Ok(RawToken::Keyword(s.to_string()));
         }
     }
 
         // Число: "123", "0", "10"
-    if true {
-        return s.parse::<String>()
-            .map(RawToken::Number)
-            .map_err(|e| format!("   >>  ! Невалидное число '{}': {}", s, e));
+    if s.chars().all(|c| c.is_ascii_alphabetic() || c.is_ascii_alphanumeric() || c == '_') {
+        return Ok(RawToken::Number(s.to_string(), *line_n));
     }
 
-    Err(format!("   >>  ! Невалидный токен: '{}'", s))
+    Err(format!("   >>  ! не получилось обработать слово: {s}  ({})", line_n))
 }
 
-fn remove_comments(string: String) -> String {
-    let mut new_string = "".to_string();
-    let mut flag_multi = false;
-    let mut flag_single = false;
-    let mut _flag = false;
 
-    let mut string = string.replace("\r\n", "\n");
 
-    string = string.replace("/*", " /* ").replace("*/", " */ ").replace("//", " // ").replace("\n", " | ").replace(";", " ; ");
 
-    for i in string.split(' ') {
-        let mut flag = false;
 
-        if i == "//" {
-            // print!("удалён комментарий: ");
-            flag_single = true
-        }
-        if flag_single || i == "|" {
-            flag = true;
-        }
+
+
+
+
+
+
+
+
+
+
+
+
+// fn remove_comments(string: String) -> String {
+//     let mut new_string = "".to_string();
+//     let mut flag_multi = false;
+//     let mut flag_single = false;
+//     let mut _flag = false;
+
+//     let mut string = string.replace("\r\n", "\n");
+
+//     string = string.replace("/*", " /* ").replace("*/", " */ ").replace("//", " // ").replace("\n", " \n ").replace(";", " ; ");
+
+//     for i in string.split(' ') {
+//         let mut flag = false;
+
+//         if i == "//" {
+//             // print!("удалён комментарий: ");
+//             flag_single = true
+//         }
+//         if flag_single || i == "\n" {
+//             flag = true;
+//         }
         
-        if i == "|" {
-            flag_single = false;
-            //println!()
-        }
+//         if i == "\n" {
+//             flag_single = false;
+//             //println!()
+//         }
         
-        if flag_single {
-            // print!("{}", i)
-        }
+//         if flag_single {
+//             // print!("{}", i)
+//         }
         
 
-        if i == "/*" {
-            flag_multi = true;
-            print!("  >>  замечено начало мульти строчного комментария: '{}' удаляется: ", i)
-        }
+//         if i == "/*" {
+//             flag_multi = true;
+//             print!("  >>  замечено начало мульти строчного комментария: '{}' удаляется: ", i)
+//         }
 
-        if flag_multi {
-            flag = true;
-        }
+//         if flag_multi {
+//             flag = true;
+//         }
 
-        if i.contains("*/") {
-            println!(" '{}'", i);
-            flag_multi = false;
-            println!("  >>  замечен конец мульти строчного комментария: '{}'", i)
-        }
-        if flag_multi {
-            //print!(" {}", i)
-        }
+//         if i.contains("*/") {
+//             println!(" '{}'", i);
+//             flag_multi = false;
+//             println!("  >>  замечен конец мульти строчного комментария: '{}'", i)
+//         }
+//         if flag_multi {
+//             //print!(" {}", i)
+//         }
 
-        if !flag {
-            new_string.push(' ');
-            new_string.push_str(i);
-            //println!("add: '{}'", i)
-        } else { 
-            //println!("not add: '{}'", i)
-        }
-    }
-    new_string
-}
+//         if !flag {
+//             new_string.push(' ');
+//             new_string.push_str(i);
+//             //println!("add: '{}'", i)
+//         } else { 
+//             //println!("not add: '{}'", i)
+//         }
+//     }
+//     new_string
+// }

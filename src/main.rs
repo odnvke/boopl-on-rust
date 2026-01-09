@@ -10,6 +10,7 @@ mod vm;
 mod tokens;
 mod to_bytecode;
 mod namezator;
+mod name_map;
 
 fn main() {
     // Получаем аргументы
@@ -17,7 +18,7 @@ fn main() {
     
     // Проверяем, что передано имя файла
     if args.len() < 2 {
-        eprintln!("Использование: {} <имя_файла>", args[0]);
+        eprintln!(" ! Использование: {} <имя_файла>", args[0]);
         process::exit(1);
     }
     
@@ -29,30 +30,30 @@ fn main() {
             let tokens = tokens::start(content);
             match tokens {
                 Ok(tokens) => {
-                    let tokens = namezator::namezating(tokens);
+                    let (tokens, ident_name_map) = namezator::namezating(tokens);
 
-                    let bytecode = to_bytecode::to_bytecode(tokens);
+                    let bytecode = to_bytecode::to_bytecode(tokens, &ident_name_map);
                     match bytecode {
                         Ok(bytecode) => {
                             if bytecode.is_empty() {println!("байткод пустой")}
-                            else {println!("перевод в байткод успешен: \n{:?} \n", bytecode)}
-                            vm::start(bytecode);
+                            else {println!("перевод в байткод успешен: \n{:?}\n", bytecode)}
+                            vm::start(bytecode, ident_name_map);
 
                         }
                         Err(e) => {
-                            eprintln!("ошибка перевода в байткод: \n{}", e)
+                            eprintln!("\n ! перевод в байткод: \n{}", e)
                         }
                     }
                 }
 
-                Err(e) => {
-                    eprintln!("ошибка токенизации: {e}");
+                Err((e, _)) => {
+                    eprintln!("\n ! токенизация: \n{}", e);
                 }
             }
         }
 
         Err(e) => {
-            eprintln!("Ошибка при чтении файла '{}': {}", filename, e);
+            eprintln!("   >>  ! Ошибка при чтении файла '{}': {}", filename, e);
             process::exit(1);
         }
     }

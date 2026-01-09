@@ -1,5 +1,7 @@
 use std::collections::{HashMap};
 
+use crate::name_map::IdentNameMap;
+
 use super::pre_run;
 
 struct VM {
@@ -17,7 +19,7 @@ impl VM {
         }
     }
     
-    fn run(&mut self, program: Vec<Vec<i32>>) {
+    fn run(&mut self, program: Vec<Vec<i32>>, ident_name_map: IdentNameMap, lines_n: Vec<i32>) {
         self.bytecode = program;
         let mut pc = 0;
         loop {
@@ -26,6 +28,7 @@ impl VM {
             let line: &Vec<i32> = &self.bytecode[pc]; 
             let opcode = line[0];
             let line = &line[1..];
+            let line_n = lines_n[pc];
             match opcode {
                 50 => {break}
 
@@ -40,7 +43,7 @@ impl VM {
                     if self.memory.contains_key(&line[1]) {
                         self.memory.insert(line[0], *self.memory.get(&line[1]).unwrap_or(&0));
                     } else {
-                        panic!("попытка взять значение из пустой ячейки {}", line[1])
+                        error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[1])), line_n)
                     }
                 }
                 // PD.10      ! P.10 небудет
@@ -52,7 +55,7 @@ impl VM {
                 231 => { if self.memory_pd.contains_key(&line[0]) {
                         pc = self.memory_pd[&line[0]] as usize
                     } else {
-                        panic!("попытка перейти к несуществующему динам указателю {}", line[0])
+                        error_print(format!("   >>  ! несушествующий динамический указатель PD.{}", ident_name_map.get_name(line[0])), line_n)
                     }
                 }
 
@@ -63,7 +66,7 @@ impl VM {
                     if self.memory_pd.contains_key(&line[1]) {
                         self.memory_pd.insert(line[0], line[1] );
                     } else {
-                        panic!("попытка передать несуществующий динам указатель: {} динам указателю: {}", line[0], line[1])
+                        error_print(format!("   >>  ! несушествующий динамический указатель PD.{}", ident_name_map.get_name(line[1])), line_n)
                     }
                 }
 
@@ -73,7 +76,7 @@ impl VM {
                         if self.memory[&line[0]] == 1 {}
                         else {pc = line[1] as usize}
                     } else {
-                        panic!("в IF проверка не сушествующей ячейки")
+                        error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
                     }
                 }
                 // IG 10 P.10
@@ -81,20 +84,20 @@ impl VM {
                     if self.memory.contains_key(&line[0]) { 
                         if self.memory[&line[0]] == 1 {pc = line[1] as usize}
                     } else {
-                        panic!("в IF проверка не сушествующей ячейки: {}", line[0])
+                        error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
                     }
                 }
                 // IG 10 PD.10
                 303 => {
                     if self.memory.contains_key(&line[0]) {
-                            if self.memory.contains_key(&line[1]) {
-                            if self.memory[&line[0]] == 1 {pc = line[1] as usize}
+                            if self.memory_pd.contains_key(&line[1]) {
+                            if self.memory[&line[0]] == 1 {pc = self.memory_pd[&line[1]] as usize}
                         }
                         else {
-                            panic!("в IF GOTO указан не определённый динамический указатель: {}", line[1])
+                            error_print(format!("   >>  ! несушествующий динамический указатель PD.{}", ident_name_map.get_name(line[1])), line_n)
                         }
                     } else {
-                        panic!("в IF проверка не сушествующей ячейки: {}", line[0])
+                        error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
                     }
                 }
 
@@ -106,7 +109,7 @@ impl VM {
                 402 => {if self.memory.contains_key(&line[0]) {
                         if self.memory[&line[0]] == 1 {print!("#")} else {print!(".")}
                     } else {
-                        panic!("попытка вывисти не определённую ячейку {}", line[0])
+                        error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
                     }
                 }
                 // P N
@@ -126,7 +129,8 @@ impl VM {
                             let bit = if self.memory.contains_key(&(start_addr + i)) {
                                 *self.memory.get(&(start_addr + i)).unwrap_or(&0)
                             } else {
-                                panic!("   >>  ! ошибка чтения UTF-8 с ячейки {}: не обьявленна {}", start_addr, start_addr+i);
+                                error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(start_addr+i)), line_n);
+                                panic!();
                             };
                             byte_value = (byte_value << 1) | (bit as u8)
                         }
@@ -156,7 +160,8 @@ impl VM {
                                 let bit = if self.memory.contains_key(&(byte_addr + i)) {
                                     *self.memory.get(&(byte_addr + i)).unwrap_or(&0)
                                 } else {
-                                    panic!("   >>  ! ошибка чтения UTF-8 с ячейки {}: не обьявленна {}", byte_addr, byte_addr+i);
+                                    error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(start_addr+i)), line_n);
+                                    panic!()
                                 };
                                 byte_value = (byte_value << 1) | (bit as u8)
                             }
@@ -178,7 +183,7 @@ impl VM {
                     if self.memory.contains_key(&line[1]) {
                         self.memory.insert(line[0], if *self.memory.get(&line[1]).unwrap_or(&0) == 1 {0} else {1});
                     } else {
-                        panic!("в действии Not указана не опреденная ячейка {}", line[1])
+                        error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[1])), line_n)
                     }
                 }
 
@@ -191,7 +196,8 @@ impl VM {
                             self.memory.insert(line[0], 0);
                         }
                     } else {
-                        panic!("в действии Or указана не опреденная ячейка {} или {}", line[1], line[2])
+                        error_print(format!("   >>  ! несушествующая ячейка {} или {}", 
+                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2])), line_n)
                     }
                 }
                 // 10 A 10 10
@@ -203,7 +209,8 @@ impl VM {
                             self.memory.insert(line[0], 0);
                         }
                     } else {
-                        panic!("в действии And указана не опреденная ячейка {} или {}", line[1], line[2])
+                        error_print(format!("   >>  ! несушествующая ячейка {} или {}", 
+                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2])), line_n)
                     }
                 }
                 // 10 X 10 10
@@ -217,23 +224,29 @@ impl VM {
                             self.memory.insert(line[0], 0);
                         }
                     } else {
-                        panic!("в действии Xor указана не опреденная ячейка {} или {}", line[1], line[2])
+                        error_print(format!("   >>  ! несушествующая ячейка {} или {}", 
+                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2])), line_n);
                     }
                 }
 
-                _ => {panic!("$$$$$$$$$$$$$$")}
+                _ => {panic!("AAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!")}
             }
             pc += 1;
         }
     }
 }
 
+fn error_print(s: String, line_n: i32) {
+    panic!("\n ! ран-тайм\n\n{}  ({})\n\n", s, line_n)
+}
 
-
-pub fn start(bytecode: Vec<Vec<i32>>) {
+pub fn start(bytecode: Vec<(Vec<i32>, i32)>, ident_name_map: IdentNameMap) {
     let mut vm = VM::new();
 
-    let program = pre_run::pre_run(bytecode);
+    let (program, lines_n) = pre_run::pre_run(bytecode, &ident_name_map);
 
-    vm.run(program);
+    if program.len() != lines_n.len() {error_print(format!("АААААА!!! байткод длина: {}; лайн_н длина: {}", 
+                                                    program.len(), lines_n.len()), -1);}
+    
+    vm.run(program, ident_name_map, lines_n);
 }

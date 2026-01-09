@@ -1,6 +1,6 @@
 // namezator.rs
 use std::collections::{HashMap, BTreeMap};
-use crate::tokens::{Token, RawToken};
+use crate::{name_map::{IdentNameMap}, tokens::{RawToken, Token}};
 
 // Часть имени (текст или число)
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -126,9 +126,9 @@ fn extract_names(raw_tokens: &[Vec<RawToken>]) -> Vec<String> {
     for line in raw_tokens {
         for token in line {
             match token {
-                RawToken::Number(name) |
-                RawToken::LabelP(name) |
-                RawToken::LabelPD(name) => {
+                RawToken::Number(name, l_n) |
+                RawToken::LabelP(name, l_n) |
+                RawToken::LabelPD(name, l_n) => {
                     let name_clone = name.clone();
                     if !unique_names.contains(&name_clone) {
                         unique_names.push(name_clone);
@@ -143,7 +143,7 @@ fn extract_names(raw_tokens: &[Vec<RawToken>]) -> Vec<String> {
 }
 
 // Основная функция
-pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> Vec<Vec<Token>> {
+pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> (Vec<Vec<Token>>, IdentNameMap) {
     let unique_names = extract_names(&raw_tokens);
     
     let mut tree = TreeNode::default();
@@ -157,20 +157,20 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> Vec<Vec<Token>> {
     
     tree.assign_ids(&mut name_to_id, &mut context, &mut current_path);
     
-    println!("=== Таблица имен (древовидная) ===");
+    println!("=~=~=~=~=~ Таблица имен =~=~=~=~=~");
     
     // Собираем владеющие значения
     let mut sorted_entries: Vec<(String, i32)> = name_to_id
         .iter()
         .map(|(k, &v)| (k.clone(), v))
         .collect();
-    
+
     sorted_entries.sort_by_key(|(_, id)| *id);
     
     for (name, id) in &sorted_entries {
         println!("{:30} → {}", name, id);
     }
-    println!("============================\n");
+    println!("=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~\n");
     
     // ИСПРАВЛЕННАЯ часть преобразования токенов
     let mut result = Vec::new();
@@ -181,22 +181,22 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> Vec<Vec<Token>> {
         // Используем ссылку на токен в match
         for token in line {
             match &token {  // Берем ссылку
-                RawToken::Bool(b) => converted_line.push(Token::Bool(*b)),
-                RawToken::Keyword(k) => converted_line.push(Token::Keyword(k.clone())),
-                RawToken::Number(name) => {
+                RawToken::Bool(b, l_n) => converted_line.push(Token::Bool(*b, *l_n)),
+                RawToken::Keyword(k, l_n) => converted_line.push(Token::Keyword(k.clone(), *l_n)),
+                RawToken::Number(name, l_n) => {
                     let id = *name_to_id.get(name)
                         .unwrap_or_else(|| panic!("Имя не найдено: {}", name));
-                    converted_line.push(Token::Number(id));
+                    converted_line.push(Token::Number(id, *l_n));
                 }
-                RawToken::LabelP(name) => {
+                RawToken::LabelP(name, l_n) => {
                     let id = *name_to_id.get(name)
                         .unwrap_or_else(|| panic!("Указатель P не найдено: {}", name));
-                    converted_line.push(Token::LabelP(id));
+                    converted_line.push(Token::LabelP(id, *l_n));
                 }
-                RawToken::LabelPD(name) => {
+                RawToken::LabelPD(name, l_n) => {
                     let id = *name_to_id.get(name)
                         .unwrap_or_else(|| panic!("Указатель PD не найдено: {}", name));
-                    converted_line.push(Token::LabelPD(id));
+                    converted_line.push(Token::LabelPD(id, *l_n));
                 }
             }
         }
@@ -206,5 +206,14 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> Vec<Vec<Token>> {
         }
     }
     
-    result
+    let mut id_to_name: HashMap<i32, String> = HashMap::new();
+    for (v, k) in name_to_id {
+        id_to_name.insert(k, v);
+    }
+
+    let mut ident_name_map = IdentNameMap::new(); 
+
+    ident_name_map.load(id_to_name);
+
+    (result, ident_name_map)
 }
