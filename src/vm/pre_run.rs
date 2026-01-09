@@ -6,8 +6,7 @@ pub fn pre_run(mut program: Vec<Vec<i32>>) -> Vec<Vec<i32>> {
     let mut counter = 0;
     let mut new_program: Vec<Vec<i32>> = Vec::new();
 
-    for i 
-    in program.iter() {
+    for i in program.iter() {
         counter += 1;
         // для P.10
         if i[0] == 200 {

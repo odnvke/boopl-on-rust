@@ -114,10 +114,69 @@ impl VM {
                 // P S
                 404 => {print!(" ")}
 
+                // P U 10
+                405 => {
+                    let start_addr = line[0];
+                    let mut bytes = Vec::new();
+                    
+                    // Читаем первый байт
+                    let first_byte = {
+                        let mut byte_value: u8 = 0;
+                        for i in 0..8 {
+                            let bit = if self.memory.contains_key(&(start_addr + i)) {
+                                *self.memory.get(&(start_addr + i)).unwrap_or(&0)
+                            } else {
+                                panic!("   >>  ! ошибка чтения UTF-8 с ячейки {}: не обьявленна {}", start_addr, start_addr+i);
+                            };
+                            byte_value = (byte_value << 1) | (bit as u8)
+                        }
+                        byte_value
+                    };
+                    bytes.push(first_byte);
+                    
+                    // Определяем сколько еще байтов нужно прочитать
+                    let additional_bytes = if (first_byte & 0b10000000) == 0 {
+                        0  // ASCII
+                    } else if (first_byte & 0b11100000) == 0b11000000 {
+                        1  // 2 байта
+                    } else if (first_byte & 0b11110000) == 0b11100000 {
+                        2  // 3 байта  
+                    } else if (first_byte & 0b11111000) == 0b11110000 {
+                        3  // 4 байта
+                    } else {
+                        0  // Некорректный
+                    };
+                    
+                    // Читаем дополнительные байты
+                    for i in 0..additional_bytes {
+                        let byte_addr = start_addr + 8 + (i * 8); // каждый байт через 8 ячеек
+                        let next_byte = {
+                            let mut byte_value: u8 = 0;
+                            for i in 0..8 {
+                                let bit = if self.memory.contains_key(&(byte_addr + i)) {
+                                    *self.memory.get(&(byte_addr + i)).unwrap_or(&0)
+                                } else {
+                                    panic!("   >>  ! ошибка чтения UTF-8 с ячейки {}: не обьявленна {}", byte_addr, byte_addr+i);
+                                };
+                                byte_value = (byte_value << 1) | (bit as u8)
+                            }
+                            byte_value
+                        };
+                        bytes.push(next_byte);
+                    }
+                    
+                    // Проверяем валидность и выводим
+                    if let Ok(s) = String::from_utf8(bytes) {
+                        print!("{}", s);
+                    } else {
+                        print!("�");
+                    }
+                }
+
                 // 10 N 10
                 500 => {
                     if self.memory.contains_key(&line[1]) {
-                        self.memory.insert(line[0], *self.memory.get(&line[1]).unwrap_or(&0));
+                        self.memory.insert(line[0], if *self.memory.get(&line[1]).unwrap_or(&0) == 1 {0} else {1});
                     } else {
                         panic!("в действии Not указана не опреденная ячейка {}", line[1])
                     }
@@ -126,7 +185,7 @@ impl VM {
                 // 10 O 10 10
                 550 => {
                     if self.memory.contains_key(&line[1]) && self.memory.contains_key(&line[2]) {
-                        if *self.memory.get(&line[1]).unwrap_or(&0) == 1 || *self.memory.get(&line[1]).unwrap_or(&0) == 1 {
+                        if *self.memory.get(&line[1]).unwrap_or(&0) == 1 || *self.memory.get(&line[2]).unwrap_or(&0) == 1 {
                             self.memory.insert(line[0], 1);
                         } else {
                             self.memory.insert(line[0], 0);
@@ -138,7 +197,7 @@ impl VM {
                 // 10 A 10 10
                 551 => {
                     if self.memory.contains_key(&line[1]) && self.memory.contains_key(&line[2]) {
-                        if *self.memory.get(&line[1]).unwrap_or(&0) == 1 && *self.memory.get(&line[1]).unwrap_or(&0) == 1 {
+                        if *self.memory.get(&line[1]).unwrap_or(&0) == 1 && *self.memory.get(&line[2]).unwrap_or(&0) == 1 {
                             self.memory.insert(line[0], 1);
                         } else {
                             self.memory.insert(line[0], 0);

@@ -9,6 +9,7 @@ use std::process;
 mod vm;
 mod tokens;
 mod to_bytecode;
+mod namezator;
 
 fn main() {
     // Получаем аргументы
@@ -28,6 +29,8 @@ fn main() {
             let tokens = tokens::start(content);
             match tokens {
                 Ok(tokens) => {
+                    let tokens = namezator::namezating(tokens);
+
                     let bytecode = to_bytecode::to_bytecode(tokens);
                     match bytecode {
                         Ok(bytecode) => {

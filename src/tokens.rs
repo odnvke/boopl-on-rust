@@ -2,16 +2,23 @@
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Token {
-    Number(i32),
     Bool(bool),
     Keyword(String),
     LabelP(i32),     // P.10
     LabelPD(i32),    // PD.10
-    Ident(String),
+    Number(i32)
 }
 
+#[derive(Debug, Clone, PartialEq)]
+pub enum RawToken {
+    Bool(bool),
+    Keyword(String),
+    LabelP(String),     // P.10
+    LabelPD(String),    // PD.10
+    Number(String)
+}
 
-pub fn start(content: String) -> Result<Vec<Vec<Token>>, String> {
+pub fn start(content: String) -> Result<Vec<Vec<RawToken>>, String> {
     let content = remove_comments(content);
     
     match tokenize(&content) {
@@ -30,7 +37,7 @@ pub fn start(content: String) -> Result<Vec<Vec<Token>>, String> {
 //     s.chars().all(|c| c.is_ascii_digit())
 // }
 
-fn tokenize(input: &str) -> Result<Vec<Vec<Token>>, String> {
+fn tokenize(input: &str) -> Result<Vec<Vec<RawToken>>, String> {
     let mut all_tokens = Vec::new();
     
     // Разбиваем входной текст на строки по ';'
@@ -64,24 +71,17 @@ fn tokenize(input: &str) -> Result<Vec<Vec<Token>>, String> {
     Ok(all_tokens)
 }
 
-fn parse_token(s: &str) -> Result<Token, String> {
-    // Число: "123", "0", "10"
-    if s.chars().all(|c| c.is_ascii_digit()) {
-        return s.parse::<i32>()
-            .map(Token::Number)
-            .map_err(|e| format!("   >>  ! Невалидное число '{}': {}", s, e));
-    }
-
+fn parse_token(s: &str) -> Result<RawToken, String> {
     // Булевы: "T", "F"
     if s == "T" || s == "F" {
-        return Ok(Token::Bool(s == "T"));
+        return Ok(RawToken::Bool(s == "T"));
     }
 
     // Односимвольные ключевые слова: "X", "A", "N", "I", "G", "P", "E", "L", "S"
     if s.len() == 1 {
         let c = s.chars().next().unwrap();
-        if matches!(c, 'X' | 'A' | 'O' | 'N' | 'I' | 'G' | 'P' | 'E' | 'L' | 'S' | ';') {
-            return Ok(Token::Keyword(c.to_string()));
+        if matches!(c, 'X' | 'A' | 'O' | 'N' | 'I' | 'G' | 'P' | 'E' | 'L' | 'S' | 'U' | ';') {
+            return Ok(RawToken::Keyword(c.to_string()));
         }
     }
     
@@ -91,26 +91,24 @@ fn parse_token(s: &str) -> Result<Token, String> {
         if s.contains('.') {
             let parts: Vec<&str> = s.split('.').collect();
             if parts.len() == 2 {
-                match parts[1].parse::<i32>() {
-                    Ok(num) => {
-                        return match parts[0] {
-                            "P" => Ok(Token::LabelP(num)),
-                            "PD" => Ok(Token::LabelPD(num)),
-                            _ => Err(format!("не удальсь обработать тип указателя {}", parts[0]))                         
-                        }
-                    }
-                    Err(e) => {return  Err(format!("не удолось обработать число в указателе {}; {}", s, e))}
+                return match parts[0] {
+                    "P" => Ok(RawToken::LabelP(parts[1].to_string())),
+                    "PD" => Ok(RawToken::LabelPD(parts[1].to_string())),
+                    _ => Err(format!("не удальсь обработать тип указателя {}", parts[0]))                         
                 }
+                
             }
         }
         if matches!(s, "IC") {
-            return Ok(Token::Keyword(s.to_string()));
+            return Ok(RawToken::Keyword(s.to_string()));
         }
     }
 
-    // Идентификатор: всё остальное "valid_name"
-    if s.chars().all(|c| c.is_alphanumeric() || c == '_') {
-        return Ok(Token::Ident(s.to_string()));
+        // Число: "123", "0", "10"
+    if true {
+        return s.parse::<String>()
+            .map(RawToken::Number)
+            .map_err(|e| format!("   >>  ! Невалидное число '{}': {}", s, e));
     }
 
     Err(format!("   >>  ! Невалидный токен: '{}'", s))
@@ -120,7 +118,7 @@ fn remove_comments(string: String) -> String {
     let mut new_string = "".to_string();
     let mut flag_multi = false;
     let mut flag_single = false;
-    let mut flag = false;
+    let mut _flag = false;
 
     let mut string = string.replace("\r\n", "\n");
 

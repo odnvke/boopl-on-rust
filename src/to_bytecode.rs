@@ -74,6 +74,9 @@ fn process_line(tokens: Vec<Token>) -> Result<Vec<i32>, String> {
         // P S
         [Token::Keyword(s), Token::Keyword(s2)] if s == "P" && s2 == "S" => Ok(vec![404]),
 
+        // P S
+        [Token::Keyword(s), Token::Keyword(s2), Token::Number(n)] if s == "P" && s2 == "U" => Ok(vec![405, *n]),
+
         // 10 N 10
         [Token::Number(n), Token::Keyword(s), Token::Number(n2)] if s == "N" => Ok(vec![500, *n, *n2]),
 
