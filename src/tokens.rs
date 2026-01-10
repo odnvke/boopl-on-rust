@@ -23,7 +23,7 @@ pub fn start(content: String) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
     
     match tokenize(&content) {
         Ok(tokens) => {
-            if tokens[0].len() == 0 {println!("\nТокенов нет")}
+            if tokens[0].len() == 0 {println!("\nТокенов нет\n")}
             else {println!("\nТокены: {:?} \n", tokens);}
             Ok(tokens)
         }
@@ -170,7 +170,7 @@ fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
                 return match parts[0] {
                     "P" => Ok(RawToken::LabelP(parts[1].to_string(), *line_n)),
                     "PD" => Ok(RawToken::LabelPD(parts[1].to_string(), *line_n)),
-                    _ => Err(format!("   >>  ! не удальсь обработать указатель {}  ({})", s, line_n))                         
+                    _ => Err(format!("   >>  ! не удальсь обработать указатель {}  ({})\n\n", s, line_n))                         
                 }   
             }
         }
@@ -181,7 +181,7 @@ fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
         return Ok(RawToken::Number(s.to_string(), *line_n));
     }
 
-    Err(format!("   >>  ! не получилось обработать слово: {s}  ({})", line_n))
+    Err(format!("   >>  ! не получилось обработать слово: {s}  ({})\n\n", line_n))
 }
 
 

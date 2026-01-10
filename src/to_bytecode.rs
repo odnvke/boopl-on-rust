@@ -113,7 +113,7 @@ fn process_line(tokens: Vec<Token>, ident_name_map: &IdentNameMap) -> Result<(Ve
                     Token::Keyword(b, l_n) => {line.push(format!("{}", *b)); line_n = *l_n;}
                 }
             }
-            Err(format!("\n   >>  ! Ошибка в обработке последовательности токенов {:?}  ({})\n", line.join(" "), line_n))
+            Err(format!("\n   >>  ! Ошибка в обработке последовательности токенов {:?}  ({})\n\n", line.join(" "), line_n))
         }
     }
 }
