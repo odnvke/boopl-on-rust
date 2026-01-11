@@ -2,6 +2,7 @@
 use std::env;
 use std::fs;
 use std::process;
+use std::path::Path;
 //use std::io;
 // use std::collections::HashMap;
 //use std::str::Chars;
@@ -11,6 +12,7 @@ mod tokens;
 mod to_bytecode;
 mod namezator;
 mod name_map;
+mod importer;
 
 fn main() {
     // Получаем аргументы
@@ -21,6 +23,10 @@ fn main() {
         eprintln!(" ! Использование: {} <имя_файла>", args[0]);
         process::exit(1);
     }
+
+    let base_path = Path::new("влтдылтад.влтдылтад")
+            .parent()  // → "."
+            .unwrap_or(Path::new("."));
     
     let filename = &args[1];
     
@@ -30,13 +36,16 @@ fn main() {
             let tokens = tokens::start(content);
             match tokens {
                 Ok(tokens) => {
+                    let tokens = importer::importing(tokens, base_path).expect(" ");
                     let (tokens, ident_name_map) = namezator::namezating(tokens);
 
                     let bytecode = to_bytecode::to_bytecode(tokens, &ident_name_map);
                     match bytecode {
                         Ok(bytecode) => {
                             if bytecode.is_empty() {println!("байткод пустой")}
-                            else {println!("перевод в байткод успешен: \n{:?}\n", bytecode)}
+                            else {
+                                //println!("перевод в байткод успешен: \n{:?}\n", bytecode)
+                            }
                             vm::start(bytecode, ident_name_map);
 
                         }

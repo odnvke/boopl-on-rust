@@ -1,4 +1,8 @@
-use std::collections::{HashMap};
+use std::{collections::HashMap};
+use crossterm::{terminal, event::{read, Event, KeyCode}};
+use std::time::Instant;
+//use std::thread;
+use std::time::Duration;
 
 use crate::name_map::IdentNameMap;
 
@@ -30,6 +34,8 @@ impl VM {
             let line = &line[1..];
             let line_n = lines_n[pc];
             match opcode {
+                0 => {}
+
                 50 => {break}
 
                 51 => {}
@@ -229,6 +235,109 @@ impl VM {
                     }
                 }
 
+                600 => {
+                    use crossterm::event::{poll, read, Event, KeyCode};
+                    
+                    terminal::enable_raw_mode().unwrap();
+                    
+                    let mut cursor_visible = true;
+                    let mut last_blink = Instant::now();
+                    
+                    print!("_");
+                    std::io::Write::flush(&mut std::io::stdout()).unwrap();
+                    
+                    let value = loop {
+                        if last_blink.elapsed().as_millis() > 300 {
+                            cursor_visible = !cursor_visible;
+                            last_blink = Instant::now();
+                            
+                            if cursor_visible {
+                                print!("\r_");
+                            } else {
+                                print!("\r ");
+                            }
+                            std::io::Write::flush(&mut std::io::stdout()).unwrap();
+                        }
+                        
+                        if poll(Duration::from_millis(50)).unwrap() {
+                            if let Ok(Event::Key(event)) = read() {
+                                match event.code {
+                                    KeyCode::Char('t') | KeyCode::Char('T') | KeyCode::Char('1') | KeyCode::Char('#') | KeyCode::Char('е') | KeyCode::Char('Е')  => {
+                                        print!("\r\r");
+                                        break 1;
+                                    }
+                                    KeyCode::Char('f') | KeyCode::Char('F') | KeyCode::Char('0') | KeyCode::Char('.') | KeyCode::Char('а') | KeyCode::Char('А') => {
+                                        print!("\r\r");
+                                        break 0;
+                                    }
+                                    _ => continue,
+                                }
+                            }
+                        }
+                    };
+    
+                    terminal::disable_raw_mode().unwrap();
+                    println!(); // новая строка
+                    
+                    self.memory.insert(line[0], value as u8);
+                }
+
+                601 => { // Ввод UTF-8 символа и сохранение в последовательность ячеек
+                    use crossterm::{event::poll, terminal::enable_raw_mode, terminal::disable_raw_mode};
+                    
+                    enable_raw_mode().unwrap();
+                    
+                    while poll(Duration::from_millis(10)).unwrap() { let _ = read(); }
+
+                    std::io::Write::flush(&mut std::io::stdout()).unwrap();
+                    
+                    let mut utf8_bytes = Vec::new();
+                    let mut got_input = false;
+                    
+                    while !got_input {
+                        if poll(Duration::from_millis(100)).unwrap() {
+                            match read() {
+                                Ok(Event::Key(event)) => {
+                                    match event.code {
+                                        KeyCode::Char(c) => {
+                                            utf8_bytes = c.to_string().into_bytes();
+                                            got_input = true;
+                                            //print!("\r")
+                                        }
+                                        _ => {}
+                                    }
+                                }
+                                Err(e) => {
+                                    error_print(format!("\n ! ран-тайм\n\n   >>  ! Ошибка чтения: {:?}", e), line_n)
+                                }
+                                _ => {}
+                            }
+                        }
+                    }
+                    
+                    disable_raw_mode().unwrap();
+                    
+                    // Сохраняем байты UTF-8 в память
+                    let start_addr = line[0] as i32;
+                    
+                    // Очищаем область (8 ячеек на каждый возможный байт)
+                    for byte_idx in 0..4 {
+                        for bit_idx in 0..8 {
+                            let addr = start_addr + (byte_idx as i32 * 8) + bit_idx as i32;
+                            self.memory.insert(addr, 0);
+                        }
+                    }
+                    
+                    // Записываем фактически введённые байты
+                    for (byte_idx, &byte) in utf8_bytes.iter().enumerate() {
+                        for bit_idx in 0..8 {
+                            let addr = start_addr + (byte_idx as i32 * 8) + (7 - bit_idx) as i32;
+                            let bit = (byte >> bit_idx) & 1;
+                            self.memory.insert(addr, bit as u8);
+                        }
+                    }
+                }
+
                 _ => {panic!("AAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!")}
             }
             pc += 1;
@@ -237,14 +346,14 @@ impl VM {
 }
 
 fn error_print(s: String, line_n: i32) {
-    panic!("\n ! ран-тайм\n\n{}  ({})\n\n", s, line_n)
+    eprintln!("\n ! ран-тайм\n\n{}  ({})\n\n", s, line_n); std::process::exit(1)
 }
 
 pub fn start(bytecode: Vec<(Vec<i32>, i32)>, ident_name_map: IdentNameMap) {
     let mut vm = VM::new();
-
+    //println!("перед пре-ран{:?}", bytecode);
     let (program, lines_n) = pre_run::pre_run(bytecode, &ident_name_map);
-
+    //println!("после пре-ран{:?}", program);
     if program.len() != lines_n.len() {error_print(format!("АААААА!!! байткод длина: {}; лайн_н длина: {}", 
                                                     program.len(), lines_n.len()), -1);}
     

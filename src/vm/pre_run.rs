@@ -9,10 +9,9 @@ pub fn pre_run(mut program: Vec<(Vec<i32>, i32)>, i_n_m: &IdentNameMap) -> (Vec<
     let mut new_program: Vec<Vec<i32>> = Vec::new();
     let mut lines_n: Vec<i32> = Vec::new();
 
-
     for (i , line_n) in program.iter() {
         counter += 1;
-        
+        //print!("{:?}", i);
         // для P.10
         if i[0] == 200 {
             // если ещё не обьявлен, обьявлаем
@@ -21,7 +20,8 @@ pub fn pre_run(mut program: Vec<(Vec<i32>, i32)>, i_n_m: &IdentNameMap) -> (Vec<
                 memory_p.insert(i[1], counter-n_pointer-1);
             } 
             // иначе ошибка
-            else {panic!("\n ! пре ран-тайм\n\n   >>  ! переобьявление статического указателя: P.{}  ({})\n\n", i_n_m.get_name(i[1]), line_n)}
+            else {eprintln!("\n ! пре ран-тайм\n\n   >>  ! переобьявление статического указателя: P.{}  ({})\n\n"
+                , i_n_m.get_name(i[1]), line_n); std::process::exit(1);}
         }
     }
 
@@ -29,30 +29,30 @@ pub fn pre_run(mut program: Vec<(Vec<i32>, i32)>, i_n_m: &IdentNameMap) -> (Vec<
         // для  G P.10
         if i[0] == 230 {
             if !memory_p.contains_key(&i[1]) {
-                panic!("\n ! пре ран-тайм\n\n   >>  ! попытка перейти по не определённому указателю: P.{}; в строке: {:?}  ({})\n\n",
-                         i_n_m.get_name(i[1]), i, line_n)
+                eprintln!("\n ! пре ран-тайм\n\n   >>  ! попытка перейти по не определённому указателю: P.{}; в строке: {:?}  ({})\n\n",
+                         i_n_m.get_name(i[1]), i, line_n); std::process::exit(1);
             } else {
-                println!("замена: P.{} на номер строки {} ", i_n_m.get_name(i[1]), memory_p[&i[1]]);
+                //println!("замена: P.{} на номер строки {} ", i_n_m.get_name(i[1]), memory_p[&i[1]]);
                 i[1] = memory_p[&i[1]];
             }
         }
         // для  PD.10 P.10
         else if i[0] == 260 {
             if !memory_p.contains_key(&i[2]) {
-                panic!("\n ! пре ран-тайм\n\n   >>  ! попытка присвоить значение неопределённого указателя: P.{}; динамическому: {:?}  ({})\n\n",
-                        i_n_m.get_name(i[2]), i, line_n)
+                eprintln!("\n ! пре ран-тайм\n\n   >>  ! попытка присвоить значение неопределённого указателя: P.{}; динамическому: {:?}  ({})\n\n",
+                        i_n_m.get_name(i[2]), i, line_n); std::process::exit(1);
             } else {
-                println!("замена: P.{} на номер строки {}", i_n_m.get_name(i[2]), memory_p[&i[2]]);
+                //println!("замена: P.{} на номер строки {}", i_n_m.get_name(i[2]), memory_p[&i[2]]);
                 i[2] = memory_p[&i[2]];
             }
         }
         // для  IG 10 P.10
         else if i[0] == 302 {
             if !memory_p.contains_key(&i[2]) {
-                panic!("\n ! пре ран-тайм\n\n   >>  ! попытка перейти по неопределённому указателю после if: P.{}; в строке: {:?}  ({})\n\n",
-                        i_n_m.get_name(i[2]), i, line_n)
+                eprintln!("\n ! пре ран-тайм\n\n   >>  ! попытка перейти по неопределённому указателю после if: P.{}; в строке: {:?}  ({})\n\n",
+                        i_n_m.get_name(i[2]), i, line_n); std::process::exit(1);
             } else {
-                println!("замена: P.{} на номер строки {}", i_n_m.get_name(i[2]), memory_p[&i[2]]);
+                //println!("замена: P.{} на номер строки {}", i_n_m.get_name(i[2]), memory_p[&i[2]]);
                 i[2] = memory_p[&i[2]];
             }
         }
@@ -86,7 +86,8 @@ pub fn pre_run(mut program: Vec<(Vec<i32>, i32)>, i_n_m: &IdentNameMap) -> (Vec<
 
                 if level > 0 {
                     let (_, line_n) = program[i];
-                    panic!("\n ! пре ран-тайм\n\n   >>  ! не найдаен end для if: I P.{}  ({})\n\n", i_n_m.get_name(new_program[i][1]), line_n)
+                    eprintln!("\n ! пре ран-тайм\n\n   >>  ! не найдаен end для if: I P.{}  ({})\n\n",
+                         i_n_m.get_name(new_program[i][1]), line_n); std::process::exit(1);
                 } else {
                     new_program[i].push(pointer);
                 }       

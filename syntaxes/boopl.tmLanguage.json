@@ -1,103 +1,88 @@
 {
-
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
-
   "name": "Boopl",
-
   "scopeName": "source.boopl",
-
   "patterns": [
-
-    {"include": "#comments"},
-
-    {"include": "#labels"},
-
-    {"include": "#addresses"},
-
-    {"include": "#commands"},
-
-    {"include": "#numbers"},
-
-    {"include": "#metavariables"}
-
-  ],
-
-  "repository": {
-
-    "comments": {
-
-      "patterns": [
-
-        {
-
-          "name": "comment.line.double-slash.boopl",
-
-          "match": "//.*$"
-
-        },
-
-        {
-
-          "name": "comment.block.boopl",
-
-          "begin": "/\\*",
-
-          "end": "\\*/"
-
-        }
-
-      ]
-
+    {
+      "include": "#comments"
     },
-
-    "labels": {
-
-      "name": "entity.name.label.boopl",
-
-      "match": "\\bP\\.\\d+\\b"
-
+    {
+      "include": "#keywords"
     },
-
-    "addresses": {
-
-      "name": "constant.numeric.address.boopl",
-
-      "match": "^\\s*\\d+"
-
+    {
+      "include": "#operators"
     },
-
-    "commands": {
-
-      "patterns": [
-
-        {
-
-          "name": "keyword.command.boopl",
-
-          "match": "\\b(A|O|X|N|I|G|IC|E|P)\\b"
-
-        }
-
-      ]
-
+    {
+      "match": "\\b(?:[a-zA-Zа-яА-Я_][a-zA-Zа-яА-Я0-9_]*|[0-9]+)\\b",
+      "name": "variable.other.boopl"
     },
-
-    "numbers": {
-
-      "name": "constant.numeric.boopl",
-
-      "match": "\\b\\d+\\b"
-
+    {
+      "include": "#pointers"
     },
-
-    "metavariables": {
-
-      "name": "variable.parameter.boopl",
-
-      "match": "\\bT\\b|\\bF\\b"
-
+    {
+      "include": "#booleans"
+    },
+    {
+      "include": "#punctuation"
     }
-
+  ],
+  "repository": {
+    "comments": {
+      "patterns": [{
+        "name": "comment.line.double-slash.boopl",
+        "match": "//.*$"
+      },
+      {
+        "name": "comment.block.boopl",
+        "begin": "/\\*",
+        "end": "\\*/"
+      }]
+    },
+    "keywords": {
+      "patterns": [{
+        "name": "keyword.control.boopl",
+        "match": "\\b(I|IG|E|G|IN|IMPORT)\\b"
+      },
+      {
+        "name": "keyword.output.boopl",
+        "match": "\\bP\\b"
+      },
+      {
+        "name": "keyword.special.boopl",
+        "match": "\\b(N|S|U)\\b"
+      }]
+    },
+    "operators": {
+      "patterns": [{
+        "name": "keyword.operator.boopl",
+        "match": "\\b(O|A|X)\\b"
+      }]
+    },
+    "pointers": {
+      "patterns": [{
+        "name": "entity.name.label.pointer.boopl",
+        "match": "P\\.\\s*(\\S+)"
+      },
+      {
+        "name": "entity.name.label.dynamic-pointer.boopl",
+        "match": "PD\\.\\s*(\\S+)"
+      }]
+    },
+    "booleans": {
+      "patterns": [{
+        "name": "constant.language.boolean.true.boopl",
+        "match": "\\bT\\b"
+      },
+      {
+        "name": "constant.language.boolean.false.boopl",
+        "match": "\\bF\\b"
+      }]
+    },
+    "punctuation": {
+      "patterns": [{
+        "name": "punctuation.terminator.boopl",
+        "match": ";"
+      }]
+    }
   }
-
 }

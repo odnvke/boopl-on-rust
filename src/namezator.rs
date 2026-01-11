@@ -126,9 +126,9 @@ fn extract_names(raw_tokens: &[Vec<RawToken>]) -> Vec<String> {
     for line in raw_tokens {
         for token in line {
             match token {
-                RawToken::Number(name, l_n) |
-                RawToken::LabelP(name, l_n) |
-                RawToken::LabelPD(name, l_n) => {
+                RawToken::Number(name, _l_n) |
+                RawToken::LabelP(name, _l_n) |
+                RawToken::LabelPD(name, _l_n) => {
                     let name_clone = name.clone();
                     if !unique_names.contains(&name_clone) {
                         unique_names.push(name_clone);
@@ -156,7 +156,7 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> (Vec<Vec<Token>>, IdentName
     let mut current_path = Vec::new();
     
     tree.assign_ids(&mut name_to_id, &mut context, &mut current_path);
-    
+    /*
     println!("=~=~=~=~=~ Таблица имен =~=~=~=~=~");
     
     // Собираем владеющие значения
@@ -171,7 +171,7 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> (Vec<Vec<Token>>, IdentName
         println!("{:30} → {}", name, id);
     }
     println!("=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~\n");
-    
+    */
     // ИСПРАВЛЕННАЯ часть преобразования токенов
     let mut result = Vec::new();
     

@@ -24,7 +24,7 @@ pub fn start(content: String) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
     match tokenize(&content) {
         Ok(tokens) => {
             if tokens[0].len() == 0 {println!("\nТокенов нет\n")}
-            else {println!("\nТокены: {:?} \n", tokens);}
+            //else {println!("\nТокены: {:?} \n", tokens);}
             Ok(tokens)
         }
         Err(e) => {
@@ -160,10 +160,25 @@ fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
             return Ok(RawToken::Keyword(c.to_string(), *line_n));
         }
     }
+
+    if s.len() == 2 {
+        if s == "IN" {
+            return Ok(RawToken::Keyword(s.to_string(), *line_n));
+        }
+        if s == "IG" {
+            return Ok(RawToken::Keyword(s.to_string(), *line_n));
+        }
+    }
+
+    if s.len() == 6 {
+        if s == "IMPORT" {
+            return  Ok(RawToken::Keyword(s.to_string(), *line_n));
+        }
+    }
     
     
-    if s.len() >= 2 { 
-        // Метки: "P1", "P2", "P3" (буква + цифры)
+    if s.len() >= 3 { 
+        // Метки: P.10 P.test PD.10 PD.test
         if s.contains('.') {
             let parts: Vec<&str> = s.split('.').collect();
             if parts.len() == 2 {
@@ -176,8 +191,9 @@ fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
         }
     }
 
-        // Число: "123", "0", "10"
+        // Числа: 10 test test_10
     if s.chars().all(|c| c.is_ascii_alphabetic() || c.is_ascii_alphanumeric() || c == '_') {
+        //print!("{s} ");
         return Ok(RawToken::Number(s.to_string(), *line_n));
     }
 

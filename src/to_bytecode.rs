@@ -2,7 +2,7 @@ use crate::{name_map::{IdentNameMap}, tokens::Token};
 
 pub fn to_bytecode(tokens: Vec<Vec<Token>>, ident_name_map: &IdentNameMap) -> Result<Vec<(Vec<i32>, i32)>, String> {
     let mut bytecode = Vec::new();
-    
+    bytecode.push((vec![0], 0));
     for token_line in tokens {
         let (code, l_n ) = process_line(token_line, ident_name_map)?;
         
@@ -10,7 +10,7 @@ pub fn to_bytecode(tokens: Vec<Vec<Token>>, ident_name_map: &IdentNameMap) -> Re
             bytecode.push((code, l_n));
         }
     }
-    
+    //println!("{:?}", bytecode);
     Ok(bytecode)
 }
 
@@ -21,13 +21,13 @@ fn process_line(tokens: Vec<Token>, ident_name_map: &IdentNameMap) -> Result<(Ve
         [Token::Keyword(s, l_n)] if s == "E" => Ok((vec![50], *l_n)),
 
         // 10 T | 10 F
-        [Token::Number(n, l_n), Token::Bool(b, l_n2)] => {
+        [Token::Number(n, l_n), Token::Bool(b, _l_n2)] => {
             if *b { Ok((vec![101, *n], *l_n)) }
             else { Ok((vec![100, *n], *l_n)) }
         }
 
         // 10 10
-        [Token::Number(n, l_n), Token::Number(n2, l_n2)] => Ok((vec![150, *n, *n2], *l_n)),
+        [Token::Number(n, l_n), Token::Number(n2, _l_n2)] => Ok((vec![150, *n, *n2], *l_n)),
 
         // P.10 | P1
         [Token::LabelP(n, l_n)] => Ok((vec![200, *n], *l_n)),
@@ -42,10 +42,10 @@ fn process_line(tokens: Vec<Token>, ident_name_map: &IdentNameMap) -> Result<(Ve
         [Token::Keyword(s, l_n), Token::LabelPD(n, l_n2)] if s == "G" => Ok((vec![231, *n], *l_n)),
 
         // PD.10 P.10
-        [Token::LabelPD(n, l_n), Token::LabelP(n2, l_n2)] => Ok((vec![260, *n, *n2], *l_n)),
+        [Token::LabelPD(n, l_n), Token::LabelP(n2, _l_n2)] => Ok((vec![260, *n, *n2], *l_n)),
 
         // PD.10 PD.10
-        [Token::LabelPD(n, l_n), Token::LabelPD(n2, l_n2)] => Ok((vec![261, *n, *n2], *l_n)),
+        [Token::LabelPD(n, l_n), Token::LabelPD(n2, _l_n2)] => Ok((vec![261, *n, *n2], *l_n)),
 
         // I 10
         [Token::Keyword(s, l_n), Token::Number(n, l_n2)] if s == "I" => Ok((vec![300, *n], *l_n)),
@@ -88,6 +88,13 @@ fn process_line(tokens: Vec<Token>, ident_name_map: &IdentNameMap) -> Result<(Ve
         // 10 X 10 10
         [Token::Number(n, l_n), Token::Keyword(s, l_n2), Token::Number(n2, l_n3), Token::Number(n3, l_n4)] 
             if s == "X" => Ok((vec![552, *n, *n2, *n3], *l_n)),
+
+        // IN 10
+        [Token::Keyword(s, l_n), Token::Number(n, l_n2)]  if s == "IN" => Ok((vec![600, *n], *l_n)),
+
+        // IN U 10
+        [Token::Keyword(s, l_n), Token::Keyword(s2, l_n2), Token::Number(n, l_n3)] 
+            if s == "IN" && s2 == "U" => Ok((vec![601, *n], *l_n)),
 
         // Пустая строка
         [] => Ok((vec![], -1)),

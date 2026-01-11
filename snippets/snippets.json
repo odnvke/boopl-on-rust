@@ -1,0 +1,122 @@
+{
+  "Variable Declaration True": {
+    "prefix": ["varT", "vt"],
+    "body": ["${1:var_name} T;"],
+    "description": "Объявить переменную со значением true"
+  },
+  "Variable Declaration False": {
+    "prefix": ["varF", "vf"],
+    "body": ["${1:var_name} F;"],
+    "description": "Объявить переменную со значением false"
+  },
+  "Copy Variable": {
+    "prefix": ["copy", "cp"],
+    "body": ["${1:dest} ${2:src};"],
+    "description": "Копировать значение переменной"
+  },
+  "Print": {
+    "prefix": ["print", "p"],
+    "body": ["P ${1:var};"],
+    "description": "Вывести значение переменной"
+  },
+  "Print True": {
+    "prefix": ["pt"],
+    "body": ["P T;"],
+    "description": "Вывести символ # (true)"
+  },
+  "Print False": {
+    "prefix": ["pf"],
+    "body": ["P F;"],
+    "description": "Вывести символ . (false)"
+  },
+  "Print New Line": {
+    "prefix": ["pn", "nl"],
+    "body": ["P N;"],
+    "description": "Перенос строки"
+  },
+  "Print Space": {
+    "prefix": ["ps", "space"],
+    "body": ["P S;"],
+    "description": "Пробел"
+  },
+  "Print UTF-8": {
+    "prefix": ["pu", "utf"],
+    "body": ["P U ${1:var};"],
+    "description": "Вывести UTF-8 символ"
+  },
+  "If Statement": {
+    "prefix": ["if", "i"],
+    "body": ["I ${1:condition};", "\t${2:// тело if}", "E;"],
+    "description": "Условный оператор"
+  },
+  "If Goto": {
+    "prefix": ["ig", "ifgoto"],
+    "body": ["IG ${1:condition} P.${2:label};"],
+    "description": "Условный переход"
+  },
+  "Goto": {
+    "prefix": ["goto", "g"],
+    "body": ["G P.${1:label};"],
+    "description": "Безусловный переход"
+  },
+  "Goto Dynamic": {
+    "prefix": ["gpd", "gotopd"],
+    "body": ["G PD.${1:label};"],
+    "description": "Переход по динамическому указателю"
+  },
+  "Pointer": {
+    "prefix": ["ptr", "pointer"],
+    "body": ["P.${1:label};"],
+    "description": "Статический указатель"
+  },
+  "Dynamic Pointer": {
+    "prefix": ["dptr", "dp"],
+    "body": ["PD.${1:label};"],
+    "description": "Динамический указатель"
+  },
+  "Assign Pointer": {
+    "prefix": ["asptr", "ap"],
+    "body": ["PD.${1:dest} P.${2:src};"],
+    "description": "Присвоить указатель"
+  },
+  "Input": {
+    "prefix": ["in", "input"],
+    "body": ["IN ${1:var};"],
+    "description": "Ввод значения"
+  },
+  "Input UTF-8": {
+    "prefix": ["inu", "inputu"],
+    "body": ["IN U ${1:var};"],
+    "description": "Ввод UTF-8 символа"
+  },
+  "NOT Operation": {
+    "prefix": ["not", "neg"],
+    "body": ["${1:dest} N ${2:src};"],
+    "description": "Логическое НЕ"
+  },
+  "OR Operation": {
+    "prefix": ["or", "||"],
+    "body": ["${1:dest} O ${2:a} ${3:b};"],
+    "description": "Логическое ИЛИ"
+  },
+  "AND Operation": {
+    "prefix": ["and", "&&"],
+    "body": ["${1:dest} A ${2:a} ${3:b};"],
+    "description": "Логическое И"
+  },
+  "XOR Operation": {
+    "prefix": ["xor", "^"],
+    "body": ["${1:dest} X ${2:a} ${3:b};"],
+    "description": "Исключающее ИЛИ"
+  },
+  "Import File": {
+    "prefix": ["import", "imp"],
+    "body": ["IMPORT ${1:filename};"],
+    "description": "Импорт файла"
+  },
+  "End Program": {
+    "prefix": ["end", "e"],
+    "body": ["E;"],
+    "description": "Конец программы"
+  }
+}
