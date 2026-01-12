@@ -23,7 +23,7 @@ pub fn start(content: String) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
     
     match tokenize(&content) {
         Ok(tokens) => {
-            if tokens[0].len() == 0 {println!("\nТокенов нет\n")}
+            if tokens.is_empty() {println!("\nТокенов нет\n")}
             //else {println!("\nТокены: {:?} \n", tokens);}
             Ok(tokens)
         }

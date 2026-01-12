@@ -36,6 +36,7 @@ fn main() {
             let tokens = tokens::start(content);
             match tokens {
                 Ok(tokens) => {
+                    if tokens.is_empty() {return;}
                     let tokens = importer::importing(tokens, base_path).expect(" ");
                     let (tokens, ident_name_map) = namezator::namezating(tokens);
 
@@ -45,8 +46,9 @@ fn main() {
                             if bytecode.is_empty() {println!("байткод пустой")}
                             else {
                                 //println!("перевод в байткод успешен: \n{:?}\n", bytecode)
+                                vm::start(bytecode, ident_name_map);
                             }
-                            vm::start(bytecode, ident_name_map);
+                            
 
                         }
                         Err(e) => {

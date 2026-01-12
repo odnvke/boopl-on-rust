@@ -1,0 +1,413 @@
+IMPORT print;
+
+P N; P N;
+
+
+PD.R P.1;
+G P.print_ru_A; P.1;   // А
+PD.R P.2;
+G P.print_ru_a; P.2;   // а
+P S;
+
+PD.R P.3;
+G P.print_ru_B; P.3;   // Б
+PD.R P.4;
+G P.print_ru_b; P.4;   // б
+P S;
+
+PD.R P.5;
+G P.print_ru_V; P.5;   // В
+PD.R P.6;
+G P.print_ru_v; P.6;   // в
+P S;
+
+PD.R P.7;
+G P.print_ru_G; P.7;   // Г
+PD.R P.8;
+G P.print_ru_g; P.8;   // г
+P S;
+
+PD.R P.9;
+G P.print_ru_D; P.9;   // Д
+PD.R P.10;
+G P.print_ru_d; P.10;  // д
+P S;
+
+PD.R P.11;
+G P.print_ru_E; P.11;  // Е
+PD.R P.12;
+G P.print_ru_e; P.12;  // е
+P S;
+
+PD.R P.13;
+G P.print_ru_YO; P.13; // Ё
+PD.R P.14;
+G P.print_ru_yo; P.14; // ё
+P S;
+
+PD.R P.15;
+G P.print_ru_ZH; P.15; // Ж
+PD.R P.16;
+G P.print_ru_zh; P.16; // ж
+P S;
+
+PD.R P.17;
+G P.print_ru_Z; P.17;  // З
+PD.R P.18;
+G P.print_ru_z; P.18;  // з
+P S;
+
+P N;
+
+PD.R P.19;
+G P.print_ru_I; P.19;  // И
+PD.R P.20;
+G P.print_ru_i; P.20;  // и
+P S;
+
+PD.R P.21;
+G P.print_ru_J; P.21;  // Й
+PD.R P.22;
+G P.print_ru_j; P.22;  // й
+P S;
+
+PD.R P.23;
+G P.print_ru_K; P.23;  // К
+PD.R P.24;
+G P.print_ru_k; P.24;  // к
+P S;
+
+PD.R P.25;
+G P.print_ru_L; P.25;  // Л
+PD.R P.26;
+G P.print_ru_l; P.26;  // л
+P S;
+
+PD.R P.27;
+G P.print_ru_M; P.27;  // М
+PD.R P.28;
+G P.print_ru_m; P.28;  // м
+P S;
+
+PD.R P.29;
+G P.print_ru_N; P.29;  // Н
+PD.R P.30;
+G P.print_ru_n; P.30;  // н
+P S;
+
+PD.R P.31;
+G P.print_ru_O; P.31;  // О
+PD.R P.32;
+G P.print_ru_o; P.32;  // о
+P S;
+
+PD.R P.33;
+G P.print_ru_P; P.33;  // П
+PD.R P.34;
+G P.print_ru_p; P.34;  // п
+P S;
+
+PD.R P.35;
+G P.print_ru_R; P.35;  // Р
+PD.R P.36;
+G P.print_ru_r; P.36;  // р
+P S;
+
+P N;
+
+PD.R P.37;
+G P.print_ru_S; P.37;  // С
+PD.R P.38;
+G P.print_ru_s; P.38;  // с
+P S;
+
+PD.R P.39;
+G P.print_ru_T; P.39;  // Т
+PD.R P.40;
+G P.print_ru_t; P.40;  // т
+P S;
+
+PD.R P.41;
+G P.print_ru_U; P.41;  // У
+PD.R P.42;
+G P.print_ru_u; P.42;  // у
+P S;
+
+PD.R P.43;
+G P.print_ru_F; P.43;  // Ф
+PD.R P.44;
+G P.print_ru_f; P.44;  // ф
+P S;
+
+PD.R P.45;
+G P.print_ru_H; P.45;  // Х
+PD.R P.46;
+G P.print_ru_h; P.46;  // х
+P S;
+
+PD.R P.47;
+G P.print_ru_TS; P.47; // Ц
+PD.R P.48;
+G P.print_ru_ts; P.48; // ц
+P S;
+
+PD.R P.49;
+G P.print_ru_CH; P.49; // Ч
+PD.R P.50;
+G P.print_ru_ch; P.50; // ч
+P S;
+
+PD.R P.51;
+G P.print_ru_SH; P.51; // Ш
+PD.R P.52;
+G P.print_ru_sh; P.52; // ш
+P S;
+
+PD.R P.53;
+G P.print_ru_SHCH; P.53; // Щ
+PD.R P.54;
+G P.print_ru_shch; P.54; // щ
+P S;
+
+P N;
+
+PD.R P.55;
+G P.print_ru_MAGKIY; P.55; // Ъ
+PD.R P.56;
+G P.print_ru_magkiy; P.56; // ъ
+P S;
+
+PD.R P.57;
+G P.print_ru_Y; P.57;  // Ы
+PD.R P.58;
+G P.print_ru_y; P.58;  // ы
+P S;
+
+PD.R P.59;
+G P.print_ru_TVERDYI; P.59; // Ь
+PD.R P.60;
+G P.print_ru_tverdyi; P.60; // ь
+P S;
+
+PD.R P.61;
+G P.print_ru_EH; P.61; // Э
+PD.R P.62;
+G P.print_ru_eh; P.62; // э
+P S;
+
+PD.R P.63;
+G P.print_ru_YU; P.63; // Ю
+PD.R P.64;
+G P.print_ru_yu; P.64; // ю
+P S;
+
+PD.R P.65;
+G P.print_ru_YA; P.65; // Я
+PD.R P.66;
+G P.print_ru_ya; P.66; // я
+
+P N; P N;
+
+PD.R P.101;
+G P.print_A; P.101;   // A
+PD.R P.102;
+G P.print_a; P.102;   // a
+P S;
+
+PD.R P.103;
+G P.print_B; P.103;   // B
+PD.R P.104;
+G P.print_b; P.104;   // b
+P S;
+
+PD.R P.105;
+G P.print_C; P.105;   // C
+PD.R P.106;
+G P.print_c; P.106;   // c
+P S;
+
+PD.R P.107;
+G P.print_D; P.107;   // D
+PD.R P.108;
+G P.print_d; P.108;   // d
+P S;
+
+PD.R P.109;
+G P.print_E; P.109;   // E
+PD.R P.110;
+G P.print_e; P.110;   // e
+P S;
+
+PD.R P.111;
+G P.print_F; P.111;   // F
+PD.R P.112;
+G P.print_f; P.112;   // f
+P S;
+
+PD.R P.113;
+G P.print_G; P.113;   // G
+PD.R P.114;
+G P.print_g; P.114;   // g
+P S;
+
+PD.R P.115;
+G P.print_H; P.115;   // H
+PD.R P.116;
+G P.print_h; P.116;   // h
+P S;
+
+PD.R P.117;
+G P.print_I; P.117;   // I
+PD.R P.118;
+G P.print_i; P.118;   // i
+P S;
+
+P N;
+
+PD.R P.119;
+G P.print_J; P.119;   // J
+PD.R P.120;
+G P.print_j; P.120;   // j
+P S;
+
+PD.R P.121;
+G P.print_K; P.121;   // K
+PD.R P.122;
+G P.print_k; P.122;   // k
+P S;
+
+PD.R P.123;
+G P.print_L; P.123;   // L
+PD.R P.124;
+G P.print_l; P.124;   // l
+P S;
+
+PD.R P.125;
+G P.print_M; P.125;   // M
+PD.R P.126;
+G P.print_m; P.126;   // m
+P S;
+
+PD.R P.127;
+G P.print_N; P.127;   // N
+PD.R P.128;
+G P.print_n; P.128;   // n
+P S;
+
+PD.R P.129;
+G P.print_O; P.129;   // O
+PD.R P.130;
+G P.print_o; P.130;   // o
+P S;
+
+PD.R P.131;
+G P.print_P; P.131;   // P
+PD.R P.132;
+G P.print_p; P.132;   // p
+P S;
+
+PD.R P.133;
+G P.print_Q; P.133;   // Q
+PD.R P.134;
+G P.print_q; P.134;   // q
+P S;
+
+PD.R P.135;
+G P.print_R; P.135;   // R
+PD.R P.136;
+G P.print_r; P.136;   // r
+P S;
+
+P N;
+
+PD.R P.137;
+G P.print_S; P.137;   // S
+PD.R P.138;
+G P.print_s; P.138;   // s
+P S;
+
+PD.R P.139;
+G P.print_T; P.139;   // T
+PD.R P.140;
+G P.print_t; P.140;   // t
+P S;
+
+PD.R P.141;
+G P.print_U; P.141;   // U
+PD.R P.142;
+G P.print_u; P.142;   // u
+P S;
+
+PD.R P.143;
+G P.print_V; P.143;   // V
+PD.R P.144;
+G P.print_v; P.144;   // v
+P S;
+
+PD.R P.145;
+G P.print_W; P.145;   // W
+PD.R P.146;
+G P.print_w; P.146;   // w
+P S;
+
+PD.R P.147;
+G P.print_X; P.147;   // X
+PD.R P.148;
+G P.print_x; P.148;   // x
+P S;
+
+PD.R P.149;
+G P.print_Y; P.149;   // Y
+PD.R P.150;
+G P.print_y; P.150;   // y
+P S;
+
+PD.R P.151;
+G P.print_Z; P.151;   // Z
+PD.R P.152;
+G P.print_z; P.152;   // z
+
+P N; P N;
+
+PD.R P.201;
+G P.print_0; P.201;   // 0
+P S;
+
+PD.R P.202;
+G P.print_1; P.202;   // 1
+P S;
+
+PD.R P.203;
+G P.print_2; P.203;   // 2
+P S;
+
+PD.R P.204;
+G P.print_3; P.204;   // 3
+P S;
+
+PD.R P.205;
+G P.print_4; P.205;   // 4
+P S;
+
+PD.R P.206;
+G P.print_5; P.206;   // 5
+P S;
+
+PD.R P.207;
+G P.print_6; P.207;   // 6
+P S;
+
+PD.R P.208;
+G P.print_7; P.208;   // 7
+P S;
+
+PD.R P.209;
+G P.print_8; P.209;   // 8
+P S;
+
+PD.R P.210;
+G P.print_9; P.210;   // 9
+
+P N; P N;
+
+E;

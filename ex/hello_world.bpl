@@ -1,9 +1,8 @@
 IMPORT print;
 
-//P.print_lib_close;
 
 PD.R P.10;
-G P.print_h; P.10;
+G P.print_H; P.10;
 
 PD.R P.11;
 G P.print_e; P.11;
