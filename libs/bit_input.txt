@@ -1,0 +1,320 @@
+IMPORT print;
+
+PD.R;
+
+ib_0 F; ib_1 F; ib_2 F; ib_3 F; ib_4 F; ib_5 F; ib_6 F; ib_7 F;
+
+bit_input_0 F; bit_input_1 F; bit_input_2 F; bit_input_3 F;
+bit_input_4 F; bit_input_5 F; bit_input_6 F; bit_input_7 F;
+
+G P.bit_input_lib_close;
+
+P.input_8;
+    bit_input_0 F; bit_input_1 F; bit_input_2 F; bit_input_3 F;
+    bit_input_4 F; bit_input_5 F; bit_input_6 F; bit_input_7 F;
+
+    _0 F; _1 F; _2 F; _3 F; _4 F; _5 F; _6 F; _ F;
+    PD.bit_input_R3 PD.R;
+    G P.bit_input_cont_input;
+E;
+
+P.bit_input_cont_input;
+    P N;
+    IN;
+
+    lib_t2 N bit_input_0;
+    I lib_t2;
+        lib_t INBC;
+        IG lib_t P.bit_input_close_if;
+        bit_input_0 T;
+        ib_7 INB;
+    E;
+
+    lib_t2 N bit_input_1;
+    I lib_t2;
+        lib_t INBC;
+        IG lib_t P.bit_input_close_if;
+        bit_input_1 T;
+        ib_6 INB;
+    E;
+
+    lib_t2 N bit_input_2;
+    I lib_t2;
+        lib_t INBC;
+        IG lib_t P.bit_input_close_if;
+        bit_input_2 T;
+        ib_5 INB;
+    E;
+
+    lib_t2 N bit_input_3;
+    I lib_t2;
+        lib_t INBC;
+        IG lib_t P.bit_input_close_if;
+        bit_input_3 T;
+        ib_4 INB;
+    E;
+
+    lib_t2 N bit_input_4;
+    I lib_t2;
+        lib_t INBC;
+        IG lib_t P.bit_input_close_if;
+        bit_input_4 T;
+        ib_3 INB;
+    E;
+
+    lib_t2 N bit_input_5;
+    I lib_t2;
+        lib_t INBC;
+        IG lib_t P.bit_input_close_if;
+        bit_input_5 T;
+        ib_2 INB;
+    E;
+
+    lib_t2 N bit_input_6;
+    I lib_t2;
+        lib_t INBC;
+        IG lib_t P.bit_input_close_if;
+        bit_input_6 T;
+        ib_1 INB;
+    E;
+
+
+    lib_t INBC;
+    IG lib_t P.bit_input_close_if;
+    ib_0 INB;
+
+    bit_input_7 T;
+
+
+    P.bit_input_close_if;
+
+    INBC;
+    
+
+    PD.R P.bit_input_5;
+    G P.bit_input_print;
+    P.bit_input_5;
+
+
+    IG bit_input_7 PD.bit_input_R3;
+
+
+    PD.R P.bit_input_18;
+    G P.bit_input_ostalos;
+    P.bit_input_18;
+
+    G PD.bit_input_R3;
+
+
+
+P.bit_input_print;
+
+    P N;
+    PD.bit_input_R2 PD.R;
+
+    PD.R P.bit_input_0;
+    G P.print_ru_V;
+    P.bit_input_0;
+
+    PD.R P.bit_input_1;
+    G P.print_ru_v;
+    P.bit_input_1;
+
+    PD.R P.bit_input_2;
+    G P.print_ru_o;
+    P.bit_input_2;
+
+    PD.R P.bit_input_3;
+    G P.print_ru_d;
+    P.bit_input_3;
+
+    PD.R P.bit_input_4;
+    G P.print_colon;
+    P.bit_input_4;
+    
+    P S;
+    
+    I bit_input_0;
+        P ib_7;
+    E;
+    I bit_input_1;
+        P ib_6;
+    E;
+
+    I bit_input_2;
+        P ib_5; 
+    E;
+    I bit_input_3;
+        P ib_4;
+    E;
+    I bit_input_4;
+        P S;
+        P ib_3;
+    E;
+    I bit_input_5;
+        P ib_2;
+    E;
+    I bit_input_6;
+        P ib_1;
+    E;
+    I bit_input_7;
+        P ib_0;
+    E;
+    
+    lib_t N bit_input_0;
+    I lib_t;
+        PD.R P.bit_input_29;
+        G P.print_ru_p;
+        P.bit_input_29;
+
+        PD.R P.bit_input_30;
+        G P.print_ru_u;
+        P.bit_input_30;
+
+        PD.R P.bit_input_31;
+        G P.print_ru_s;
+        P.bit_input_31;
+
+        PD.R P.bit_input_32;
+        G P.print_ru_t;
+        P.bit_input_32;
+
+        PD.R P.bit_input_33;
+        G P.print_ru_o;
+        P.bit_input_33;
+
+        PD.R P.bit_input_34;
+        G P.print_comma;
+        P.bit_input_34;
+        P S; P S;
+
+    E;
+
+    I bit_input_0;
+        PD.R P.bit_input_35;
+        G P.print_semicolon;
+        P.bit_input_35;
+        P S; P S;
+    E;
+
+    G PD.bit_input_R2;
+
+
+P.bit_input_ostalos;
+    PD.bit_input_R2 PD.R;
+
+
+    PD.R P.bit_input_6;
+    G P.print_ru_e;
+    P.bit_input_6;
+
+    PD.R P.bit_input_7;
+    G P.print_ru_shch;
+    P.bit_input_7;
+
+    PD.R P.bit_input_8;
+    G P.print_ru_yo;
+    P.bit_input_8;
+
+    PD.R P.bit_input_9;
+    G P.print_colon;
+    P.bit_input_9;
+
+    P S;
+
+    I bit_input_0;
+        I bit_input_1;
+            I bit_input_2;
+                I bit_input_3;
+                    I bit_input_4;
+                        I bit_input_5;
+                            I bit_input_6;            
+                                PD.R P.bit_input_17;
+                                G P.print_1;
+                                P.bit_input_17;
+                                G P.19;
+                            E;
+                            
+                            PD.R P.bit_input_16;
+                            G P.print_2;
+                            P.bit_input_16;
+                            G P.19;
+                        E;
+                        
+                        PD.R P.bit_input_15;
+                        G P.print_3;
+                        P.bit_input_15;
+                        G P.19;
+                    E;
+                    
+                    PD.R P.bit_input_14;
+                    G P.print_4;
+                    P.bit_input_14;
+                    G P.19;
+                E;
+                
+                PD.R P.bit_input_13;
+                G P.print_5;
+                P.bit_input_13;
+                G P.19;
+            E;
+            
+            PD.R P.bit_input_12;
+            G P.print_6;
+            P.bit_input_12;
+            G P.19;
+        E;
+        
+        PD.R P.bit_input_11;
+        G P.print_7;
+        P.bit_input_11;
+        G P.19;
+    E;
+    PD.R P.bit_input_28;
+    G P.print_8;
+    P.bit_input_28;
+
+
+    P.19;
+
+    P S;
+
+    PD.R P.bit_input_20;
+    G P.print_ru_s;
+    P.bit_input_20;
+
+    PD.R P.bit_input_21;
+    G P.print_ru_i;
+    P.bit_input_21;
+
+    PD.R P.bit_input_22;
+    G P.print_ru_m;
+    P.bit_input_22;
+
+    PD.R P.bit_input_23;
+    G P.print_ru_v;
+    P.bit_input_23;
+
+    PD.R P.bit_input_24;
+    G P.print_ru_o;
+    P.bit_input_24;
+
+    PD.R P.bit_input_25;
+    G P.print_ru_l;
+    P.bit_input_25;
+
+    PD.R P.bit_input_26;
+    G P.print_ru_o;
+    P.bit_input_26;
+
+    PD.R P.bit_input_27;
+    G P.print_ru_v;
+    P.bit_input_27;
+
+
+    P N; 
+    G P.bit_input_cont_input;
+
+
+
+P.bit_input_lib_close;

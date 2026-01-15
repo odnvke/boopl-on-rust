@@ -89,12 +89,27 @@ fn process_line(tokens: Vec<Token>, ident_name_map: &IdentNameMap) -> Result<(Ve
         [Token::Number(n, l_n), Token::Keyword(s, l_n2), Token::Number(n2, l_n3), Token::Number(n3, l_n4)] 
             if s == "X" => Ok((vec![552, *n, *n2, *n3], *l_n)),
 
-        // IN 10
-        [Token::Keyword(s, l_n), Token::Number(n, l_n2)]  if s == "IN" => Ok((vec![600, *n], *l_n)),
+        // IN
+        [Token::Keyword(s, l_n)]  if s == "IN" => Ok((vec![600], *l_n)),
 
-        // IN U 10
-        [Token::Keyword(s, l_n), Token::Keyword(s2, l_n2), Token::Number(n, l_n3)] 
-            if s == "IN" && s2 == "U" => Ok((vec![601, *n], *l_n)),
+        // IN U
+        [Token::Keyword(s, l_n), Token::Keyword(s2, l_n2)] 
+            if s == "IN" && s2 == "U" => Ok((vec![601], *l_n)),
+
+        // INBC
+        [Token::Keyword(s, l_n)] 
+            if s == "INBC" => Ok((vec![625], *l_n)),
+
+        // 10 INBC
+        [Token::Number(n, l_n), Token::Keyword(s, l_n2)]  if s == "INBC" => Ok((vec![650, *n], *l_n)),
+
+        // 10 INB
+        [Token::Number(n, l_n),  Token::Keyword(s, l_n2)]  if s == "INB" => Ok((vec![675, *n], *l_n)),
+
+        // 10 U INB
+        [Token::Number(n, l_n), Token::Keyword(s, l_n2), Token::Keyword(s2, l_n3)]
+              if s == "U" && s2 == "INB" => Ok((vec![676, *n], *l_n)),
+
 
         // Пустая строка
         [] => Ok((vec![], -1)),

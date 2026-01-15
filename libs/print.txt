@@ -353,7 +353,15 @@ P.print_question; // ? = 00111111 (63)
     P U sb_0;
     G PD.R;
 
+P.print_colon; // : = 00111010
+    sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 T;  sb_5 F;  sb_6 T;  sb_7 F;
+    P U sb_0;
+    G PD.R;
 
+P.print_semicolon; // ; = 00111011
+    sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 T;  sb_5 F;  sb_6 T;  sb_7 T;
+    P U sb_0;
+    G PD.R;
 
 // русские заглавные
 P.print_ru_A;      // А = D090 (11010000 10010000)

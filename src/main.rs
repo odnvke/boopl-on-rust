@@ -7,6 +7,7 @@ use std::path::Path;
 // use std::collections::HashMap;
 //use std::str::Chars;
 
+mod function_preprocessor;
 mod vm;
 mod tokens;
 mod to_bytecode;
@@ -33,7 +34,12 @@ fn main() {
     // Читаем файл
     match fs::read_to_string(filename) {
         Ok(content) => {
-            let tokens = tokens::start(content);
+            let expanded = function_preprocessor::expand(&content);
+
+use std::fs::write;
+write("debug_preprocessor_output.bpl", &expanded).ok();
+
+            let tokens = tokens::start(expanded);
             match tokens {
                 Ok(tokens) => {
                     if tokens.is_empty() {return;}

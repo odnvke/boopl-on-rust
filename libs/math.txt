@@ -8,7 +8,7 @@ i2_4 F;  i2_5 F;  i2_6 F;  i2_7 F;
 
 c_in F;
 c_out F;
-
+lib_c_in c_in;
 
 o_0 F; o_1 F; o_2 F; o_3 F;
 o_4 F; o_5 F; o_6 F; o_7 F;
@@ -17,8 +17,8 @@ G P.math_lib_close;
 E;
 
 
-P.add;
-    tc c_in;
+P._add;
+    tc lib_c_in;
 
     t   X i_0 i2_0;
     t2  A i_0 i2_0;
@@ -28,46 +28,47 @@ P.add;
 
     t   X i_1 i2_1;
     t2  A i_1 i2_1;
-    o_1 X t   c_in;
-    t   A t   c_in; 
+    o_1 X t   tc;
+    t   A t   tc; 
     tc  O t   t2;
 
     t   X i_2 i2_2;
     t2  A i_2 i2_2;
-    o_2 X t   c_in;
-    t   A t   c_in; 
+    o_2 X t   tc;
+    t   A t   tc; 
     tc  O t   t2;
 
     t   X i_3 i2_3;
     t2  A i_3 i2_3;
-    o_3 X t   c_in;
-    t   A t   c_in; 
+    o_3 X t   tc;
+    t   A t   tc; 
     tc  O t   t2;
 
     t   X i_4 i2_4;
     t2  A i_4 i2_4;
-    o_4 X t   c_in;
-    t   A t   c_in; 
+    o_4 X t   tc;
+    t   A t   tc; 
     tc  O t   t2;
 
     t   X i_5 i2_5;
     t2  A i_5 i2_5;
-    o_5 X t   c_in;
-    t   A t   c_in; 
+    o_5 X t   tc;
+    t   A t   tc; 
     tc  O t   t2;
 
     t   X i_6 i2_6;
     t2  A i_6 i2_6;
-    o_6 X t   c_in;
-    t   A t   c_in; 
+    o_6 X t   tc;
+    t   A t   tc; 
     tc  O t   t2;
 
     t   X i_7 i2_7;
     t2  A i_7 i2_7;
-    o_7 X t   c_in;
-    t   A t   c_in; 
+    o_7 X t   tc;
+    t   A t   tc; 
     tc  O t   t2;
 
+    c_out tc;
     G PD.R;
 
 P.sub;
@@ -76,18 +77,26 @@ P.sub;
     i2_4 N i2_4; i2_5 N i2_5;
     i2_6 N i2_6; i2_7 N i2_7;
 
-    c_in N c_in;
+    lib_c_in N c_in;
 
     PD._lib_R_1 PD.R;
+    
     PD.R P._math_0;
-
-    G P.add;
-
+    G P._add;
     P._math_0;
 
     G PD._lib_R_1;
 
+P.add;
+    lib_c_in c_in;
 
+    PD._lib_R_1 PD.R;
+    
+    PD.R P._math_1;
+    G P._add;
+    P._math_1;
+
+    G PD._lib_R_1;
 
 
 

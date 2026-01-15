@@ -1,0 +1,18 @@
+// ############ ОПЕРАЦИИ ##############
+
+value1 T;
+
+value2 F;
+
+
+// not
+V N value1;
+
+// or
+V O value1 value2;
+
+// and 
+V A value1 value2;
+
+// xor
+V X value1 value2;

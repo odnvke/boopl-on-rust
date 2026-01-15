@@ -156,7 +156,7 @@ fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
     // Односимвольные ключевые слова: "X", "A", "N", "I", "G", "P", "E", "L", "S"
     if s.len() == 1 {
         let c = s.chars().next().unwrap();
-        if matches!(c, 'X' | 'A' | 'O' | 'N' | 'I' | 'G' | 'P' | 'E' | 'L' | 'S' | 'U' | ';') {
+        if matches!(c, 'X' | 'A' | 'O' | 'N' | 'I' | 'G' | 'P' | 'E' | 'L' | 'S' | 'U') {
             return Ok(RawToken::Keyword(c.to_string(), *line_n));
         }
     }
@@ -170,11 +170,20 @@ fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
         }
     }
 
+    if s.len() == 4 {
+        if s == "INBC" {return Ok(RawToken::Keyword(s.to_string(), *line_n));}
+    }
+    if s.len() == 3 {
+        if s == "INB" {return Ok(RawToken::Keyword(s.to_string(), *line_n));}
+    }
+
     if s.len() == 6 {
         if s == "IMPORT" {
             return  Ok(RawToken::Keyword(s.to_string(), *line_n));
         }
     }
+
+
     
     
     if s.len() >= 3 { 

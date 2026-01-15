@@ -1,7 +1,4 @@
-use std::{collections::HashMap};
-use crossterm::{terminal, event::{read, Event, KeyCode}};
-//use std::thread;
-use std::time::Duration;
+use std::{collections::{HashMap, VecDeque}};
 
 use crate::name_map::IdentNameMap;
 
@@ -11,6 +8,7 @@ struct VM {
     memory: HashMap<i32, u8>,
     memory_pd: HashMap<i32, i32>,
     bytecode: Vec<Vec<i32>>,
+    input_buffer: VecDeque<char>,
 }
 
 impl VM {
@@ -18,7 +16,8 @@ impl VM {
         VM {
             memory: HashMap::new(),
             memory_pd: HashMap::new(),
-            bytecode: Vec::new()
+            bytecode: Vec::new(),
+            input_buffer: VecDeque::new(),
         }
     }
     
@@ -69,7 +68,7 @@ impl VM {
                 // PD.10 PD.10
                 261 => { 
                     if self.memory_pd.contains_key(&line[1]) {
-                        self.memory_pd.insert(line[0], line[1] );
+                        self.memory_pd.insert(line[0], *self.memory_pd.get(&line[1]).unwrap_or(&0));
                     } else {
                         error_print(format!("   >>  ! несушествующий динамический указатель PD.{}", ident_name_map.get_name(line[1])), line_n)
                     }
@@ -234,111 +233,75 @@ impl VM {
                     }
                 }
 
-600 => {
-    use std::io::{self, Write};
-    use crossterm::event::{poll, read, Event, KeyCode};
-    use std::time::Duration;
-    
-    print!("_");
-    io::stdout().flush().unwrap();
-    
-    // Включаем raw mode
-    terminal::enable_raw_mode().unwrap();
-    
-    // ОЧИЩАЕМ БУФЕР ПЕРЕД НАЧАЛОМ
-    while poll(Duration::from_millis(0)).unwrap_or(false) {
-        let _ = read();
-    }
-    
-    let value = loop {
-        // Ждём событие с таймаутом
-        if poll(Duration::from_millis(100)).unwrap_or(false) {
-            match read() {
-                Ok(Event::Key(event)) => {
-                    match event.code {
-                        KeyCode::Char('t') | KeyCode::Char('T') | KeyCode::Char('1') | KeyCode::Char('#') | KeyCode::Char('е') | KeyCode::Char('Е') => {
-                            print!("\r\r");
-                            break 1;
+                // 600: IN добавляет строку в буффер
+                600 => {
+                    use std::io::{self, Write};
+                    
+                    io::stdout().flush().unwrap();
+                    
+                    let mut input = String::new();
+                    io::stdin().read_line(&mut input).unwrap();
+                    
+                    // Каждый символ строки добавляем в буфер
+                    for ch in input.chars() {
+                        match ch {
+                            'T' | 't' | '1' | '#' | 'F' | 'f' | '0' | '.'=> {
+                                // Добавляем только валидные символы
+                                self.input_buffer.push_back(ch.to_ascii_uppercase());
+                            }
+                            _ => {}
                         }
-                        KeyCode::Char('f') | KeyCode::Char('F') | KeyCode::Char('0') | KeyCode::Char('.') | KeyCode::Char('а') | KeyCode::Char('А') => {
-                            print!("\r\r");
-                            break 0;
-                        }
-                        _ => {
-                            // Игнорируем, но продолжаем ждать
-                            continue;
-                        }
+                         
+                    }
+print!("\x1B[2K\r"); // Очистить всю строку
+                    
+                }
+
+                // 601: IN U
+                601 => {
+                    use std::io::{self, Write};
+                    
+                    io::stdout().flush().unwrap();
+                    
+                    let mut input = String::new();
+                    io::stdin().read_line(&mut input).unwrap();
+                    
+                    input.chars().for_each(|ch| self.input_buffer.push_back(ch));
+                }
+
+                // INBC   очистить буффер
+                625 => {
+                    self.input_buffer.clear();
+                }
+                
+                // 10 INBC   проверка пустоты
+                650 => {
+                    let result = if self.input_buffer.is_empty() { 1 } else { 0 };
+                    self.memory.insert(line[0], result);
+                }
+                
+                // 10 INB    берёт следующий символ
+                675 => {
+                    if let Some(ch) = self.input_buffer.pop_front() {
+                        // Преобразуем char в T/F (1 или 0)
+                        let value = match ch {
+                            'T' | 't' | '1' | '#' => 1,
+                            'F' | 'f' | '0' | '.' => 0,
+                            _ => {error_print(format!("   >> ! символ неподходяший для ячейки памяти {}", ch), line_n); std::process::exit(1)}
+                        };
+                        self.memory.insert(line[0], value);
+                    } else {
+                        error_print(format!("   >>  ! буффур ввода пустой"), line_n);
                     }
                 }
-                _ => continue,
-            }
-        }
-    };
 
-    // ОЧИЩАЕМ БУФЕР ПОСЛЕ ПОЛУЧЕНИЯ ЗНАЧЕНИЯ
-    while poll(Duration::from_millis(0)).unwrap_or(false) {
-        let _ = read();
-    }
-    
-    terminal::disable_raw_mode().unwrap();
-    println!();
-    
-    self.memory.insert(line[0], value as u8);
-}
 
-                601 => { // Ввод UTF-8 символа и сохранение в последовательность ячеек
-                    use crossterm::{event::poll, terminal::enable_raw_mode, terminal::disable_raw_mode};
-                    
-                    enable_raw_mode().unwrap();
-                    
-                    while poll(Duration::from_millis(10)).unwrap() { let _ = read(); }
-
-                    std::io::Write::flush(&mut std::io::stdout()).unwrap();
-                    
-                    let mut utf8_bytes = Vec::new();
-                    let mut got_input = false;
-                    
-                    while !got_input {
-                        if poll(Duration::from_millis(100)).unwrap() {
-                            match read() {
-                                Ok(Event::Key(event)) => {
-                                    match event.code {
-                                        KeyCode::Char(c) => {
-                                            utf8_bytes = c.to_string().into_bytes();
-                                            got_input = true;
-                                            //print!("\r")
-                                        }
-                                        _ => {}
-                                    }
-                                }
-                                Err(e) => {
-                                    error_print(format!("\n ! ран-тайм\n\n   >>  ! Ошибка чтения: {:?}", e), line_n)
-                                }
-                                _ => {}
-                            }
-                        }
-                    }
-                    
-                    disable_raw_mode().unwrap();
-                    
-                    // Сохраняем байты UTF-8 в память
-                    let start_addr = line[0] as i32;
-                    
-                    // Очищаем область (8 ячеек на каждый возможный байт)
-                    for byte_idx in 0..4 {
-                        for bit_idx in 0..8 {
-                            let addr = start_addr + (byte_idx as i32 * 8) + bit_idx as i32;
-                            self.memory.insert(addr, 0);
-                        }
-                    }
-                    
-                    // Записываем фактически введённые байты
-                    for (byte_idx, &byte) in utf8_bytes.iter().enumerate() {
-                        for bit_idx in 0..8 {
-                            let addr = start_addr + (byte_idx as i32 * 8) + (7 - bit_idx) as i32;
-                            let bit = (byte >> bit_idx) & 1;
-                            self.memory.insert(addr, bit as u8);
-                        }
+                // 676: 10 U INB - взять первый символ из буфера
+                676 => {
+                    if let Some(ch) = self.input_buffer.pop_front() {
+                        self.store_char_to_memory(line[0], ch);
+                    } else {
+                        error_print("   >>  ! буффур ввода пустой (utf-8) ".to_string(), line_n);
                     }
                 }
 
@@ -347,7 +310,35 @@ impl VM {
             pc += 1;
         }
     }
+
+
+
+    fn store_char_to_memory(&mut self, start_addr: i32, ch: char) {
+        let mut bytes = [0u8; 4];
+        let utf8_bytes = ch.encode_utf8(&mut bytes);
+        
+        // Очистить
+        for i in 0..32 {
+            self.memory.insert(start_addr + i, 0);
+        }
+        
+        // Записать байты
+        for (byte_idx, &byte) in utf8_bytes.as_bytes().iter().enumerate() {
+            for bit_pos in 0..8 {
+                let addr = start_addr + (byte_idx as i32 * 8) + bit_pos;
+                // bit_pos=0 -> бит 7, bit_pos=1 -> бит 6, ..., bit_pos=7 -> бит 0
+                let bit_shift = 7 - bit_pos;  // 7,6,5,4,3,2,1,0
+                let bit = (byte >> bit_shift) & 1;
+                self.memory.insert(addr, bit);
+            }
+        }
+    }
 }
+
+
+
+
+
 
 fn error_print(s: String, line_n: i32) {
     eprintln!("\n ! ран-тайм\n\n{}  ({})\n\n", s, line_n); std::process::exit(1)
