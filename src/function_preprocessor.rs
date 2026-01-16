@@ -2,15 +2,15 @@
 use crate::tokens::RawToken;
 
 pub fn expand(tokens: Vec<Vec<RawToken>>) -> Vec<Vec<RawToken>> {
-    let mut Fp = Data::new();
-    Fp.expand(tokens)
+    let mut fp = Data::new();
+    fp.expand(tokens)
 }
 
 struct Data {
     ident_index: i32,
     local_p_index: i32,
     is_need_label_p: bool,
-    find_ret: bool, 
+
     is_in_func: bool,
     func_name: Option<String>,
     return_point_name_t: String,
@@ -25,7 +25,7 @@ impl Data {
             ident_index: 0,
             local_p_index: 0,
             is_need_label_p: false,
-            find_ret: false,
+
             is_in_func: false,
             func_name: None,
             return_point_name_t: "__func_return_{}".to_string(),

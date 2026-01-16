@@ -11,6 +11,7 @@ mod to_bytecode;
 mod namezator;
 mod name_map;
 mod importer;
+mod parentheses_preprocessor;
 
 fn main() {
     let args: Vec<String> = env::args().collect();

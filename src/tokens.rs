@@ -1,4 +1,5 @@
 //use std::{fmt::format, i32};
+use crate::parentheses_preprocessor::parentheses_process;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Token {
@@ -41,7 +42,10 @@ fn tokenize(input: &str) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
     let mut in_multi_comment = false;
     let mut current_instruction = String::new();
     let mut instruction_line = 1;
+    let mut in_parentheses = false;
     
+    let mut in_parentheses_vec: Vec<char> = Vec::new();
+
     let mut chars = input.chars().peekable();
     
     while let Some(ch) = chars.next() {
@@ -86,22 +90,33 @@ fn tokenize(input: &str) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
             ';' => {
                 // Конец инструкции
                 if !current_instruction.trim().is_empty() {
+                    let n = parentheses_process(&in_parentheses_vec);
+                    
                     match parse_instruction(&current_instruction, instruction_line) {
                         Ok(tokens) => {
-                            all_tokens.push(tokens);
+                            if n == 1 {
+                                all_tokens.push(tokens);
+                            } else { for _ in 0..n {
+                                all_tokens.push(tokens.clone());
+                            }} 
+                            
                         }
                         Err(e) => return Err((e, instruction_line)),
                     }
                 }
                 current_instruction.clear();
+                in_parentheses_vec.clear();
                 instruction_line = current_line; // СЛЕДУЮЩАЯ инструкция начнётся с текущей строки
             }
+            '(' => {in_parentheses = true}
+            ')' => {in_parentheses = false}
             _ => {
+                if in_parentheses {in_parentheses_vec.push(ch);}
                 // Если инструкция пустая (только что начали), запоминаем строку
-                if current_instruction.trim().is_empty() && !ch.is_whitespace() {
+                else if current_instruction.trim().is_empty() && !ch.is_whitespace() {
                     instruction_line = current_line;
                 }
-                current_instruction.push(ch);
+                if !in_parentheses {current_instruction.push(ch);}
             }
         }
     }
@@ -145,7 +160,6 @@ fn parse_instruction(instruction: &str, line_num: i32) -> Result<Vec<RawToken>, 
     Ok(tokens)
 }
 
-// parse_token оставить как был, но он получает реальный line_num
 
 fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
     // Булевы: "T", "F"
