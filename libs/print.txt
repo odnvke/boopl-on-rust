@@ -6,7 +6,6 @@
 
 
 
-
 sb_0 F;  sb_1 F;  sb_2 F;  sb_3 F;  sb_4 F;
 sb_5 F;  sb_6 F;  sb_7 F;  sb_8 F; sb_9 F; 
 sb_10 F;  sb_11 F;  sb_12 F;  sb_13 F;
@@ -22,750 +21,749 @@ G P.print_lib_close;
 FUNC print_a;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_b;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 F;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_c;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 F;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_d;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 T;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_e;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 T;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_f;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 T;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_g;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 T;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_h;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 T;  sb_5 F;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_i;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 T;  sb_5 F;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_j;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 T;  sb_5 F;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_k;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 T;  sb_5 F;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_l;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 T;  sb_5 T;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_m;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 T;  sb_5 T;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_n;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 T;  sb_5 T;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_o;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 T;  sb_5 T;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_p;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_q;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_r;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_s;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_t;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 T;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_u;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 T;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_v;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 T;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_w;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 T;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_x;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 T;  sb_4 T;  sb_5 F;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_y;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 T;  sb_4 T;  sb_5 F;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_z;
     sb_0 F;  sb_1 T;  sb_2 T;  sb_3 T;  sb_4 T;  sb_5 F;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 // Заглавные буквы
 FUNC print_A;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_B;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 F;  sb_5 F;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_C;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 F;  sb_5 F;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_D;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 F;  sb_5 T;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_E;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 F;  sb_5 T;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_F;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 F;  sb_5 T;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_G;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 F;  sb_5 T;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_H;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 T;  sb_5 F;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_I;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 T;  sb_5 F;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_J;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 T;  sb_5 F;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_K;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 T;  sb_5 F;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_L;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 T;  sb_5 T;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_M;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 T;  sb_5 T;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_N;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 T;  sb_5 T;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_O;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 F;  sb_4 T;  sb_5 T;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_P;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_Q;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_R;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_S;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_T;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 T;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_U;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 T;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_V;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 T;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_W;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 T;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_X;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 T;  sb_5 F;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_Y;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 T;  sb_5 F;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_Z;
     sb_0 F;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 T;  sb_5 F;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 // Цифры
 FUNC print_0;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_1;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_2;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_3;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_4;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 T;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_5;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 T;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_6;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 T;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_7;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 T;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_8;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 T;  sb_5 F;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_9;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 T;  sb_5 F;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 // Cимволы
 FUNC print_space;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_dot;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 F;  sb_4 T;  sb_5 T;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_comma;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 F;  sb_4 T;  sb_5 T;  sb_6 F;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_exclamation;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_question;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 T;  sb_5 T;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_colon;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 T;  sb_5 F;  sb_6 T;  sb_7 F;
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_semicolon;
     sb_0 F;  sb_1 F;  sb_2 T;  sb_3 T;  sb_4 T;  sb_5 F;  sb_6 T;  sb_7 T;
     P U sb_0;
-    RET;
+    RET E;
 
 // русские заглавные
 FUNC print_ru_A;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 F; sb_13 F; sb_14 F; sb_15 F; // 90
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_B;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 F; sb_13 F; sb_14 F; sb_15 T; // 91
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_V;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 F; sb_13 F; sb_14 T; sb_15 F; // 92
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_G;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 F; sb_13 F; sb_14 T; sb_15 T; // 93
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_D;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 F; sb_13 T; sb_14 F; sb_15 F; // 94
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_E;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 F; sb_13 T; sb_14 F; sb_15 T; // 95
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_ZH;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 F; sb_13 T; sb_14 T; sb_15 F; // 96
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_Z;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 F; sb_13 T; sb_14 T; sb_15 T; // 97
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_I;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 T; sb_13 F; sb_14 F; sb_15 F; // 98
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_J;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 T; sb_13 F; sb_14 F; sb_15 T; // 99
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_K;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 T; sb_13 F; sb_14 T; sb_15 F; // 9A
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_L;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 T; sb_13 F; sb_14 T; sb_15 T; // 9B
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_M;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 T; sb_13 T; sb_14 F; sb_15 F; // 9C
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_N;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 T; sb_13 T; sb_14 F; sb_15 T; // 9D
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_O;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 T; sb_13 T; sb_14 T; sb_15 F; // 9E
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_P;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 T; sb_13 T; sb_14 T; sb_15 T; // 9F
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_R;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 F; sb_13 F; sb_14 F; sb_15 F; // A0
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_S;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 F; sb_13 F; sb_14 F; sb_15 T; // A1
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_T;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 F; sb_13 F; sb_14 T; sb_15 F; // A2
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_U;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 F; sb_13 F; sb_14 T; sb_15 T; // A3
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_F;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 F; sb_13 T; sb_14 F; sb_15 F; // A4
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_H;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 F; sb_13 T; sb_14 F; sb_15 T; // A5
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_TS;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 F; sb_13 T; sb_14 T; sb_15 F; // A6
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_CH;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 F; sb_13 T; sb_14 T; sb_15 T; // A7
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_SH;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 T; sb_13 F; sb_14 F; sb_15 F; // A8
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_SHCH;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 T; sb_13 F; sb_14 F; sb_15 T; // A9
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_Y;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 T; sb_13 F; sb_14 T; sb_15 T; // AB
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_EH;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 T; sb_13 T; sb_14 F; sb_15 T; // AD
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_YU;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 T; sb_13 T; sb_14 T; sb_15 F; // AE
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_YA;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 T; sb_13 T; sb_14 T; sb_15 T; // AF
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_TVERDYI;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 T; sb_13 T; sb_14 F; sb_15 F; // AC
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_MAGKIY;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 F; sb_12 T; sb_13 F; sb_14 T; sb_15 F; // AA
     P U sb_0;
-    RET;
-
+    RET E;
 
 // русские строчные буквы
 FUNC print_ru_a;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 F; sb_13 F; sb_14 F; sb_15 F; // B0
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_b;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 F; sb_13 F; sb_14 F; sb_15 T; // B1
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_v;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 F; sb_13 F; sb_14 T; sb_15 F; // B2
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_g;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 F; sb_13 F; sb_14 T; sb_15 T; // B3
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_d;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 F; sb_13 T; sb_14 F; sb_15 F; // B4
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_e;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 F; sb_13 T; sb_14 F; sb_15 T; // B5
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_zh;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 F; sb_13 T; sb_14 T; sb_15 F; // B6
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_z;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 F; sb_13 T; sb_14 T; sb_15 T; // B7
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_i;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 T; sb_13 F; sb_14 F; sb_15 F; // B8
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_j;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 T; sb_13 F; sb_14 F; sb_15 T; // B9
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_k;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 T; sb_13 F; sb_14 T; sb_15 F; // BA
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_l;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 T; sb_13 F; sb_14 T; sb_15 T; // BB
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_m;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 T; sb_13 T; sb_14 F; sb_15 F; // BC
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_n;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 T; sb_13 T; sb_14 F; sb_15 T; // BD
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_o;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 T; sb_13 T; sb_14 T; sb_15 F; // BE
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_p;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 T; sb_11 T; sb_12 T; sb_13 T; sb_14 T; sb_15 T; // BF
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_r;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F; sb_6 F; sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 F; sb_13 F; sb_14 F; sb_15 F; // 80
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_s;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F; sb_6 F; sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 F; sb_13 F; sb_14 F; sb_15 T; // 81
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_t;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F; sb_6 F; sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 F; sb_13 F; sb_14 T; sb_15 F; // 82
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_u;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F; sb_6 F; sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 F; sb_13 F; sb_14 T; sb_15 T; // 83
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_f;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F; sb_6 F; sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 F; sb_13 T; sb_14 F; sb_15 F; // 84
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_h;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F; sb_6 F; sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 F; sb_13 T; sb_14 F; sb_15 T; // 85
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_ts;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F; sb_6 F; sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 F; sb_13 T; sb_14 T; sb_15 F; // 86
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_ch;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F; sb_6 F; sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 F; sb_13 T; sb_14 T; sb_15 T; // 87
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_sh;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F; sb_6 F; sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 T; sb_13 F; sb_14 F; sb_15 F; // 88
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_shch;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F; sb_6 F; sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 T; sb_13 F; sb_14 F; sb_15 T; // 89
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_magkiy;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 T; sb_13 F; sb_14 T; sb_15 F; // 8A
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_y;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 T; sb_13 F; sb_14 T; sb_15 T; // 8B
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_tverdyi;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 T; sb_13 T; sb_14 F; sb_15 F; // 8C
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_eh;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 T; sb_13 T; sb_14 F; sb_15 T; // 8D
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_yu;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 T; sb_13 T; sb_14 T; sb_15 F; // 8E
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_ya;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 T; sb_13 T; sb_14 T; sb_15 T; // 8F
     P U sb_0;
-    RET;
+    RET E;
 
 // Особые буквы
 FUNC print_ru_yo;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;  // D1
     sb_8 T;  sb_9 F; sb_10 F; sb_11 T; sb_12 F; sb_13 F; sb_14 F; sb_15 T; // 91
     P U sb_0;
-    RET;
+    RET E;
 
 FUNC print_ru_YO;
     sb_0 T;  sb_1 T;  sb_2 F;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 F;  // D0
     sb_8 T;  sb_9 F; sb_10 F; sb_11 F; sb_12 F; sb_13 F; sb_14 F; sb_15 T; // 81
     P U sb_0;
-    RET;
+    RET E;
 
 
 P.print_lib_close;

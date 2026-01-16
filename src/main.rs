@@ -80,10 +80,10 @@ fn main() {
                     }
                     
                     let tokens = importer::importing(tokens, base_path).expect("Ошибка импорта");
-                    let expanded_tokens = function_preprocessor::expand_tokens(tokens);
+                    let expanded_tokens = function_preprocessor::expand(tokens);
                     
                     match expanded_tokens {
-                        Ok(tokens) => {
+                        tokens => {
                             // Сохраняем расширенные токены
                             if debug_mode {
                                 save_tokens_to_file(&filename, "expanded.txt", &tokens);
@@ -110,10 +110,6 @@ fn main() {
                                     process::exit(1);
                                 }
                             }
-                        }
-                        Err(e) => {
-                            eprintln!("{}", e);
-                            process::exit(1);
                         }
                     }
                 }
@@ -143,11 +139,11 @@ fn show_usage(program_name: &str) {
 // Форматирование одного токена
 fn format_token(token: &tokens::RawToken) -> String {
     match token {
-        tokens::RawToken::Bool(b, _) => format!("B({})", b),
-        tokens::RawToken::Number(n, _) => format!("N({})", n),
-        tokens::RawToken::Keyword(k, _) => format!("K({})", k),
-        tokens::RawToken::LabelP(s, _) => format!("P({})", s),
-        tokens::RawToken::LabelPD(s, _) => format!("PD({})", s),
+        tokens::RawToken::Bool(b, _) => format!("{}", b),
+        tokens::RawToken::Number(n, _) => format!("{}", n),
+        tokens::RawToken::Keyword(k, _) => format!("{}", k),
+        tokens::RawToken::LabelP(s, _) => format!("P.{}", s),
+        tokens::RawToken::LabelPD(s, _) => format!("PD.{}", s),
     }
 }
 

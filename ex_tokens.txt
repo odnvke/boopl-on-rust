@@ -1,114 +1,79 @@
 === ТОКЕНЫ ===
 
-1: K(IMPORT) N(math) 
-2: K(IMPORT) N(messages) 
-3: N(ib_0) B(false) 
-4: N(ib_1) B(false) 
-5: N(ib_2) B(false) 
-6: N(ib_3) B(false) 
-7: N(ib_4) B(false) 
-8: N(ib_5) B(false) 
-9: N(ib_6) B(false) 
-10: N(ib_7) B(false) 
-11: P(vvod) 
-12: PD(R) P(1) 
-13: K(G) P(first_num_print) 
-14: P(1) 
-15: PD(R) P(0) 
-16: P(0) 
-17: N(i_0) N(ib_0) 
-18: N(i_1) N(ib_1) 
-19: N(i_2) N(ib_2) 
-20: N(i_3) N(ib_3) 
-21: N(i_4) N(ib_4) 
-22: N(i_5) N(ib_5) 
-23: N(i_6) N(ib_6) 
-24: N(i_7) N(ib_7) 
-25: K(P) K(N) 
-26: P(vvod_2) 
-27: PD(R) P(2) 
-28: K(G) P(second_num_print) 
-29: P(2) 
-30: PD(R) P(3) 
-31: P(3) 
-32: N(i2_0) N(ib_0) 
-33: N(i2_1) N(ib_1) 
-34: N(i2_2) N(ib_2) 
-35: N(i2_3) N(ib_3) 
-36: N(i2_4) N(ib_4) 
-37: N(i2_5) N(ib_5) 
-38: N(i2_6) N(ib_6) 
-39: N(i2_7) N(ib_7) 
-40: K(P) K(N) 
-41: PD(R) P(9) 
-42: K(G) P(deistvie) 
-43: P(9) 
-44: K(INBC) 
-45: K(IN) 
-46: N(minus) K(INB) 
-47: K(I) N(minus) 
-48: PD(R) P(10) 
-49: K(G) P(raznica) 
-50: P(10) 
-51: PD(R) P(11) 
-52: K(CALL) N(sub) 
-53: P(11) 
-54: K(E) 
-55: N(plus) K(N) N(minus) 
-56: K(I) N(plus) 
-57: PD(R) P(4) 
-58: K(G) P(summa) 
-59: P(4) 
-60: PD(R) P(5) 
-61: K(CALL) N(add) 
-62: P(5) 
-63: K(E) 
-64: K(P) K(N) 
-65: K(P) N(o_7) 
-66: K(P) N(o_6) 
-67: K(P) N(o_5) 
-68: K(P) N(o_4) 
-69: K(P) N(o_3) 
-70: K(P) N(o_2) 
-71: K(P) N(o_1) 
-72: K(P) N(o_0) 
-73: K(P) K(N) 
-74: PD(R) P(6) 
-75: K(G) P(prodoljit) 
-76: P(6) 
-77: K(INBC) 
-78: K(IN) 
-79: N(pdol) K(INB) 
-80: K(IG) N(pdol) P(end) 
-81: PD(R) P(7) 
-82: K(G) P(prodoljit_2) 
-83: P(7) 
-84: K(INBC) 
-85: K(IN) 
-86: N(pdol_2) K(INB) 
-87: K(I) N(pdol_2) 
-88: N(i_0) N(o_0) 
-89: N(i_1) N(o_1) 
-90: N(i_2) N(o_2) 
-91: N(i_3) N(o_3) 
-92: N(i_4) N(o_4) 
-93: N(i_5) N(o_5) 
-94: N(i_6) N(o_6) 
-95: N(i_7) N(o_7) 
-96: PD(R) P(8) 
-97: K(G) P(first_num_print) 
-98: P(8) 
-99: K(P) K(N) 
-100: K(P) N(o_7) 
-101: K(P) N(o_6) 
-102: K(P) N(o_5) 
-103: K(P) N(o_4) 
-104: K(P) N(o_3) 
-105: K(P) N(o_2) 
-106: K(P) N(o_1) 
-107: K(P) N(o_0) 
-108: K(P) K(N) 
-109: K(G) P(vvod_2) 
-110: K(E) 
-111: K(G) P(vvod) 
-112: P(end) 
+1: CALL a 
+2: P N 
+3: P S 
+4: P S 
+5: P S 
+6: P S 
+7: P S 
+8: CALL b 
+9: FUNC a 
+10: P false 
+11: P false 
+12: P false 
+13: P true 
+14: P S 
+15: CALL b 
+16: P false 
+17: P false 
+18: P false 
+19: P true 
+20: P S 
+21: RET E 
+22: FUNC b 
+23: P false 
+24: P false 
+25: P true 
+26: P false 
+27: P S 
+28: CALL c 
+29: P false 
+30: P false 
+31: P true 
+32: P false 
+33: P S 
+34: RET E 
+35: FUNC c 
+36: P false 
+37: P true 
+38: P false 
+39: P false 
+40: P S 
+41: CALL d 
+42: P false 
+43: P true 
+44: P false 
+45: P false 
+46: P S 
+47: RET E 
+48: FUNC d 
+49: P true 
+50: P false 
+51: P false 
+52: P false 
+53: P S 
+54: CALL spliter 
+55: P true 
+56: P false 
+57: P false 
+58: P false 
+59: P S 
+60: RET E 
+61: FUNC spliter 
+62: P S 
+63: CALL print_colon 
+64: P S 
+65: P S 
+66: RET E 
+67: FUNC print_colon 
+68: sb_0 false 
+69: sb_1 false 
+70: sb_2 true 
+71: sb_3 true 
+72: sb_4 true 
+73: sb_5 false 
+74: sb_6 true 
+75: sb_7 false 
+76: P U sb_0 
+77: RET E 

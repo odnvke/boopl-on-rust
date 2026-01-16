@@ -104,15 +104,26 @@ impl TreeNode {
 fn parse_name(name: &str) -> Vec<NamePart> {
     let mut parts = Vec::new();
     
-    for part in name.split('_') {
-        if part.is_empty() {
-            continue;
-        }
-        
-        if let Ok(num) = part.parse::<i32>() {
+    if name.is_empty() {
+        return parts;
+    }
+    
+    // Разбиваем с сохранением пустых частей как отдельных элементов
+    let segments: Vec<&str> = name.split('_').collect();
+    
+    for (i, segment) in segments.iter().enumerate() {
+        if segment.is_empty() {
+            // Пустая часть означает двойное подчеркивание или подчеркивание в начале/конце
+            parts.push(NamePart::Text("_".to_string()));
+        } else if let Ok(num) = segment.parse::<i32>() {
             parts.push(NamePart::Number(num));
         } else {
-            parts.push(NamePart::Text(part.to_string()));
+            parts.push(NamePart::Text(segment.to_string()));
+        }
+        
+        // Добавляем разделитель между частями (кроме последней)
+        if i < segments.len() - 1 {
+            parts.push(NamePart::Text("_".to_string()));
         }
     }
     
@@ -156,7 +167,7 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> (Vec<Vec<Token>>, IdentName
     let mut current_path = Vec::new();
     
     tree.assign_ids(&mut name_to_id, &mut context, &mut current_path);
-    
+    /* 
     println!("=~=~=~=~=~ Таблица имен =~=~=~=~=~");
     
     // Собираем владеющие значения
@@ -171,7 +182,7 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> (Vec<Vec<Token>>, IdentName
         println!("{:30} → {}", name, id);
     }
     println!("=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~\n");
-    
+    */
     // ИСПРАВЛЕННАЯ часть преобразования токенов
     let mut result = Vec::new();
     

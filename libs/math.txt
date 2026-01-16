@@ -67,7 +67,8 @@ FUNC _add;
     tc  O t   t2;
 
     c_out tc;
-    RET;
+    RET E;
+
 
 FUNC sub;
     i2_0 N i2_0; i2_1 N i2_1;
@@ -79,18 +80,15 @@ FUNC sub;
     
     CALL _add;
 
-    G PD._lib_R_1;
+    RET E;
+
 
 FUNC add;
     lib_c_in c_in;
 
-    PD._lib_R_1 PD.R;
-    
-    PD.R P._math_1;
-    G P._add;
-    P._math_1;
+    CALL _add;
 
-    G PD._lib_R_1;
+    RET E;
 
 
 

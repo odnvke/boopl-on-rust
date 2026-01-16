@@ -12,7 +12,7 @@ FUNC input_8;
     _0 F; _1 F; _2 F; _3 F; _4 F; _5 F; _6 F; _ F;
 
     CALL bit_input_cont_input;
-RET;
+RET E;
 
 FUNC bit_input_cont_input;
     P N;
@@ -81,7 +81,7 @@ FUNC bit_input_cont_input;
 
     bit_input_7 T;
 
-    //P.___eta_metca_sto_procentov_unicalnay;
+    P.bit_input_close_if;
 
     INBC;
     
@@ -93,7 +93,7 @@ FUNC bit_input_cont_input;
 
     CALL print_remaining_info;
 
-RET;
+RET E;
 
 FUNC print_bit_input_info;
     P N;
@@ -147,7 +147,7 @@ FUNC print_bit_input_info;
         P S; P S;
     E;
 
-RET;
+RET E;
 
 FUNC print_remaining_info;
     CALL print_ru_e;
@@ -198,6 +198,6 @@ P.skip_print;
     CALL print_ru_v;
 
     P N;
-RET;
+RET E;
 
 P.bit_input_lib_close;
