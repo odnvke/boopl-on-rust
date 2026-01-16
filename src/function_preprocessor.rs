@@ -84,11 +84,20 @@ impl Data {
                     }
                 }
 
+                
 
-
-                _ => {out_vec.push(line);}
+                _ => {
+                    for token in &line {
+                        if let RawToken::Keyword(s, _) = token {
+                            if matches!(s.as_str(), "CALL" | "FUNC" | "RET") {
+                                eprintln!("\n ! препроцессор функций:\n\n   >>  ! неудалось обработать {:?}", line);
+                                std::process::exit(1);
+                            }
+                        }
+                    }
+                    out_vec.push(line);
                 }
-            
+            }
         }
 
         out_vec
