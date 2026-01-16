@@ -171,10 +171,13 @@ fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
     }
 
     if s.len() == 4 {
-        if s == "INBC" {return Ok(RawToken::Keyword(s.to_string(), *line_n));}
+        if matches!(s, "INBC" | "CALL" | "FUNC") {
+            return Ok(RawToken::Keyword(s.to_string(), *line_n));
+        }
     }
+    
     if s.len() == 3 {
-        if s == "INB" {return Ok(RawToken::Keyword(s.to_string(), *line_n));}
+        if matches!(s, "INB" | "RET") {return Ok(RawToken::Keyword(s.to_string(), *line_n));}
     }
 
     if s.len() == 6 {

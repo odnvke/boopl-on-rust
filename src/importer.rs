@@ -1,15 +1,16 @@
+// importer.rs
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::collections::HashSet;
 use crate::tokens::{RawToken, start as tokenize};
-use crate::function_preprocessor;
 
+// ОРИГИНАЛЬНАЯ функция - не меняем название!
 pub fn importing(tokens: Vec<Vec<RawToken>>, base_path: &Path) -> Result<Vec<Vec<RawToken>>, String> {
     let mut processed_files = HashSet::new();
     process_imports(tokens, base_path, &mut processed_files)
 }
 
-// importer.rs
+// Старая реализация
 fn process_imports(
     tokens: Vec<Vec<RawToken>>,
     base_path: &Path,
@@ -30,20 +31,14 @@ fn process_imports(
                 }
                 processed_files.insert(canonical_path.clone());
                 
-                // Читаем файл
                 let content = fs::read_to_string(&file_path)
                     .map_err(|e| format!("Строка {}: Не удалось прочитать файл '{}': {}", 
                                          l_n, filename_str, e))?;
                 
-                // ВАЖНО: используем обновлённый препроцессор
-                let expanded = function_preprocessor::expand(&content);
-                
-                // Токенизируем
-                let imported_tokens = tokenize(expanded)
+                let imported_tokens = tokenize(content)
                     .map_err(|(e, line)| format!("Строка {} в файле '{}': {}", 
                                                  line, filename_str, e))?;
                 
-                // Рекурсивно обрабатываем
                 let parent_dir = file_path.parent().unwrap_or(base_path);
                 let processed = process_imports(imported_tokens, parent_dir, processed_files)?;
                 

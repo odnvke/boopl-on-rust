@@ -1,7 +1,3 @@
-IMPORT print;
-
-PD.R;
-
 ib_0 F; ib_1 F; ib_2 F; ib_3 F; ib_4 F; ib_5 F; ib_6 F; ib_7 F;
 
 bit_input_0 F; bit_input_1 F; bit_input_2 F; bit_input_3 F;
@@ -9,16 +5,16 @@ bit_input_4 F; bit_input_5 F; bit_input_6 F; bit_input_7 F;
 
 G P.bit_input_lib_close;
 
-P.input_8;
+FUNC input_8;
     bit_input_0 F; bit_input_1 F; bit_input_2 F; bit_input_3 F;
     bit_input_4 F; bit_input_5 F; bit_input_6 F; bit_input_7 F;
 
     _0 F; _1 F; _2 F; _3 F; _4 F; _5 F; _6 F; _ F;
-    PD.bit_input_R3 PD.R;
-    G P.bit_input_cont_input;
-E;
 
-P.bit_input_cont_input;
+    CALL bit_input_cont_input;
+RET;
+
+FUNC bit_input_cont_input;
     P N;
     IN;
 
@@ -85,53 +81,28 @@ P.bit_input_cont_input;
 
     bit_input_7 T;
 
-
-    P.bit_input_close_if;
+    //P.___eta_metca_sto_procentov_unicalnay;
 
     INBC;
     
+    CALL print_bit_input_info;
 
-    PD.R P.bit_input_5;
-    G P.bit_input_print;
-    P.bit_input_5;
+    I bit_input_7;
+        RET;
+    E;
 
+    CALL print_remaining_info;
 
-    IG bit_input_7 PD.bit_input_R3;
+RET;
 
-
-    PD.R P.bit_input_18;
-    G P.bit_input_ostalos;
-    P.bit_input_18;
-
-    G PD.bit_input_R3;
-
-
-
-P.bit_input_print;
-
+FUNC print_bit_input_info;
     P N;
-    PD.bit_input_R2 PD.R;
 
-    PD.R P.bit_input_0;
-    G P.print_ru_V;
-    P.bit_input_0;
-
-    PD.R P.bit_input_1;
-    G P.print_ru_v;
-    P.bit_input_1;
-
-    PD.R P.bit_input_2;
-    G P.print_ru_o;
-    P.bit_input_2;
-
-    PD.R P.bit_input_3;
-    G P.print_ru_d;
-    P.bit_input_3;
-
-    PD.R P.bit_input_4;
-    G P.print_colon;
-    P.bit_input_4;
-    
+    CALL print_ru_V;
+    CALL print_ru_v;
+    CALL print_ru_o;
+    CALL print_ru_d;
+    CALL print_colon;
     P S;
     
     I bit_input_0;
@@ -140,7 +111,6 @@ P.bit_input_print;
     I bit_input_1;
         P ib_6;
     E;
-
     I bit_input_2;
         P ib_5; 
     E;
@@ -163,63 +133,27 @@ P.bit_input_print;
     
     lib_t N bit_input_0;
     I lib_t;
-        PD.R P.bit_input_29;
-        G P.print_ru_p;
-        P.bit_input_29;
-
-        PD.R P.bit_input_30;
-        G P.print_ru_u;
-        P.bit_input_30;
-
-        PD.R P.bit_input_31;
-        G P.print_ru_s;
-        P.bit_input_31;
-
-        PD.R P.bit_input_32;
-        G P.print_ru_t;
-        P.bit_input_32;
-
-        PD.R P.bit_input_33;
-        G P.print_ru_o;
-        P.bit_input_33;
-
-        PD.R P.bit_input_34;
-        G P.print_comma;
-        P.bit_input_34;
+        CALL print_ru_p;
+        CALL print_ru_u;
+        CALL print_ru_s;
+        CALL print_ru_t;
+        CALL print_ru_o;
+        CALL print_comma;
         P S; P S;
-
     E;
 
     I bit_input_0;
-        PD.R P.bit_input_35;
-        G P.print_semicolon;
-        P.bit_input_35;
+        CALL print_semicolon;
         P S; P S;
     E;
 
-    G PD.bit_input_R2;
+RET;
 
-
-P.bit_input_ostalos;
-    PD.bit_input_R2 PD.R;
-
-
-    PD.R P.bit_input_6;
-    G P.print_ru_e;
-    P.bit_input_6;
-
-    PD.R P.bit_input_7;
-    G P.print_ru_shch;
-    P.bit_input_7;
-
-    PD.R P.bit_input_8;
-    G P.print_ru_yo;
-    P.bit_input_8;
-
-    PD.R P.bit_input_9;
-    G P.print_colon;
-    P.bit_input_9;
-
+FUNC print_remaining_info;
+    CALL print_ru_e;
+    CALL print_ru_shch;
+    CALL print_ru_yo;
+    CALL print_colon;
     P S;
 
     I bit_input_0;
@@ -229,92 +163,41 @@ P.bit_input_ostalos;
                     I bit_input_4;
                         I bit_input_5;
                             I bit_input_6;            
-                                PD.R P.bit_input_17;
-                                G P.print_1;
-                                P.bit_input_17;
-                                G P.19;
+                                CALL print_1;
+                                G P.skip_print;
                             E;
-                            
-                            PD.R P.bit_input_16;
-                            G P.print_2;
-                            P.bit_input_16;
-                            G P.19;
+                            CALL print_2;
+                            G P.skip_print;
                         E;
-                        
-                        PD.R P.bit_input_15;
-                        G P.print_3;
-                        P.bit_input_15;
-                        G P.19;
+                        CALL print_3;
+                        G P.skip_print;
                     E;
-                    
-                    PD.R P.bit_input_14;
-                    G P.print_4;
-                    P.bit_input_14;
-                    G P.19;
+                    CALL print_4;
+                    G P.skip_print;
                 E;
-                
-                PD.R P.bit_input_13;
-                G P.print_5;
-                P.bit_input_13;
-                G P.19;
+                CALL print_5;
+                G P.skip_print;
             E;
-            
-            PD.R P.bit_input_12;
-            G P.print_6;
-            P.bit_input_12;
-            G P.19;
+            CALL print_6;
+            G P.skip_print;
         E;
-        
-        PD.R P.bit_input_11;
-        G P.print_7;
-        P.bit_input_11;
-        G P.19;
+        CALL print_7;
+        G P.skip_print;
     E;
-    PD.R P.bit_input_28;
-    G P.print_8;
-    P.bit_input_28;
+    CALL print_8;
 
-
-    P.19;
-
+P.skip_print;
     P S;
+    CALL print_ru_s;
+    CALL print_ru_i;
+    CALL print_ru_m;
+    CALL print_ru_v;
+    CALL print_ru_o;
+    CALL print_ru_l;
+    CALL print_ru_o;
+    CALL print_ru_v;
 
-    PD.R P.bit_input_20;
-    G P.print_ru_s;
-    P.bit_input_20;
-
-    PD.R P.bit_input_21;
-    G P.print_ru_i;
-    P.bit_input_21;
-
-    PD.R P.bit_input_22;
-    G P.print_ru_m;
-    P.bit_input_22;
-
-    PD.R P.bit_input_23;
-    G P.print_ru_v;
-    P.bit_input_23;
-
-    PD.R P.bit_input_24;
-    G P.print_ru_o;
-    P.bit_input_24;
-
-    PD.R P.bit_input_25;
-    G P.print_ru_l;
-    P.bit_input_25;
-
-    PD.R P.bit_input_26;
-    G P.print_ru_o;
-    P.bit_input_26;
-
-    PD.R P.bit_input_27;
-    G P.print_ru_v;
-    P.bit_input_27;
-
-
-    P N; 
-    G P.bit_input_cont_input;
-
-
+    P N;
+RET;
 
 P.bit_input_lib_close;

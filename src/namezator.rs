@@ -156,7 +156,7 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> (Vec<Vec<Token>>, IdentName
     let mut current_path = Vec::new();
     
     tree.assign_ids(&mut name_to_id, &mut context, &mut current_path);
-    /*
+    
     println!("=~=~=~=~=~ Таблица имен =~=~=~=~=~");
     
     // Собираем владеющие значения
@@ -171,7 +171,7 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> (Vec<Vec<Token>>, IdentName
         println!("{:30} → {}", name, id);
     }
     println!("=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~\n");
-    */
+    
     // ИСПРАВЛЕННАЯ часть преобразования токенов
     let mut result = Vec::new();
     

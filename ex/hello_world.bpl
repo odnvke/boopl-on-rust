@@ -1,39 +1,28 @@
 IMPORT print;
 
 
-PD.R P.10;
-G P.print_H; P.10;
+CALL print_H;
 
-PD.R P.11;
-G P.print_e; P.11;
+CALL print_e;
 
-PD.R P.12;
-G P.print_l; P.12;
+CALL print_l;
 
-PD.R P.13;
-G P.print_l; P.13;
+CALL print_l;
 
-PD.R P.14;
-G P.print_o; P.14;
+CALL print_o;
 
 P S;
 
-PD.R P.15;
-G P.print_w; P.15;
+CALL print_w;
 
-PD.R P.16;
-G P.print_o; P.16;
+CALL print_o;
 
-PD.R P.17;
-G P.print_r; P.17;
+CALL print_r;
 
-PD.R P.18;
-G P.print_l; P.18;
+CALL print_l;
 
-PD.R P.19;
-G P.print_d; P.19;
+CALL print_d;
 
-PD.R P.20;
-G P.print_exclamation; P.20;
+CALL print_exclamation;
 
 E;

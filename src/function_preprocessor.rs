@@ -1,488 +1,295 @@
 // function_preprocessor.rs
 use std::collections::{HashMap, HashSet};
+use crate::tokens::RawToken;
 
-pub fn expand(source: &str) -> String {
-    let mut expander = FunctionExpander::new();
-    expander.expand(source)
+// ==================== ТОКЕН-ПРЕПРОЦЕССОР ====================
+
+pub fn expand_tokens(tokens: Vec<Vec<RawToken>>) -> Result<Vec<Vec<RawToken>>, String> {
+    let mut expander = TokenFunctionExpander::new();
+    expander.expand(tokens)
 }
 
-struct FunctionInfo {
-    original_body: String,
-    processed_body: String,
-    declared_at_line: usize,
-    calls: HashSet<String>, // Какие функции вызывает эта функция
+struct TokenFunctionInfo {
+    body_tokens: Vec<Vec<RawToken>>,
+    declared_at_line: i32,
+    calls: HashSet<String>,
 }
 
-struct FunctionExpander {
-    functions: HashMap<String, FunctionInfo>,
-    all_calls: Vec<(String, usize)>, // (имя_функции, строка_вызова)
-    next_id: usize,
+struct TokenFunctionExpander {
+    functions: HashMap<String, TokenFunctionInfo>,
+    call_counter: usize,
 }
 
-impl FunctionExpander {
+impl TokenFunctionExpander {
     fn new() -> Self {
         Self {
             functions: HashMap::new(),
-            all_calls: Vec::new(),
-            next_id: 0,
+            call_counter: 0,
         }
     }
     
-    fn expand(&mut self, source: &str) -> String {
-        // Сбрасываем next_id
-        self.next_id = 0;
+    fn expand(&mut self, tokens: Vec<Vec<RawToken>>) -> Result<Vec<Vec<RawToken>>, String> {
+        // 1. Собрать информацию о функциях
+        self.collect_functions(&tokens)?;
         
-        // Валидируем исходный код (требуем ; везде)
-        match self.validate(source) {
-            Ok(_) => {}, // всё OK
-            Err(e) => {
-                eprintln!("! препроцессор функций:\n\n{}\n\n", e);
-                std::process::exit(1);
-            }
-        }
-
-        // Обрабатываем тела функций (преобразуем CALL)
-        let mut processed_bodies = Vec::new();
-        for (func_name, info) in &self.functions {
-            let processed_body = self.process_function_body(&info.original_body, func_name);
-            processed_bodies.push((func_name.clone(), processed_body));
+        // 2. Проверить циклические зависимости
+        if let Some(cycle) = self.find_cycles() {
+            return Err(format!("Обнаружена циклическая зависимость: {}", cycle.join(" -> ")));
         }
         
-        // Обновляем processed_body в функциях
-        for (func_name, processed_body) in processed_bodies {
-            if let Some(info) = self.functions.get_mut(&func_name) {
-                info.processed_body = processed_body;
-            }
-        }
-
-        // Теперь обрабатываем для расширения
-        let lines: Vec<&str> = source.lines().collect();
-        let mut result_lines = Vec::new();
-        let mut i = 0;
+        // 3. Расширить основной код
+        let mut result = Vec::new();
         
-        // Собираем основной код (все, что не является функциями)
-        while i < lines.len() {
-            let line = lines[i].trim();
-            
-            if line.starts_with("FUNC") {
-                // Пропускаем всю функцию
-                i += 1;
-                while i < lines.len() {
-                    let body_line = lines[i].trim();
-                    if body_line == "RET;" {
-                        break;
-                    }
-                    i += 1;
-                }
-                i += 1; // Пропускаем RET;
-                continue;
+        for line in tokens {
+            if self.is_function_declaration(&line) {
+                continue; // Пропускаем объявления функций
             }
             
-            result_lines.push(lines[i]);
-            i += 1;
-        }
-        
-        // 2. Обрабатываем оставшиеся строки
-        let mut final_result = String::new();
-        
-        // Глобальные переменные
-        final_result.push_str("PD.__ret;\n\n");
-        
-        for line in result_lines {
-            let trimmed = line.trim();
-            let indent = Self::get_indent(line);
-            
-            // Пропускаем пустые строки
-            if trimmed.is_empty() {
-                final_result.push_str("\n");
-                continue;
-            }
-            
-            // Пропускаем комментарии
-            if trimmed.starts_with("//") {
-                final_result.push_str(line);
-                final_result.push_str("\n");
-                continue;
-            }
-            
-            // Обработка CALL
-            if trimmed.starts_with("CALL ") {
-                let rest = trimmed[5..].trim();
-                let func_name = rest.split_whitespace().next().unwrap_or("");
-                let func_name = func_name.trim_end_matches(';');
-                
-                if self.functions.contains_key(func_name) {
-                    let call_id = self.next_id;
-                    self.next_id += 1;
-                    
-                    final_result.push_str(&format!("{}// CALL {}\n", indent, func_name));
-                    final_result.push_str(&format!("{}PD.__ret P.__ret_{};\n", indent, call_id));
-                    final_result.push_str(&format!("{}G P.__func_{}_body;\n", indent, func_name));
-                    final_result.push_str(&format!("{}P.__ret_{};\n", indent, call_id));
-                } else {
-                    // Функция не найдена
-                    final_result.push_str(line);
-                    final_result.push_str("\n");
+            // Пропускаем RET в основном коде
+            if let [RawToken::Keyword(k, _)] = line.as_slice() {
+                if k == "RET" {
+                    continue;
                 }
             }
-            // Обработка E
-            else if trimmed == "E;" {
-                final_result.push_str(&format!("{}E;\n", indent));
-            }
-            // Всё остальное
-            else {
-                final_result.push_str(line);
-                final_result.push_str("\n");
-            }
-        }
-        
-        // 3. Добавляем тела функций
-        if !self.functions.is_empty() {
-            final_result.push_str("\n// === Тела функций ===\n");
             
-            for (func_name, info) in &self.functions {
-                final_result.push_str(&format!("\nP.__func_{}_body;\n", func_name));
-                final_result.push_str(&format!("  PD.__local_ret_{} PD.__ret;\n", func_name));
-                final_result.push_str(&info.processed_body);
-                final_result.push_str(&format!("  G PD.__local_ret_{};\n", func_name));
-            }
-        }
-        
-        final_result
-    }
-    
-    fn process_function_body(&self, body: &str, current_func_name: &str) -> String {
-        let lines: Vec<&str> = body.lines().collect();
-        let mut result = String::new();
-        let mut local_next_id = 0;
-        
-        for line in lines {
-            let trimmed = line.trim();
-            
-            // Пропускаем пустые строки и комментарии
-            if trimmed.is_empty() || trimmed.starts_with("//") {
-                result.push_str(line);
-                result.push_str("\n");
-                continue;
-            }
-            
-            let indent = Self::get_indent(line);
-            
-            if trimmed.starts_with("CALL ") {
-                let rest = trimmed[5..].trim();
-                let called_func = rest.split_whitespace().next().unwrap_or("");
-                let called_func = called_func.trim_end_matches(';');
-                
-                // Проверяем, объявлена ли вызываемая функция
-                if self.functions.contains_key(called_func) {
-                    result.push_str(&format!("{}// CALL {}\n", indent, called_func));
-                    result.push_str(&format!("{}PD.__ret P.__ret_{}_{};\n", 
-                        indent, current_func_name, local_next_id));
-                    result.push_str(&format!("{}G P.__func_{}_body;\n",
-                        indent, called_func));
-                    result.push_str(&format!("{}P.__ret_{}_{};\n", 
-                        indent, current_func_name, local_next_id));
-                    
-                    local_next_id += 1;
-                } else {
-                    // Если функция не найдена, оставляем как есть
-                    result.push_str(line);
-                    result.push_str("\n");
+            if let Some(expanded) = self.expand_main_line(&line)? {
+                for exp_line in expanded {
+                    result.push(exp_line);
                 }
             } else {
-                result.push_str(line);
-                result.push_str("\n");
+                result.push(line);
             }
         }
         
-        result
-    }
-    
-fn validate(&mut self, source: &str) -> Result<(), String> {
-    let lines: Vec<&str> = source.lines().collect();
-    
-    // 1. ПЕРВЫЙ ПРОХОД: собираем ВСЕ объявления функций
-    let mut i = 0;
-    let mut function_declarations: Vec<(String, usize, usize, usize)> = Vec::new(); // (имя, строка_начала, строка_RET, уровень_вложенности)
-    let mut current_func_stack: Vec<(String, usize)> = Vec::new(); // Стек функций
-    
-    while i < lines.len() {
-        let line = lines[i].trim();
-        
-        if line.starts_with("FUNC") {
-            let func_name = Self::extract_func_name(line);
-            let declared_at_line = i + 1;
-            
-            // Проверка переопределения
-            if self.functions.contains_key(&func_name) {
-                let first_line = self.functions[&func_name].declared_at_line;
-                return Err(format!(
-                    "Переопределение функции '{}'\nПервое объявление: строка {}\nПовторное: строка {}",
-                    func_name, first_line, declared_at_line
-                ));
-            }
-            
-            // Запоминаем объявление
-            function_declarations.push((func_name.clone(), declared_at_line, 0, current_func_stack.len()));
-            
-            // Добавляем в стек
-            current_func_stack.push((func_name.clone(), declared_at_line));
-            
-            // Ищем конец функции (RET;)
-            let mut j = i + 1;
-            let mut found_ret = false;
-            
-            while j < lines.len() {
-                let body_line = lines[j].trim();
-                
-                if body_line == "RET;" {
-                    found_ret = true;
-                    // Обновляем информацию о конце функции
-                    if let Some(last) = function_declarations.last_mut() {
-                        last.2 = j + 1;
-                    }
-                    current_func_stack.pop();
-                    break;
-                }
-                
-                // Если встретили новую функцию внутри - ошибка
-                if body_line.starts_with("FUNC") {
-                    let nested_func = Self::extract_func_name(body_line);
-                    return Err(format!(
-                        "Строка {}: Функция '{}' объявлена внутри функции '{}' (вложенные функции не разрешены)",
-                        j + 1, nested_func, func_name
-                    ));
-                }
-                
-                j += 1;
-            }
-            
-            if !found_ret {
-                return Err(format!(
-                    "Функция '{}' (строка {}) не завершена RET;",
-                    func_name, declared_at_line
-                ));
-            }
-            
-            i = j + 1; // Переходим к строке после RET;
-            continue;
+        // 4. Добавить тела функций
+        if !self.functions.is_empty() {
+            let bodies = self.create_function_bodies();
+            result.extend(bodies);
         }
         
-        i += 1;
+        Ok(result)
     }
     
-    // 2. СОЗДАЕМ функции в HashMap
-    for (func_name, start_line, _ret_line, _nesting_level) in &function_declarations {
-        self.functions.insert(func_name.clone(), FunctionInfo {
-            original_body: String::new(),
-            processed_body: String::new(),
-            declared_at_line: start_line.clone(),
-            calls: HashSet::new(),
+fn collect_functions(&mut self, tokens: &[Vec<RawToken>]) -> Result<(), String> {
+    let mut current_func: Option<(String, i32, Vec<Vec<RawToken>>)> = None;
+    
+    for line in tokens {
+        // Проверяем начало новой функции
+        if let [RawToken::Keyword(k, line_num), RawToken::Number(name, _), ..] = &line[..] {
+            if k == "FUNC" {
+                // Если уже есть активная функция, завершаем её
+                if let Some((prev_name, prev_line_num, body)) = current_func.take() {
+                    let calls = self.extract_calls_from_body(&body);
+                    self.functions.insert(prev_name.clone(), TokenFunctionInfo {
+                        body_tokens: body,
+                        declared_at_line: prev_line_num,
+                        calls,
+                    });
+                }
+                
+                if self.functions.contains_key(name) {
+                    return Err(format!("Строка {}: Переопределение функции '{}'", line_num, name));
+                }
+                
+                current_func = Some((name.clone(), *line_num, Vec::new()));
+                continue;
+            }
+        }
+        
+        // Добавляем ВСЕ строки в тело текущей функции (включая RET!)
+        if let Some((_, _, body)) = &mut current_func {
+            body.push(line.clone());
+        }
+    }
+    
+    // Не забываем завершить последнюю функцию
+    if let Some((name, line_num, body)) = current_func.take() {
+        let calls = self.extract_calls_from_body(&body);
+        self.functions.insert(name.clone(), TokenFunctionInfo {
+            body_tokens: body,
+            declared_at_line: line_num,
+            calls,
         });
-    }
-    
-    // 3. ВТОРОЙ ПРОХОД: собираем тела функций и вызовы
-    self.all_calls.clear();
-    
-    for (func_name, start_line, ret_line, _) in function_declarations.iter() {
-        let start_idx = start_line - 1;
-        let ret_idx = ret_line - 1;
-        
-        if let Some(func_info) = self.functions.get_mut(func_name) {
-            let mut original_body = String::new();
-            let mut calls_in_func = HashSet::new();
-            
-            // Собираем тело функции
-            for line_idx in (start_idx + 1)..ret_idx {
-                let line = lines[line_idx];
-                original_body.push_str(line);
-                original_body.push_str("\n");
-                
-                // Проверяем синтаксис в теле функции
-                let trimmed = line.trim();
-                if !trimmed.is_empty() && 
-                   !trimmed.starts_with("//") &&
-                   !trimmed.ends_with(';') &&
-                   !trimmed.ends_with(':') {
-                    return Err(format!(
-                        "Строка {}: Инструкция должна заканчиваться точкой с запятой: '{}'",
-                        line_idx + 1, trimmed
-                    ));
-                }
-                
-                // Собираем CALL внутри функции
-                if trimmed.starts_with("CALL ") {
-                    let called = Self::extract_called_func(trimmed);
-                    if !called.is_empty() {
-                        calls_in_func.insert(called.clone());
-                        self.all_calls.push((called.clone(), line_idx + 1));
-                    }
-                }
-            }
-            
-            func_info.original_body = original_body;
-            func_info.calls = calls_in_func;
-        }
-    }
-    
-    // 4. Собираем CALL вне функций (в основном коде)
-    for (line_idx, line) in lines.iter().enumerate() {
-        let trimmed = line.trim();
-        
-        // Пропускаем пустые строки, комментарии
-        if trimmed.is_empty() || trimmed.starts_with("//") {
-            continue;
-        }
-        
-        // Пропускаем строки внутри функций
-        let mut is_inside_function = false;
-        for (_, start_line, ret_line, _) in &function_declarations {
-            let start_idx = *start_line - 1;
-            let ret_idx = *ret_line - 1;
-            if line_idx > start_idx && line_idx < ret_idx {
-                is_inside_function = true;
-                break;
-            }
-        }
-        
-        if is_inside_function {
-            continue;
-        }
-        
-        // Проверяем синтаксис в основном коде
-        if !trimmed.starts_with("FUNC") && 
-           trimmed != "RET;" &&
-           !trimmed.ends_with(';') && 
-           !trimmed.ends_with(':') {
-            return Err(format!(
-                "Строка {}: Инструкция должна заканчиваться точкой с запятой: '{}'",
-                line_idx + 1, trimmed
-            ));
-        }
-        
-        // Сбор CALL вне функций
-        if trimmed.starts_with("CALL ") {
-            let called = Self::extract_called_func(trimmed);
-            if !called.is_empty() {
-                self.all_calls.push((called, line_idx + 1));
-            }
-        }
-    }
-    
-    // 5. Проверка необъявленных функций
-    let mut undefined_calls = Vec::new();
-    for (called_func, line_num) in &self.all_calls {
-        if !self.functions.contains_key(called_func) {
-            undefined_calls.push((called_func.clone(), *line_num));
-        }
-    }
-    
-    if !undefined_calls.is_empty() {
-        let mut error_msg = String::from("Вызовы необъявленных функций:\n");
-        for (func, line) in undefined_calls {
-            error_msg.push_str(&format!("  - '{}' в строке {}\n", func, line));
-        }
-        return Err(error_msg);
-    }
-    
-    // 6. Проверка циклических зависимостей
-    if let Some(cycle) = self.find_cycles() {
-        return Err(format!(
-            "Обнаружена циклическая зависимость:\n  {}",
-            cycle.join(" -> ")
-        ));
     }
     
     Ok(())
 }
     
-    fn find_cycles(&self) -> Option<Vec<String>> {
-        let _visited: HashSet<String> = HashSet::new();
+    fn create_function_bodies(&mut self) -> Vec<Vec<RawToken>> {
+    let mut result = Vec::new();
+    
+    // Глобальная переменная для возврата
+    result.push(vec![RawToken::LabelPD("__ret".to_string(), 0)]);
+    result.push(vec![]); // Пустая строка
+    
+    // Создаем копию информации о функциях перед обработкой
+    let funcs_to_process: Vec<(String, Vec<Vec<RawToken>>)> = self.functions
+        .iter()
+        .map(|(name, info)| (name.clone(), info.body_tokens.clone()))
+        .collect();
+    
+    for (func_name, body_tokens) in funcs_to_process {
+        // Метка начала функции
+        result.push(vec![
+            RawToken::LabelP(format!("__func_{}_body", func_name), 0),
+        ]);
         
-        for func_name in self.functions.keys() {
-            let mut visiting: HashSet<String> = HashSet::new();
-            let mut path: Vec<String> = Vec::new();
-            
-            if let Some(cycle) = self.detect_cycle(func_name, &mut visiting, &mut path) {
-                return Some(cycle);
+        // Сохраняем возвратный адрес
+        result.push(vec![
+            RawToken::LabelPD(format!("__local_ret_{}", func_name), 0),
+            RawToken::LabelPD("__ret".to_string(), 0),
+        ]);
+        
+        // Тело функции ВКЛЮЧАЯ все RET
+        for line in &body_tokens {
+            if let Some(expanded) = self.expand_function_line(line, &func_name) {
+                for exp_line in expanded {
+                    result.push(exp_line);
+                }
+            } else {
+                result.push(line.clone());
             }
         }
         
-        None
+        // Автоматический возврат в конце функции (на случай если нет явного RET)
+        result.push(vec![
+            RawToken::Keyword("G".to_string(), 0),
+            RawToken::LabelPD(format!("__local_ret_{}", func_name), 0),
+        ]);
+        
+        result.push(vec![]); // Пустая строка между функциями
     }
-
-    fn detect_cycle(&self, current: &str, visiting: &mut HashSet<String>, 
-                   path: &mut Vec<String>) -> Option<Vec<String>> {
-        if visiting.contains(current) {
-            // Нашли цикл
-            let start = path.iter().position(|x| x == current).unwrap();
-            let cycle = path[start..].to_vec();
-            return Some(cycle);
+    
+    result
+}
+    
+    fn expand_main_line(&mut self, line: &[RawToken]) -> Result<Option<Vec<Vec<RawToken>>>, String> {
+        if let [RawToken::Keyword(k, line_num), RawToken::Number(func_name, _), ..] = line {
+            if k == "CALL" {
+                if !self.functions.contains_key(func_name) {
+                    return Err(format!("Строка {}: Функция '{}' не объявлена", line_num, func_name));
+                }
+                
+                let call_id = self.call_counter;
+                self.call_counter += 1;
+                
+                let mut result = Vec::new();
+                
+                // PD.__ret P.__ret_{call_id}
+                result.push(vec![
+                    RawToken::LabelPD("__ret".to_string(), *line_num),
+                    RawToken::LabelP(format!("__ret_{}", call_id), *line_num),
+                ]);
+                
+                // G P.__func_{func_name}_body
+                result.push(vec![
+                    RawToken::Keyword("G".to_string(), *line_num),
+                    RawToken::LabelP(format!("__func_{}_body", func_name), *line_num),
+                ]);
+                
+                // P.__ret_{call_id}
+                result.push(vec![
+                    RawToken::LabelP(format!("__ret_{}", call_id), *line_num),
+                ]);
+                
+                return Ok(Some(result));
+            }
         }
         
-        visiting.insert(current.to_string());
-        path.push(current.to_string());
+        Ok(None)
+    }
+    
+fn expand_function_line(&mut self, line: &[RawToken], current_func: &str) -> Option<Vec<Vec<RawToken>>> {
+    // ДОСТАТОЧНО: проверяем только первый токен для RET
+    if let [RawToken::Keyword(k, line_num), ..] = line {
+        match k.as_str() {
+            "CALL" => {
+                // Для CALL нужен второй токен
+                if let [_, RawToken::Number(called_func, line_num), ..] = line {
+                    if self.functions.contains_key(called_func) {
+                        let call_id = self.call_counter;
+                        self.call_counter += 1;
+                        
+                        let mut result = Vec::new();
+                        
+                        result.push(vec![
+                            RawToken::LabelPD("__ret".to_string(), *line_num),
+                            RawToken::LabelP(format!("__ret_{}_{}", current_func, call_id), *line_num),
+                        ]);
+                        
+                        result.push(vec![
+                            RawToken::Keyword("G".to_string(), *line_num),
+                            RawToken::LabelP(format!("__func_{}_body", called_func), *line_num),
+                        ]);
+                        
+                        result.push(vec![
+                            RawToken::LabelP(format!("__ret_{}_{}", current_func, call_id), *line_num),
+                        ]);
+                        
+                        return Some(result);
+                    }
+                }
+            }
+            "RET" => {
+                // RET заменяем на G к локальному возврату
+                return Some(vec![vec![
+                    RawToken::Keyword("G".to_string(), *line_num),
+                    RawToken::LabelPD(format!("__local_ret_{}", current_func), *line_num),
+                ]]);
+            }
+            _ => {}
+        }
+    }
+    None
+}
+    
+    // Вспомогательные методы
+    fn is_function_declaration(&self, line: &[RawToken]) -> bool {
+        matches!(line.get(0), Some(RawToken::Keyword(k, _)) if k == "FUNC")
+    }
+    
+    fn extract_calls_from_body(&self, body: &[Vec<RawToken>]) -> HashSet<String> {
+        let mut calls = HashSet::new();
+        for line in body {
+            if let [RawToken::Keyword(k, _), RawToken::Number(func_name, _), ..] = line.as_slice() {
+                if k == "CALL" {
+                    calls.insert(func_name.clone());
+                }
+            }
+        }
+        calls
+    }
+    
+    fn find_cycles(&self) -> Option<Vec<String>> {
+        for func in self.functions.keys() {
+            let mut visited = HashSet::new();
+            let mut stack = Vec::new();
+            
+            if self.detect_cycle(func, &mut visited, &mut stack) {
+                return Some(stack);
+            }
+        }
+        None
+    }
+    
+    fn detect_cycle(&self, current: &str, visited: &mut HashSet<String>, stack: &mut Vec<String>) -> bool {
+        if visited.contains(current) {
+            return true;
+        }
         
-        if let Some(func_info) = self.functions.get(current) {
-            for callee in &func_info.calls {
-                if let Some(cycle) = self.detect_cycle(callee, visiting, path) {
-                    return Some(cycle);
+        visited.insert(current.to_string());
+        stack.push(current.to_string());
+        
+        if let Some(info) = self.functions.get(current) {
+            for callee in &info.calls {
+                if self.detect_cycle(callee, visited, stack) {
+                    return true;
                 }
             }
         }
         
-        path.pop();
-        visiting.remove(current);
-        None
-    }
-    
-    fn extract_func_name(line: &str) -> String {
-        let line = line.trim();
-        let line = line.trim_start_matches("FUNC").trim_start();
-        
-        // Убираем комментарии
-        let line = match line.find("//") {
-            Some(pos) => &line[..pos],
-            None => line,
-        };
-        
-        let end = line.find(|c: char| c == ' ' || c == '(' || c == ';')
-            .unwrap_or(line.len());
-        
-        let func_name = line[..end].trim();
-        
-        if func_name.is_empty() {
-            eprintln!("Предупреждение: функция без имени");
-        }
-        
-        func_name.to_string()
-    }
-    
-    fn extract_called_func(line: &str) -> String {
-        let line = line.trim_start_matches("CALL ").trim();
-        // Убираем комментарии после вызова
-        let line = match line.find("//") {
-            Some(pos) => &line[..pos],
-            None => line,
-        };
-        
-        // Ищем конец имени функции
-        let end = line.find(|c: char| c == ' ' || c == ';')
-            .unwrap_or(line.len());
-        
-        let func_name = line[..end].trim();
-        
-        // Проверяем, не пустое ли имя
-        if func_name.is_empty() {
-            eprintln!("Предупреждение: пустой вызов CALL в строке");
-        }
-        
-        func_name.to_string()
-    }
-    
-    fn get_indent(line: &str) -> String {
-        line.chars()
-            .take_while(|c| c.is_whitespace())
-            .collect()
+        stack.pop();
+        visited.remove(current);
+        false
     }
 }

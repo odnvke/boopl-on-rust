@@ -11,7 +11,7 @@ pub fn pre_run(mut program: Vec<(Vec<i32>, i32)>, i_n_m: &IdentNameMap) -> (Vec<
 
     for (i , line_n) in program.iter() {
         counter += 1;
-        //print!("{:?}", i);
+        print!("{:?}", i);
         // для P.10
         if i[0] == 200 {
             // если ещё не обьявлен, обьявлаем
