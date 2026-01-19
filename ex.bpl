@@ -1,1 +1,7 @@
-(1_000_000) P T;
+DEBUG_ON LOG;
+
+P.loop;
+
+P T; P F; P S;
+
+G P.loop;

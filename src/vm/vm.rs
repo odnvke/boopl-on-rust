@@ -24,13 +24,17 @@ impl VM {
     fn run(&mut self, program: Vec<Vec<i32>>, ident_name_map: IdentNameMap, lines_n: Vec<i32>) {
         self.bytecode = program;
         let mut pc = 0;
+        let mut instr_couter = 0;
+        let mut log_mode = false;
+        let mut step_mode = false;
         loop {
             if pc >= self.bytecode.len() {break;}
-            
             let line: &Vec<i32> = &self.bytecode[pc]; 
             let opcode = line[0];
             let line = &line[1..];
             let line_n = lines_n[pc];
+
+            if log_mode {print!("\n  [pc: {}; instr: {}; line: {}]  ", pc, instr_couter, line_n)}
             match opcode {
                 0 => {}
 
@@ -39,24 +43,38 @@ impl VM {
                 51 => {}
 
                 // 10 F
-                100 => {self.memory.insert(line[0],0);}
+                100 => {
+                    self.memory.insert(line[0],0);
+                    if log_mode {print!("{} <= False", ident_name_map.get_name(line[0]))}
+                }
                 // 10 T
-                101 => {self.memory.insert(line[0],1);}
+                101 => {
+                    self.memory.insert(line[0],1);
+                    if log_mode {print!("{} <= False", ident_name_map.get_name(line[0]))}
+                }
                 // 10 10
                 150 => {
                     if self.memory.contains_key(&line[1]) {
                         self.memory.insert(line[0], *self.memory.get(&line[1]).unwrap_or(&0));
+                        if log_mode {print!("{} <= {} ({})", ident_name_map.get_name(line[0]), ident_name_map.get_name(line[1]), line[1] == 1)}
                     } else {
                         error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[1])), line_n)
                     }
                 }
                 // PD.10      ! P.10 небудет
-                201 => {self.memory_pd.insert(line[0], pc as i32);}
+                201 => {
+                    self.memory_pd.insert(line[0], pc as i32);
+                    if log_mode {print!("PD.{} <= {}", ident_name_map.get_name(line[0]), pc)}
+                }
 
                 // G P.10
-                230 => {pc = line[0] as usize}
+                230 => {
+                    if log_mode {print!("GO TO: {}(instr) (from: {})", line[0], pc)};
+                    pc = line[0] as usize;
+                }
                 // G PD.10
                 231 => { if self.memory_pd.contains_key(&line[0]) {
+                        if log_mode {print!("GO TO: PD.{} (from: {})", ident_name_map.get_name(line[0]), pc)}
                         pc = self.memory_pd[&line[0]] as usize
                     } else {
                         error_print(format!("   >>  ! несушествующий динамический указатель PD.{}", ident_name_map.get_name(line[0])), line_n)
@@ -64,10 +82,14 @@ impl VM {
                 }
 
                 // PD.10 P.10
-                260 => {self.memory_pd.insert(line[0], line[1] );}
+                260 => {
+                    if log_mode {print!("PD.{} <= {}(instr)", ident_name_map.get_name(line[0]), line[1])}
+                    self.memory_pd.insert(line[0], line[1] );
+                }
                 // PD.10 PD.10
                 261 => { 
                     if self.memory_pd.contains_key(&line[1]) {
+                        if log_mode {print!("PD.{} <= PD.{} ({})", ident_name_map.get_name(line[0]), ident_name_map.get_name(line[1]), line[1])}
                         self.memory_pd.insert(line[0], *self.memory_pd.get(&line[1]).unwrap_or(&0));
                     } else {
                         error_print(format!("   >>  ! несушествующий динамический указатель PD.{}", ident_name_map.get_name(line[1])), line_n)
@@ -77,16 +99,19 @@ impl VM {
                 // I 10 6(указатель на иначе)
                 300 => {
                     if self.memory.contains_key(&line[0]) {
-                        if self.memory[&line[0]] == 1 {}
-                        else {pc = line[1] as usize}
+                        if log_mode {print!("IF {} (end on {}) : ", ident_name_map.get_name(line[0]), line[1])}
+                        if self.memory[&line[0]] == 1 {print!("Run IF Block")}
+                        else {pc = line[1] as usize; print!("GO TO End IF")}
                     } else {
                         error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
                     }
                 }
                 // IG 10 P.10
                 302 => {
-                    if self.memory.contains_key(&line[0]) { 
-                        if self.memory[&line[0]] == 1 {pc = line[1] as usize}
+                    if self.memory.contains_key(&line[0]) {
+                        if log_mode {print!("IF {} GO TO {}(instr) : ", ident_name_map.get_name(line[0]), line[1])}
+                        if self.memory[&line[0]] == 1 {pc = line[1] as usize; print!("GO TO")}
+                        else {print!("next instr")}
                     } else {
                         error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
                     }
@@ -95,7 +120,10 @@ impl VM {
                 303 => {
                     if self.memory.contains_key(&line[0]) {
                             if self.memory_pd.contains_key(&line[1]) {
-                            if self.memory[&line[0]] == 1 {pc = self.memory_pd[&line[1]] as usize}
+                            if log_mode {print!("IF {} GOTO {} ({}) :", ident_name_map.get_name(line[0]), 
+                                    ident_name_map.get_name(line[1]), self.memory_pd[&line[1]])}
+                            if self.memory[&line[0]] == 1 {pc = self.memory_pd[&line[1]] as usize; print!("GO TO")}
+                            else {print!("next instr")}
                         }
                         else {
                             error_print(format!("   >>  ! несушествующий динамический указатель PD.{}", ident_name_map.get_name(line[1])), line_n)
@@ -106,23 +134,37 @@ impl VM {
                 }
 
                 // P T
-                400 => {print!("#")}
+                400 => {
+                    if log_mode {print!("PRINT TRUE: ")}
+                    print!("#")
+                }
                 // P F
-                401 => {print!(".")}
+                401 => {
+                    if log_mode {print!("PRINT FALSE: ")}
+                    print!(".")
+                }
                 // P 10
                 402 => {if self.memory.contains_key(&line[0]) {
+                        if log_mode {print!("PRINT {}: ", ident_name_map.get_name(line[0]))}
                         if self.memory[&line[0]] == 1 {print!("#")} else {print!(".")}
                     } else {
                         error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
                     }
                 }
                 // P N
-                403 => {println!()}
+                403 => {
+                    if log_mode {print!("NEW LINE: ")}
+                    println!()
+                }
                 // P S
-                404 => {print!(" ")}
+                404 => {
+                    if log_mode {print!("PRINT SPACE: ")}
+                    print!(" ")
+                }
 
                 // P U 10
                 405 => {
+                    if log_mode {print!("PRINT UTF-8 (from: {}): ", ident_name_map.get_name(line[0]))}
                     let start_addr = line[0];
                     let mut bytes = Vec::new();
                     
@@ -185,6 +227,7 @@ impl VM {
                 // 10 N 10
                 500 => {
                     if self.memory.contains_key(&line[1]) {
+                        if log_mode {print!("{} <= NOT {}", )}
                         self.memory.insert(line[0], if *self.memory.get(&line[1]).unwrap_or(&0) == 1 {0} else {1});
                     } else {
                         error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[1])), line_n)
@@ -253,8 +296,6 @@ impl VM {
                         }
                          
                     }
-print!("\x1B[2K\r"); // Очистить всю строку
-                    
                 }
 
                 // 601: IN U
@@ -305,9 +346,42 @@ print!("\x1B[2K\r"); // Очистить всю строку
                     }
                 }
 
+                700 => {
+                    println!("\n\n   >>   BreakPoint on {}\n\n", line_n);
+                    break;
+                }
+
+                730 => {
+                    println!("\n   >>   StepPoint on {}: press Enter", line_n);
+                    use std::io::{self, Write};
+                    
+                    io::stdout().flush().unwrap();
+                    
+                    let mut input = String::new();
+                    io::stdin().read_line(&mut input).unwrap();
+                }
+
+                760 => {
+                    if line[0] == 0 {step_mode = true} else {log_mode = true}
+                }
+
+                761 => {
+                    if line[0] == 0 {step_mode = false} else {log_mode = false}
+                }
                 _ => {panic!("AAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!")}
             }
+
+            if step_mode {
+                    use std::io::{self, Write};
+                    
+                    io::stdout().flush().unwrap();
+                    
+                    let mut input = String::new();
+                    io::stdin().read_line(&mut input).unwrap();
+            }
+
             pc += 1;
+            instr_couter += 1;
         }
     }
 

@@ -176,28 +176,37 @@ fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
     }
 
     if s.len() == 2 {
-        if s == "IN" {
+        if matches!(s, "IN" | "IG" | "BP") {
             return Ok(RawToken::Keyword(s.to_string(), *line_n));
         }
-        if s == "IG" {
+    }
+
+    if s.len() == 3 {
+        if matches!(s, "INB" | "RET" | "LOG") {
             return Ok(RawToken::Keyword(s.to_string(), *line_n));
         }
     }
 
     if s.len() == 4 {
-        if matches!(s, "INBC" | "CALL" | "FUNC") {
+        if matches!(s, "INBC" | "CALL" | "FUNC" | "STEP") {
             return Ok(RawToken::Keyword(s.to_string(), *line_n));
         }
     }
     
-    if s.len() == 3 {
-        if matches!(s, "INB" | "RET") {return Ok(RawToken::Keyword(s.to_string(), *line_n));}
+    if s.len() == 5 {
+        if matches!(s, "DEBUG") {
+            return  Ok(RawToken::Keyword(s.to_string(), *line_n));
+        }
     }
 
     if s.len() == 6 {
         if s == "IMPORT" {
             return  Ok(RawToken::Keyword(s.to_string(), *line_n));
         }
+    }
+
+    if matches!(s, "DEBUG_ON" | "DEBUG_OFF") {
+        return  Ok(RawToken::Keyword(s.to_string(), *line_n));
     }
 
 

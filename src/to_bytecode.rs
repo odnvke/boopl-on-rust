@@ -110,6 +110,35 @@ fn process_line(tokens: Vec<Token>, ident_name_map: &IdentNameMap) -> Result<(Ve
         [Token::Number(n, l_n), Token::Keyword(s, l_n2), Token::Keyword(s2, l_n3)]
               if s == "U" && s2 == "INB" => Ok((vec![676, *n], *l_n)),
 
+        // DEBUG BP;
+        [Token::Keyword(s, l_n), Token::Keyword(s2, _)] 
+                if s == "DEBUG" && s2 == "BP" => Ok((vec![700], *l_n)),
+
+        // DEBUG BP 10;
+        [Token::Keyword(s, l_n), Token::Keyword(s2, _), Token::Number(n, _)] 
+                if s == "DEBUG" && s2 == "BP" => Ok((vec![701, *n], *l_n)),
+
+        // DEBUG STEP;        
+        [Token::Keyword(s, l_n), Token::Keyword(s2, _)] 
+                if s == "DEBUG" && s2 == "STEP" => Ok((vec![730], *l_n)),
+
+        // DEBUG_ON STEP;        
+        [Token::Keyword(s, l_n), Token::Keyword(s2, _)] 
+                if s == "DEBUG_ON" && s2 == "STEP" => Ok((vec![760, 0], *l_n)),
+        
+        // DEBUG_ON LOG;        
+        [Token::Keyword(s, l_n), Token::Keyword(s2, _)] 
+                if s == "DEBUG_ON" && s2 == "LOG" => Ok((vec![760, 1], *l_n)),
+        
+        // DEBUG_ON STEP;        
+        [Token::Keyword(s, l_n), Token::Keyword(s2, _)] 
+                if s == "DEBUG_OFF" && s2 == "STEP" => Ok((vec![761, 0], *l_n)),
+        
+        // DEBUG_ON LOG;        
+        [Token::Keyword(s, l_n), Token::Keyword(s2, _)] 
+                if s == "DEBUG_OFF" && s2 == "LOG" => Ok((vec![761, 1], *l_n)),
+        
+
 
         // Пустая строка
         [] => Ok((vec![], -1)),

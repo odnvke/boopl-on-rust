@@ -154,7 +154,7 @@ fn extract_names(raw_tokens: &[Vec<RawToken>]) -> Vec<String> {
 }
 
 // Основная функция
-pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> (Vec<Vec<Token>>, IdentNameMap) {
+pub fn namezating(raw_tokens: Vec<Vec<RawToken>>, debug_mode: bool) -> (Vec<Vec<Token>>, IdentNameMap) {
     let unique_names = extract_names(&raw_tokens);
     
     let mut tree = TreeNode::default();
@@ -167,7 +167,7 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> (Vec<Vec<Token>>, IdentName
     let mut current_path = Vec::new();
     
     tree.assign_ids(&mut name_to_id, &mut context, &mut current_path);
-    /* 
+    if debug_mode {
     println!("=~=~=~=~=~ Таблица имен =~=~=~=~=~");
     
     // Собираем владеющие значения
@@ -182,7 +182,7 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>) -> (Vec<Vec<Token>>, IdentName
         println!("{:30} → {}", name, id);
     }
     println!("=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~=~\n");
-    */
+    }
     // ИСПРАВЛЕННАЯ часть преобразования токенов
     let mut result = Vec::new();
     

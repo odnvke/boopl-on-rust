@@ -90,7 +90,7 @@ fn main() {
                                 save_tokens_to_file(&filename, "expanded.txt", &tokens);
                             }
                             
-                            let (tokens, ident_name_map) = namezator::namezating(tokens);
+                            let (tokens, ident_name_map) = namezator::namezating(tokens, debug_mode);
                             
                             let bytecode = to_bytecode::to_bytecode(tokens, &ident_name_map);
                             match bytecode {
