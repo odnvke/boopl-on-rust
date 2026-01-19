@@ -100,8 +100,13 @@ impl VM {
                 300 => {
                     if self.memory.contains_key(&line[0]) {
                         if log_mode {print!("IF {} (end on {}) : ", ident_name_map.get_name(line[0]), line[1])}
-                        if self.memory[&line[0]] == 1 {print!("Run IF Block")}
-                        else {pc = line[1] as usize; print!("GO TO End IF")}
+                        if self.memory[&line[0]] == 1 {
+                            if log_mode {print!("Run IF Block")}
+                        }
+                        else {
+                            pc = line[1] as usize; 
+                            if log_mode {print!("GO TO End IF")}
+                        }
                     } else {
                         error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
                     }
@@ -110,8 +115,8 @@ impl VM {
                 302 => {
                     if self.memory.contains_key(&line[0]) {
                         if log_mode {print!("IF {} GO TO {}(instr) : ", ident_name_map.get_name(line[0]), line[1])}
-                        if self.memory[&line[0]] == 1 {pc = line[1] as usize; print!("GO TO")}
-                        else {print!("next instr")}
+                        if self.memory[&line[0]] == 1 {pc = line[1] as usize; if log_mode {print!("GO TO")}}
+                        else {if log_mode {print!("next instr")}}
                     } else {
                         error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
                     }
@@ -122,8 +127,8 @@ impl VM {
                             if self.memory_pd.contains_key(&line[1]) {
                             if log_mode {print!("IF {} GOTO {} ({}) :", ident_name_map.get_name(line[0]), 
                                     ident_name_map.get_name(line[1]), self.memory_pd[&line[1]])}
-                            if self.memory[&line[0]] == 1 {pc = self.memory_pd[&line[1]] as usize; print!("GO TO")}
-                            else {print!("next instr")}
+                            if self.memory[&line[0]] == 1 {pc = self.memory_pd[&line[1]] as usize; if log_mode {print!("GO TO")}}
+                            else {if log_mode {print!("next instr")}}
                         }
                         else {
                             error_print(format!("   >>  ! несушествующий динамический указатель PD.{}", ident_name_map.get_name(line[1])), line_n)
@@ -227,7 +232,7 @@ impl VM {
                 // 10 N 10
                 500 => {
                     if self.memory.contains_key(&line[1]) {
-                        if log_mode {print!("{} <= NOT {}", )}
+                        if log_mode {print!("{} <= NOT {}", ident_name_map.get_name(line[0]), ident_name_map.get_name(line[1]))}
                         self.memory.insert(line[0], if *self.memory.get(&line[1]).unwrap_or(&0) == 1 {0} else {1});
                     } else {
                         error_print(format!("   >>  ! несушествующая ячейка {}", ident_name_map.get_name(line[1])), line_n)
@@ -236,6 +241,8 @@ impl VM {
 
                 // 10 O 10 10
                 550 => {
+                    if log_mode {print!("{} <= {} OR {}", ident_name_map.get_name(line[0]), 
+                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2]))}
                     if self.memory.contains_key(&line[1]) && self.memory.contains_key(&line[2]) {
                         if *self.memory.get(&line[1]).unwrap_or(&0) == 1 || *self.memory.get(&line[2]).unwrap_or(&0) == 1 {
                             self.memory.insert(line[0], 1);
@@ -249,6 +256,8 @@ impl VM {
                 }
                 // 10 A 10 10
                 551 => {
+                    if log_mode {print!("{} <= {} AND {}", ident_name_map.get_name(line[0]), 
+                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2]))}
                     if self.memory.contains_key(&line[1]) && self.memory.contains_key(&line[2]) {
                         if *self.memory.get(&line[1]).unwrap_or(&0) == 1 && *self.memory.get(&line[2]).unwrap_or(&0) == 1 {
                             self.memory.insert(line[0], 1);
@@ -262,6 +271,8 @@ impl VM {
                 }
                 // 10 X 10 10
                 552 => {
+                        if log_mode {print!("{} <= {} XOR {}", ident_name_map.get_name(line[0]), 
+                                ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2]))}
                     if self.memory.contains_key(&line[1]) && self.memory.contains_key(&line[2]) {
                         let a = if *self.memory.get(&line[1]).unwrap_or(&0) == 1 {1} else {0};
                         let b = if *self.memory.get(&line[2]).unwrap_or(&0) == 1 {1} else {0};
@@ -278,6 +289,8 @@ impl VM {
 
                 // 600: IN добавляет строку в буффер
                 600 => {
+                    if log_mode {print!("INPUT Bool: ")}
+
                     use std::io::{self, Write};
                     
                     io::stdout().flush().unwrap();
@@ -296,10 +309,12 @@ impl VM {
                         }
                          
                     }
+                    if log_mode {print!("\n  INPUT Bool Closed; INPUT Buffer: {}", self.input_buffer.iter().collect::<String>())}
                 }
 
                 // 601: IN U
                 601 => {
+                    if log_mode {print!("INPUT UTF-8: ")}
                     use std::io::{self, Write};
                     
                     io::stdout().flush().unwrap();
@@ -308,15 +323,18 @@ impl VM {
                     io::stdin().read_line(&mut input).unwrap();
                     
                     input.chars().for_each(|ch| self.input_buffer.push_back(ch));
+                    if log_mode {print!("\n  INPUT UTF-8 Closed; INPUT Buffer: {}", self.input_buffer.iter().collect::<String>())}
                 }
 
                 // INBC   очистить буффер
                 625 => {
+                    if log_mode {print!("INPUT Buffer cleared")}
                     self.input_buffer.clear();
                 }
                 
                 // 10 INBC   проверка пустоты
                 650 => {
+                    if log_mode {print!("{} <= IF INPUT Buffer clear ({})", ident_name_map.get_name(line[0]), self.input_buffer.is_empty())}
                     let result = if self.input_buffer.is_empty() { 1 } else { 0 };
                     self.memory.insert(line[0], result);
                 }
@@ -324,6 +342,7 @@ impl VM {
                 // 10 INB    берёт следующий символ
                 675 => {
                     if let Some(ch) = self.input_buffer.pop_front() {
+                        if log_mode {print!("{} <= First Char From INPUT Buffer ({})", ident_name_map.get_name(line[0]), ch)}
                         // Преобразуем char в T/F (1 или 0)
                         let value = match ch {
                             'T' | 't' | '1' | '#' => 1,
@@ -340,6 +359,7 @@ impl VM {
                 // 676: 10 U INB - взять первый символ из буфера
                 676 => {
                     if let Some(ch) = self.input_buffer.pop_front() {
+                        if log_mode {print!("{} <= First Char UTF-8 From INPUT Buffer ({})", ident_name_map.get_name(line[0]), ch)}
                         self.store_char_to_memory(line[0], ch);
                     } else {
                         error_print("   >>  ! буффур ввода пустой (utf-8) ".to_string(), line_n);
@@ -362,10 +382,12 @@ impl VM {
                 }
 
                 760 => {
+                    if log_mode {print!("log_mode: {}; step_mode: {}", log_mode, step_mode)}
                     if line[0] == 0 {step_mode = true} else {log_mode = true}
                 }
 
                 761 => {
+                    if log_mode {print!("log_mode: {}; step_mode: {}", log_mode, step_mode)}
                     if line[0] == 0 {step_mode = false} else {log_mode = false}
                 }
                 _ => {panic!("AAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!")}

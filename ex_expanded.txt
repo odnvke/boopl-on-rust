@@ -1,10 +1,3121 @@
 === ТОКЕНЫ ===
 
 1: PD.__return 
-2: DEBUG_ON STEP 
-3: DEBUG_ON LOG 
-4: P.loop 
-5: P true 
-6: P false 
-7: P S 
-8: G P.loop 
+2: ib_0 false 
+3: ib_1 false 
+4: ib_2 false 
+5: ib_3 false 
+6: ib_4 false 
+7: ib_5 false 
+8: ib_6 false 
+9: ib_7 false 
+10: bit_input_0 false 
+11: bit_input_1 false 
+12: bit_input_2 false 
+13: bit_input_3 false 
+14: bit_input_4 false 
+15: bit_input_5 false 
+16: bit_input_6 false 
+17: bit_input_7 false 
+18: G P.bit_input_lib_close 
+19: G P.__func_close_1 
+20: P.input_8 
+21: bit_input_0 false 
+22: bit_input_1 false 
+23: bit_input_2 false 
+24: bit_input_3 false 
+25: bit_input_4 false 
+26: bit_input_5 false 
+27: bit_input_6 false 
+28: bit_input_7 false 
+29: _0 false 
+30: _1 false 
+31: _2 false 
+32: _3 false 
+33: _4 false 
+34: _5 false 
+35: _6 false 
+36: _ false 
+37: PD.__func_return_1 PD.__return 
+38: PD.__return P.__local_func_1 
+39: G P.bit_input_cont_input 
+40: P.__local_func_1 
+41: G PD.__func_return_1 
+42: P.__func_close_1 
+43: G P.__func_close_2 
+44: P.bit_input_cont_input 
+45: P N 
+46: IN 
+47: lib_t2 N bit_input_0 
+48: I lib_t2 
+49: lib_t INBC 
+50: IG lib_t P.bit_input_close_if 
+51: bit_input_0 true 
+52: ib_7 INB 
+53: E 
+54: lib_t2 N bit_input_1 
+55: I lib_t2 
+56: lib_t INBC 
+57: IG lib_t P.bit_input_close_if 
+58: bit_input_1 true 
+59: ib_6 INB 
+60: E 
+61: lib_t2 N bit_input_2 
+62: I lib_t2 
+63: lib_t INBC 
+64: IG lib_t P.bit_input_close_if 
+65: bit_input_2 true 
+66: ib_5 INB 
+67: E 
+68: lib_t2 N bit_input_3 
+69: I lib_t2 
+70: lib_t INBC 
+71: IG lib_t P.bit_input_close_if 
+72: bit_input_3 true 
+73: ib_4 INB 
+74: E 
+75: lib_t2 N bit_input_4 
+76: I lib_t2 
+77: lib_t INBC 
+78: IG lib_t P.bit_input_close_if 
+79: bit_input_4 true 
+80: ib_3 INB 
+81: E 
+82: lib_t2 N bit_input_5 
+83: I lib_t2 
+84: lib_t INBC 
+85: IG lib_t P.bit_input_close_if 
+86: bit_input_5 true 
+87: ib_2 INB 
+88: E 
+89: lib_t2 N bit_input_6 
+90: I lib_t2 
+91: lib_t INBC 
+92: IG lib_t P.bit_input_close_if 
+93: bit_input_6 true 
+94: ib_1 INB 
+95: E 
+96: lib_t INBC 
+97: IG lib_t P.bit_input_close_if 
+98: ib_0 INB 
+99: bit_input_7 true 
+100: P.bit_input_close_if 
+101: INBC 
+102: PD.__func_return_2 PD.__return 
+103: PD.__return P.__local_func_2 
+104: G P.print_bit_input_info 
+105: P.__local_func_2 
+106: I bit_input_7 
+107: G PD.__func_return_2 
+108: E 
+109: PD.__return P.__local_func_3 
+110: G P.print_remaining_info 
+111: P.__local_func_3 
+112: G PD.__func_return_2 
+113: P.__func_close_2 
+114: G P.__func_close_3 
+115: P.print_bit_input_info 
+116: P N 
+117: PD.__func_return_3 PD.__return 
+118: PD.__return P.__local_func_4 
+119: G P.print_ru_V 
+120: P.__local_func_4 
+121: PD.__return P.__local_func_5 
+122: G P.print_ru_v 
+123: P.__local_func_5 
+124: PD.__return P.__local_func_6 
+125: G P.print_ru_o 
+126: P.__local_func_6 
+127: PD.__return P.__local_func_7 
+128: G P.print_ru_d 
+129: P.__local_func_7 
+130: PD.__return P.__local_func_8 
+131: G P.print_colon 
+132: P.__local_func_8 
+133: P S 
+134: I bit_input_0 
+135: P ib_7 
+136: E 
+137: I bit_input_1 
+138: P ib_6 
+139: E 
+140: I bit_input_2 
+141: P ib_5 
+142: E 
+143: I bit_input_3 
+144: P ib_4 
+145: E 
+146: I bit_input_4 
+147: P S 
+148: P ib_3 
+149: E 
+150: I bit_input_5 
+151: P ib_2 
+152: E 
+153: I bit_input_6 
+154: P ib_1 
+155: E 
+156: I bit_input_7 
+157: P ib_0 
+158: E 
+159: lib_t N bit_input_0 
+160: I lib_t 
+161: PD.__return P.__local_func_9 
+162: G P.print_ru_p 
+163: P.__local_func_9 
+164: PD.__return P.__local_func_10 
+165: G P.print_ru_u 
+166: P.__local_func_10 
+167: PD.__return P.__local_func_11 
+168: G P.print_ru_s 
+169: P.__local_func_11 
+170: PD.__return P.__local_func_12 
+171: G P.print_ru_t 
+172: P.__local_func_12 
+173: PD.__return P.__local_func_13 
+174: G P.print_ru_o 
+175: P.__local_func_13 
+176: PD.__return P.__local_func_14 
+177: G P.print_comma 
+178: P.__local_func_14 
+179: P S 
+180: P S 
+181: E 
+182: I bit_input_0 
+183: PD.__return P.__local_func_15 
+184: G P.print_semicolon 
+185: P.__local_func_15 
+186: P S 
+187: P S 
+188: E 
+189: G PD.__func_return_3 
+190: P.__func_close_3 
+191: G P.__func_close_4 
+192: P.print_remaining_info 
+193: PD.__func_return_4 PD.__return 
+194: PD.__return P.__local_func_16 
+195: G P.print_ru_e 
+196: P.__local_func_16 
+197: PD.__return P.__local_func_17 
+198: G P.print_ru_shch 
+199: P.__local_func_17 
+200: PD.__return P.__local_func_18 
+201: G P.print_ru_yo 
+202: P.__local_func_18 
+203: PD.__return P.__local_func_19 
+204: G P.print_colon 
+205: P.__local_func_19 
+206: P S 
+207: I bit_input_0 
+208: I bit_input_1 
+209: I bit_input_2 
+210: I bit_input_3 
+211: I bit_input_4 
+212: I bit_input_5 
+213: I bit_input_6 
+214: PD.__return P.__local_func_20 
+215: G P.print_1 
+216: P.__local_func_20 
+217: G P.skip_print 
+218: E 
+219: PD.__return P.__local_func_21 
+220: G P.print_2 
+221: P.__local_func_21 
+222: G P.skip_print 
+223: E 
+224: PD.__return P.__local_func_22 
+225: G P.print_3 
+226: P.__local_func_22 
+227: G P.skip_print 
+228: E 
+229: PD.__return P.__local_func_23 
+230: G P.print_4 
+231: P.__local_func_23 
+232: G P.skip_print 
+233: E 
+234: PD.__return P.__local_func_24 
+235: G P.print_5 
+236: P.__local_func_24 
+237: G P.skip_print 
+238: E 
+239: PD.__return P.__local_func_25 
+240: G P.print_6 
+241: P.__local_func_25 
+242: G P.skip_print 
+243: E 
+244: PD.__return P.__local_func_26 
+245: G P.print_7 
+246: P.__local_func_26 
+247: G P.skip_print 
+248: E 
+249: PD.__return P.__local_func_27 
+250: G P.print_8 
+251: P.__local_func_27 
+252: P.skip_print 
+253: P S 
+254: PD.__return P.__local_func_28 
+255: G P.print_ru_s 
+256: P.__local_func_28 
+257: PD.__return P.__local_func_29 
+258: G P.print_ru_i 
+259: P.__local_func_29 
+260: PD.__return P.__local_func_30 
+261: G P.print_ru_m 
+262: P.__local_func_30 
+263: PD.__return P.__local_func_31 
+264: G P.print_ru_v 
+265: P.__local_func_31 
+266: PD.__return P.__local_func_32 
+267: G P.print_ru_o 
+268: P.__local_func_32 
+269: PD.__return P.__local_func_33 
+270: G P.print_ru_l 
+271: P.__local_func_33 
+272: PD.__return P.__local_func_34 
+273: G P.print_ru_o 
+274: P.__local_func_34 
+275: PD.__return P.__local_func_35 
+276: G P.print_ru_v 
+277: P.__local_func_35 
+278: P N 
+279: G PD.__func_return_4 
+280: P.__func_close_4 
+281: P.bit_input_lib_close 
+282: i_0 false 
+283: i_1 false 
+284: i_2 false 
+285: i_3 false 
+286: i_4 false 
+287: i_5 false 
+288: i_6 false 
+289: i_7 false 
+290: i2_0 false 
+291: i2_1 false 
+292: i2_2 false 
+293: i2_3 false 
+294: i2_4 false 
+295: i2_5 false 
+296: i2_6 false 
+297: i2_7 false 
+298: c_in false 
+299: c_out false 
+300: lib_c_in c_in 
+301: o_0 false 
+302: o_1 false 
+303: o_2 false 
+304: o_3 false 
+305: o_4 false 
+306: o_5 false 
+307: o_6 false 
+308: o_7 false 
+309: G P.math_lib_close 
+310: E 
+311: G P.__func_close_5 
+312: P._add 
+313: tc lib_c_in 
+314: t X i_0 i2_0 
+315: t2 A i_0 i2_0 
+316: o_0 X t c_in 
+317: t A t c_in 
+318: tc O t t2 
+319: t X i_1 i2_1 
+320: t2 A i_1 i2_1 
+321: o_1 X t tc 
+322: t A t tc 
+323: tc O t t2 
+324: t X i_2 i2_2 
+325: t2 A i_2 i2_2 
+326: o_2 X t tc 
+327: t A t tc 
+328: tc O t t2 
+329: t X i_3 i2_3 
+330: t2 A i_3 i2_3 
+331: o_3 X t tc 
+332: t A t tc 
+333: tc O t t2 
+334: t X i_4 i2_4 
+335: t2 A i_4 i2_4 
+336: o_4 X t tc 
+337: t A t tc 
+338: tc O t t2 
+339: t X i_5 i2_5 
+340: t2 A i_5 i2_5 
+341: o_5 X t tc 
+342: t A t tc 
+343: tc O t t2 
+344: t X i_6 i2_6 
+345: t2 A i_6 i2_6 
+346: o_6 X t tc 
+347: t A t tc 
+348: tc O t t2 
+349: t X i_7 i2_7 
+350: t2 A i_7 i2_7 
+351: o_7 X t tc 
+352: t A t tc 
+353: tc O t t2 
+354: c_out tc 
+355: G PD.__return 
+356: P.__func_close_5 
+357: G P.__func_close_6 
+358: P.sub 
+359: i2_0 N i2_0 
+360: i2_1 N i2_1 
+361: i2_2 N i2_2 
+362: i2_3 N i2_3 
+363: i2_4 N i2_4 
+364: i2_5 N i2_5 
+365: i2_6 N i2_6 
+366: i2_7 N i2_7 
+367: lib_c_in N c_in 
+368: PD.__func_return_6 PD.__return 
+369: PD.__return P.__local_func_36 
+370: G P._add 
+371: P.__local_func_36 
+372: G PD.__func_return_6 
+373: P.__func_close_6 
+374: G P.__func_close_7 
+375: P.add 
+376: lib_c_in c_in 
+377: PD.__func_return_7 PD.__return 
+378: PD.__return P.__local_func_37 
+379: G P._add 
+380: P.__local_func_37 
+381: G PD.__func_return_7 
+382: P.__func_close_7 
+383: P.math_lib_close 
+384: sb_0 false 
+385: sb_1 false 
+386: sb_2 false 
+387: sb_3 false 
+388: sb_4 false 
+389: sb_5 false 
+390: sb_6 false 
+391: sb_7 false 
+392: sb_8 false 
+393: sb_9 false 
+394: sb_10 false 
+395: sb_11 false 
+396: sb_12 false 
+397: sb_13 false 
+398: sb_14 false 
+399: sb_15 false 
+400: sb_16 false 
+401: sb_17 false 
+402: sb_18 false 
+403: sb_19 false 
+404: sb_20 false 
+405: sb_21 false 
+406: sb_22 false 
+407: sb_23 false 
+408: sb_24 false 
+409: sb_25 false 
+410: sb_26 false 
+411: sb_27 false 
+412: sb_28 false 
+413: sb_29 false 
+414: sb_30 false 
+415: sb_31 false 
+416: G P.print_lib_close 
+417: G P.__func_close_8 
+418: P.print_a 
+419: sb_0 false 
+420: sb_1 true 
+421: sb_2 true 
+422: sb_3 false 
+423: sb_4 false 
+424: sb_5 false 
+425: sb_6 false 
+426: sb_7 true 
+427: P U sb_0 
+428: G PD.__return 
+429: P.__func_close_8 
+430: G P.__func_close_9 
+431: P.print_b 
+432: sb_0 false 
+433: sb_1 true 
+434: sb_2 true 
+435: sb_3 false 
+436: sb_4 false 
+437: sb_5 false 
+438: sb_6 true 
+439: sb_7 false 
+440: P U sb_0 
+441: G PD.__return 
+442: P.__func_close_9 
+443: G P.__func_close_10 
+444: P.print_c 
+445: sb_0 false 
+446: sb_1 true 
+447: sb_2 true 
+448: sb_3 false 
+449: sb_4 false 
+450: sb_5 false 
+451: sb_6 true 
+452: sb_7 true 
+453: P U sb_0 
+454: G PD.__return 
+455: P.__func_close_10 
+456: G P.__func_close_11 
+457: P.print_d 
+458: sb_0 false 
+459: sb_1 true 
+460: sb_2 true 
+461: sb_3 false 
+462: sb_4 false 
+463: sb_5 true 
+464: sb_6 false 
+465: sb_7 false 
+466: P U sb_0 
+467: G PD.__return 
+468: P.__func_close_11 
+469: G P.__func_close_12 
+470: P.print_e 
+471: sb_0 false 
+472: sb_1 true 
+473: sb_2 true 
+474: sb_3 false 
+475: sb_4 false 
+476: sb_5 true 
+477: sb_6 false 
+478: sb_7 true 
+479: P U sb_0 
+480: G PD.__return 
+481: P.__func_close_12 
+482: G P.__func_close_13 
+483: P.print_f 
+484: sb_0 false 
+485: sb_1 true 
+486: sb_2 true 
+487: sb_3 false 
+488: sb_4 false 
+489: sb_5 true 
+490: sb_6 true 
+491: sb_7 false 
+492: P U sb_0 
+493: G PD.__return 
+494: P.__func_close_13 
+495: G P.__func_close_14 
+496: P.print_g 
+497: sb_0 false 
+498: sb_1 true 
+499: sb_2 true 
+500: sb_3 false 
+501: sb_4 false 
+502: sb_5 true 
+503: sb_6 true 
+504: sb_7 true 
+505: P U sb_0 
+506: G PD.__return 
+507: P.__func_close_14 
+508: G P.__func_close_15 
+509: P.print_h 
+510: sb_0 false 
+511: sb_1 true 
+512: sb_2 true 
+513: sb_3 false 
+514: sb_4 true 
+515: sb_5 false 
+516: sb_6 false 
+517: sb_7 false 
+518: P U sb_0 
+519: G PD.__return 
+520: P.__func_close_15 
+521: G P.__func_close_16 
+522: P.print_i 
+523: sb_0 false 
+524: sb_1 true 
+525: sb_2 true 
+526: sb_3 false 
+527: sb_4 true 
+528: sb_5 false 
+529: sb_6 false 
+530: sb_7 true 
+531: P U sb_0 
+532: G PD.__return 
+533: P.__func_close_16 
+534: G P.__func_close_17 
+535: P.print_j 
+536: sb_0 false 
+537: sb_1 true 
+538: sb_2 true 
+539: sb_3 false 
+540: sb_4 true 
+541: sb_5 false 
+542: sb_6 true 
+543: sb_7 false 
+544: P U sb_0 
+545: G PD.__return 
+546: P.__func_close_17 
+547: G P.__func_close_18 
+548: P.print_k 
+549: sb_0 false 
+550: sb_1 true 
+551: sb_2 true 
+552: sb_3 false 
+553: sb_4 true 
+554: sb_5 false 
+555: sb_6 true 
+556: sb_7 true 
+557: P U sb_0 
+558: G PD.__return 
+559: P.__func_close_18 
+560: G P.__func_close_19 
+561: P.print_l 
+562: sb_0 false 
+563: sb_1 true 
+564: sb_2 true 
+565: sb_3 false 
+566: sb_4 true 
+567: sb_5 true 
+568: sb_6 false 
+569: sb_7 false 
+570: P U sb_0 
+571: G PD.__return 
+572: P.__func_close_19 
+573: G P.__func_close_20 
+574: P.print_m 
+575: sb_0 false 
+576: sb_1 true 
+577: sb_2 true 
+578: sb_3 false 
+579: sb_4 true 
+580: sb_5 true 
+581: sb_6 false 
+582: sb_7 true 
+583: P U sb_0 
+584: G PD.__return 
+585: P.__func_close_20 
+586: G P.__func_close_21 
+587: P.print_n 
+588: sb_0 false 
+589: sb_1 true 
+590: sb_2 true 
+591: sb_3 false 
+592: sb_4 true 
+593: sb_5 true 
+594: sb_6 true 
+595: sb_7 false 
+596: P U sb_0 
+597: G PD.__return 
+598: P.__func_close_21 
+599: G P.__func_close_22 
+600: P.print_o 
+601: sb_0 false 
+602: sb_1 true 
+603: sb_2 true 
+604: sb_3 false 
+605: sb_4 true 
+606: sb_5 true 
+607: sb_6 true 
+608: sb_7 true 
+609: P U sb_0 
+610: G PD.__return 
+611: P.__func_close_22 
+612: G P.__func_close_23 
+613: P.print_p 
+614: sb_0 false 
+615: sb_1 true 
+616: sb_2 true 
+617: sb_3 true 
+618: sb_4 false 
+619: sb_5 false 
+620: sb_6 false 
+621: sb_7 false 
+622: P U sb_0 
+623: G PD.__return 
+624: P.__func_close_23 
+625: G P.__func_close_24 
+626: P.print_q 
+627: sb_0 false 
+628: sb_1 true 
+629: sb_2 true 
+630: sb_3 true 
+631: sb_4 false 
+632: sb_5 false 
+633: sb_6 false 
+634: sb_7 true 
+635: P U sb_0 
+636: G PD.__return 
+637: P.__func_close_24 
+638: G P.__func_close_25 
+639: P.print_r 
+640: sb_0 false 
+641: sb_1 true 
+642: sb_2 true 
+643: sb_3 true 
+644: sb_4 false 
+645: sb_5 false 
+646: sb_6 true 
+647: sb_7 false 
+648: P U sb_0 
+649: G PD.__return 
+650: P.__func_close_25 
+651: G P.__func_close_26 
+652: P.print_s 
+653: sb_0 false 
+654: sb_1 true 
+655: sb_2 true 
+656: sb_3 true 
+657: sb_4 false 
+658: sb_5 false 
+659: sb_6 true 
+660: sb_7 true 
+661: P U sb_0 
+662: G PD.__return 
+663: P.__func_close_26 
+664: G P.__func_close_27 
+665: P.print_t 
+666: sb_0 false 
+667: sb_1 true 
+668: sb_2 true 
+669: sb_3 true 
+670: sb_4 false 
+671: sb_5 true 
+672: sb_6 false 
+673: sb_7 false 
+674: P U sb_0 
+675: G PD.__return 
+676: P.__func_close_27 
+677: G P.__func_close_28 
+678: P.print_u 
+679: sb_0 false 
+680: sb_1 true 
+681: sb_2 true 
+682: sb_3 true 
+683: sb_4 false 
+684: sb_5 true 
+685: sb_6 false 
+686: sb_7 true 
+687: P U sb_0 
+688: G PD.__return 
+689: P.__func_close_28 
+690: G P.__func_close_29 
+691: P.print_v 
+692: sb_0 false 
+693: sb_1 true 
+694: sb_2 true 
+695: sb_3 true 
+696: sb_4 false 
+697: sb_5 true 
+698: sb_6 true 
+699: sb_7 false 
+700: P U sb_0 
+701: G PD.__return 
+702: P.__func_close_29 
+703: G P.__func_close_30 
+704: P.print_w 
+705: sb_0 false 
+706: sb_1 true 
+707: sb_2 true 
+708: sb_3 true 
+709: sb_4 false 
+710: sb_5 true 
+711: sb_6 true 
+712: sb_7 true 
+713: P U sb_0 
+714: G PD.__return 
+715: P.__func_close_30 
+716: G P.__func_close_31 
+717: P.print_x 
+718: sb_0 false 
+719: sb_1 true 
+720: sb_2 true 
+721: sb_3 true 
+722: sb_4 true 
+723: sb_5 false 
+724: sb_6 false 
+725: sb_7 false 
+726: P U sb_0 
+727: G PD.__return 
+728: P.__func_close_31 
+729: G P.__func_close_32 
+730: P.print_y 
+731: sb_0 false 
+732: sb_1 true 
+733: sb_2 true 
+734: sb_3 true 
+735: sb_4 true 
+736: sb_5 false 
+737: sb_6 false 
+738: sb_7 true 
+739: P U sb_0 
+740: G PD.__return 
+741: P.__func_close_32 
+742: G P.__func_close_33 
+743: P.print_z 
+744: sb_0 false 
+745: sb_1 true 
+746: sb_2 true 
+747: sb_3 true 
+748: sb_4 true 
+749: sb_5 false 
+750: sb_6 true 
+751: sb_7 false 
+752: P U sb_0 
+753: G PD.__return 
+754: P.__func_close_33 
+755: G P.__func_close_34 
+756: P.print_A 
+757: sb_0 false 
+758: sb_1 true 
+759: sb_2 false 
+760: sb_3 false 
+761: sb_4 false 
+762: sb_5 false 
+763: sb_6 false 
+764: sb_7 true 
+765: P U sb_0 
+766: G PD.__return 
+767: P.__func_close_34 
+768: G P.__func_close_35 
+769: P.print_B 
+770: sb_0 false 
+771: sb_1 true 
+772: sb_2 false 
+773: sb_3 false 
+774: sb_4 false 
+775: sb_5 false 
+776: sb_6 true 
+777: sb_7 false 
+778: P U sb_0 
+779: G PD.__return 
+780: P.__func_close_35 
+781: G P.__func_close_36 
+782: P.print_C 
+783: sb_0 false 
+784: sb_1 true 
+785: sb_2 false 
+786: sb_3 false 
+787: sb_4 false 
+788: sb_5 false 
+789: sb_6 true 
+790: sb_7 true 
+791: P U sb_0 
+792: G PD.__return 
+793: P.__func_close_36 
+794: G P.__func_close_37 
+795: P.print_D 
+796: sb_0 false 
+797: sb_1 true 
+798: sb_2 false 
+799: sb_3 false 
+800: sb_4 false 
+801: sb_5 true 
+802: sb_6 false 
+803: sb_7 false 
+804: P U sb_0 
+805: G PD.__return 
+806: P.__func_close_37 
+807: G P.__func_close_38 
+808: P.print_E 
+809: sb_0 false 
+810: sb_1 true 
+811: sb_2 false 
+812: sb_3 false 
+813: sb_4 false 
+814: sb_5 true 
+815: sb_6 false 
+816: sb_7 true 
+817: P U sb_0 
+818: G PD.__return 
+819: P.__func_close_38 
+820: G P.__func_close_39 
+821: P.print_F 
+822: sb_0 false 
+823: sb_1 true 
+824: sb_2 false 
+825: sb_3 false 
+826: sb_4 false 
+827: sb_5 true 
+828: sb_6 true 
+829: sb_7 false 
+830: P U sb_0 
+831: G PD.__return 
+832: P.__func_close_39 
+833: G P.__func_close_40 
+834: P.print_G 
+835: sb_0 false 
+836: sb_1 true 
+837: sb_2 false 
+838: sb_3 false 
+839: sb_4 false 
+840: sb_5 true 
+841: sb_6 true 
+842: sb_7 true 
+843: P U sb_0 
+844: G PD.__return 
+845: P.__func_close_40 
+846: G P.__func_close_41 
+847: P.print_H 
+848: sb_0 false 
+849: sb_1 true 
+850: sb_2 false 
+851: sb_3 false 
+852: sb_4 true 
+853: sb_5 false 
+854: sb_6 false 
+855: sb_7 false 
+856: P U sb_0 
+857: G PD.__return 
+858: P.__func_close_41 
+859: G P.__func_close_42 
+860: P.print_I 
+861: sb_0 false 
+862: sb_1 true 
+863: sb_2 false 
+864: sb_3 false 
+865: sb_4 true 
+866: sb_5 false 
+867: sb_6 false 
+868: sb_7 true 
+869: P U sb_0 
+870: G PD.__return 
+871: P.__func_close_42 
+872: G P.__func_close_43 
+873: P.print_J 
+874: sb_0 false 
+875: sb_1 true 
+876: sb_2 false 
+877: sb_3 false 
+878: sb_4 true 
+879: sb_5 false 
+880: sb_6 true 
+881: sb_7 false 
+882: P U sb_0 
+883: G PD.__return 
+884: P.__func_close_43 
+885: G P.__func_close_44 
+886: P.print_K 
+887: sb_0 false 
+888: sb_1 true 
+889: sb_2 false 
+890: sb_3 false 
+891: sb_4 true 
+892: sb_5 false 
+893: sb_6 true 
+894: sb_7 true 
+895: P U sb_0 
+896: G PD.__return 
+897: P.__func_close_44 
+898: G P.__func_close_45 
+899: P.print_L 
+900: sb_0 false 
+901: sb_1 true 
+902: sb_2 false 
+903: sb_3 false 
+904: sb_4 true 
+905: sb_5 true 
+906: sb_6 false 
+907: sb_7 false 
+908: P U sb_0 
+909: G PD.__return 
+910: P.__func_close_45 
+911: G P.__func_close_46 
+912: P.print_M 
+913: sb_0 false 
+914: sb_1 true 
+915: sb_2 false 
+916: sb_3 false 
+917: sb_4 true 
+918: sb_5 true 
+919: sb_6 false 
+920: sb_7 true 
+921: P U sb_0 
+922: G PD.__return 
+923: P.__func_close_46 
+924: G P.__func_close_47 
+925: P.print_N 
+926: sb_0 false 
+927: sb_1 true 
+928: sb_2 false 
+929: sb_3 false 
+930: sb_4 true 
+931: sb_5 true 
+932: sb_6 true 
+933: sb_7 false 
+934: P U sb_0 
+935: G PD.__return 
+936: P.__func_close_47 
+937: G P.__func_close_48 
+938: P.print_O 
+939: sb_0 false 
+940: sb_1 true 
+941: sb_2 false 
+942: sb_3 false 
+943: sb_4 true 
+944: sb_5 true 
+945: sb_6 true 
+946: sb_7 true 
+947: P U sb_0 
+948: G PD.__return 
+949: P.__func_close_48 
+950: G P.__func_close_49 
+951: P.print_P 
+952: sb_0 false 
+953: sb_1 true 
+954: sb_2 false 
+955: sb_3 true 
+956: sb_4 false 
+957: sb_5 false 
+958: sb_6 false 
+959: sb_7 false 
+960: P U sb_0 
+961: G PD.__return 
+962: P.__func_close_49 
+963: G P.__func_close_50 
+964: P.print_Q 
+965: sb_0 false 
+966: sb_1 true 
+967: sb_2 false 
+968: sb_3 true 
+969: sb_4 false 
+970: sb_5 false 
+971: sb_6 false 
+972: sb_7 true 
+973: P U sb_0 
+974: G PD.__return 
+975: P.__func_close_50 
+976: G P.__func_close_51 
+977: P.print_R 
+978: sb_0 false 
+979: sb_1 true 
+980: sb_2 false 
+981: sb_3 true 
+982: sb_4 false 
+983: sb_5 false 
+984: sb_6 true 
+985: sb_7 false 
+986: P U sb_0 
+987: G PD.__return 
+988: P.__func_close_51 
+989: G P.__func_close_52 
+990: P.print_S 
+991: sb_0 false 
+992: sb_1 true 
+993: sb_2 false 
+994: sb_3 true 
+995: sb_4 false 
+996: sb_5 false 
+997: sb_6 true 
+998: sb_7 true 
+999: P U sb_0 
+1000: G PD.__return 
+1001: P.__func_close_52 
+1002: G P.__func_close_53 
+1003: P.print_T 
+1004: sb_0 false 
+1005: sb_1 true 
+1006: sb_2 false 
+1007: sb_3 true 
+1008: sb_4 false 
+1009: sb_5 true 
+1010: sb_6 false 
+1011: sb_7 false 
+1012: P U sb_0 
+1013: G PD.__return 
+1014: P.__func_close_53 
+1015: G P.__func_close_54 
+1016: P.print_U 
+1017: sb_0 false 
+1018: sb_1 true 
+1019: sb_2 false 
+1020: sb_3 true 
+1021: sb_4 false 
+1022: sb_5 true 
+1023: sb_6 false 
+1024: sb_7 true 
+1025: P U sb_0 
+1026: G PD.__return 
+1027: P.__func_close_54 
+1028: G P.__func_close_55 
+1029: P.print_V 
+1030: sb_0 false 
+1031: sb_1 true 
+1032: sb_2 false 
+1033: sb_3 true 
+1034: sb_4 false 
+1035: sb_5 true 
+1036: sb_6 true 
+1037: sb_7 false 
+1038: P U sb_0 
+1039: G PD.__return 
+1040: P.__func_close_55 
+1041: G P.__func_close_56 
+1042: P.print_W 
+1043: sb_0 false 
+1044: sb_1 true 
+1045: sb_2 false 
+1046: sb_3 true 
+1047: sb_4 false 
+1048: sb_5 true 
+1049: sb_6 true 
+1050: sb_7 true 
+1051: P U sb_0 
+1052: G PD.__return 
+1053: P.__func_close_56 
+1054: G P.__func_close_57 
+1055: P.print_X 
+1056: sb_0 false 
+1057: sb_1 true 
+1058: sb_2 false 
+1059: sb_3 true 
+1060: sb_4 true 
+1061: sb_5 false 
+1062: sb_6 false 
+1063: sb_7 false 
+1064: P U sb_0 
+1065: G PD.__return 
+1066: P.__func_close_57 
+1067: G P.__func_close_58 
+1068: P.print_Y 
+1069: sb_0 false 
+1070: sb_1 true 
+1071: sb_2 false 
+1072: sb_3 true 
+1073: sb_4 true 
+1074: sb_5 false 
+1075: sb_6 false 
+1076: sb_7 true 
+1077: P U sb_0 
+1078: G PD.__return 
+1079: P.__func_close_58 
+1080: G P.__func_close_59 
+1081: P.print_Z 
+1082: sb_0 false 
+1083: sb_1 true 
+1084: sb_2 false 
+1085: sb_3 true 
+1086: sb_4 true 
+1087: sb_5 false 
+1088: sb_6 true 
+1089: sb_7 false 
+1090: P U sb_0 
+1091: G PD.__return 
+1092: P.__func_close_59 
+1093: G P.__func_close_60 
+1094: P.print_0 
+1095: sb_0 false 
+1096: sb_1 false 
+1097: sb_2 true 
+1098: sb_3 true 
+1099: sb_4 false 
+1100: sb_5 false 
+1101: sb_6 false 
+1102: sb_7 false 
+1103: P U sb_0 
+1104: G PD.__return 
+1105: P.__func_close_60 
+1106: G P.__func_close_61 
+1107: P.print_1 
+1108: sb_0 false 
+1109: sb_1 false 
+1110: sb_2 true 
+1111: sb_3 true 
+1112: sb_4 false 
+1113: sb_5 false 
+1114: sb_6 false 
+1115: sb_7 true 
+1116: P U sb_0 
+1117: G PD.__return 
+1118: P.__func_close_61 
+1119: G P.__func_close_62 
+1120: P.print_2 
+1121: sb_0 false 
+1122: sb_1 false 
+1123: sb_2 true 
+1124: sb_3 true 
+1125: sb_4 false 
+1126: sb_5 false 
+1127: sb_6 true 
+1128: sb_7 false 
+1129: P U sb_0 
+1130: G PD.__return 
+1131: P.__func_close_62 
+1132: G P.__func_close_63 
+1133: P.print_3 
+1134: sb_0 false 
+1135: sb_1 false 
+1136: sb_2 true 
+1137: sb_3 true 
+1138: sb_4 false 
+1139: sb_5 false 
+1140: sb_6 true 
+1141: sb_7 true 
+1142: P U sb_0 
+1143: G PD.__return 
+1144: P.__func_close_63 
+1145: G P.__func_close_64 
+1146: P.print_4 
+1147: sb_0 false 
+1148: sb_1 false 
+1149: sb_2 true 
+1150: sb_3 true 
+1151: sb_4 false 
+1152: sb_5 true 
+1153: sb_6 false 
+1154: sb_7 false 
+1155: P U sb_0 
+1156: G PD.__return 
+1157: P.__func_close_64 
+1158: G P.__func_close_65 
+1159: P.print_5 
+1160: sb_0 false 
+1161: sb_1 false 
+1162: sb_2 true 
+1163: sb_3 true 
+1164: sb_4 false 
+1165: sb_5 true 
+1166: sb_6 false 
+1167: sb_7 true 
+1168: P U sb_0 
+1169: G PD.__return 
+1170: P.__func_close_65 
+1171: G P.__func_close_66 
+1172: P.print_6 
+1173: sb_0 false 
+1174: sb_1 false 
+1175: sb_2 true 
+1176: sb_3 true 
+1177: sb_4 false 
+1178: sb_5 true 
+1179: sb_6 true 
+1180: sb_7 false 
+1181: P U sb_0 
+1182: G PD.__return 
+1183: P.__func_close_66 
+1184: G P.__func_close_67 
+1185: P.print_7 
+1186: sb_0 false 
+1187: sb_1 false 
+1188: sb_2 true 
+1189: sb_3 true 
+1190: sb_4 false 
+1191: sb_5 true 
+1192: sb_6 true 
+1193: sb_7 true 
+1194: P U sb_0 
+1195: G PD.__return 
+1196: P.__func_close_67 
+1197: G P.__func_close_68 
+1198: P.print_8 
+1199: sb_0 false 
+1200: sb_1 false 
+1201: sb_2 true 
+1202: sb_3 true 
+1203: sb_4 true 
+1204: sb_5 false 
+1205: sb_6 false 
+1206: sb_7 false 
+1207: P U sb_0 
+1208: G PD.__return 
+1209: P.__func_close_68 
+1210: G P.__func_close_69 
+1211: P.print_9 
+1212: sb_0 false 
+1213: sb_1 false 
+1214: sb_2 true 
+1215: sb_3 true 
+1216: sb_4 true 
+1217: sb_5 false 
+1218: sb_6 false 
+1219: sb_7 true 
+1220: P U sb_0 
+1221: G PD.__return 
+1222: P.__func_close_69 
+1223: G P.__func_close_70 
+1224: P.print_space 
+1225: sb_0 false 
+1226: sb_1 false 
+1227: sb_2 true 
+1228: sb_3 false 
+1229: sb_4 false 
+1230: sb_5 false 
+1231: sb_6 false 
+1232: sb_7 false 
+1233: P U sb_0 
+1234: G PD.__return 
+1235: P.__func_close_70 
+1236: G P.__func_close_71 
+1237: P.print_dot 
+1238: sb_0 false 
+1239: sb_1 false 
+1240: sb_2 true 
+1241: sb_3 false 
+1242: sb_4 true 
+1243: sb_5 true 
+1244: sb_6 true 
+1245: sb_7 false 
+1246: P U sb_0 
+1247: G PD.__return 
+1248: P.__func_close_71 
+1249: G P.__func_close_72 
+1250: P.print_comma 
+1251: sb_0 false 
+1252: sb_1 false 
+1253: sb_2 true 
+1254: sb_3 false 
+1255: sb_4 true 
+1256: sb_5 true 
+1257: sb_6 false 
+1258: sb_7 false 
+1259: P U sb_0 
+1260: G PD.__return 
+1261: P.__func_close_72 
+1262: G P.__func_close_73 
+1263: P.print_exclamation 
+1264: sb_0 false 
+1265: sb_1 false 
+1266: sb_2 true 
+1267: sb_3 false 
+1268: sb_4 false 
+1269: sb_5 false 
+1270: sb_6 false 
+1271: sb_7 true 
+1272: P U sb_0 
+1273: G PD.__return 
+1274: P.__func_close_73 
+1275: G P.__func_close_74 
+1276: P.print_question 
+1277: sb_0 false 
+1278: sb_1 false 
+1279: sb_2 true 
+1280: sb_3 true 
+1281: sb_4 true 
+1282: sb_5 true 
+1283: sb_6 true 
+1284: sb_7 true 
+1285: P U sb_0 
+1286: G PD.__return 
+1287: P.__func_close_74 
+1288: G P.__func_close_75 
+1289: P.print_colon 
+1290: sb_0 false 
+1291: sb_1 false 
+1292: sb_2 true 
+1293: sb_3 true 
+1294: sb_4 true 
+1295: sb_5 false 
+1296: sb_6 true 
+1297: sb_7 false 
+1298: P U sb_0 
+1299: G PD.__return 
+1300: P.__func_close_75 
+1301: G P.__func_close_76 
+1302: P.print_semicolon 
+1303: sb_0 false 
+1304: sb_1 false 
+1305: sb_2 true 
+1306: sb_3 true 
+1307: sb_4 true 
+1308: sb_5 false 
+1309: sb_6 true 
+1310: sb_7 true 
+1311: P U sb_0 
+1312: G PD.__return 
+1313: P.__func_close_76 
+1314: G P.__func_close_77 
+1315: P.print_ru_A 
+1316: sb_0 true 
+1317: sb_1 true 
+1318: sb_2 false 
+1319: sb_3 true 
+1320: sb_4 false 
+1321: sb_5 false 
+1322: sb_6 false 
+1323: sb_7 false 
+1324: sb_8 true 
+1325: sb_9 false 
+1326: sb_10 false 
+1327: sb_11 true 
+1328: sb_12 false 
+1329: sb_13 false 
+1330: sb_14 false 
+1331: sb_15 false 
+1332: P U sb_0 
+1333: G PD.__return 
+1334: P.__func_close_77 
+1335: G P.__func_close_78 
+1336: P.print_ru_B 
+1337: sb_0 true 
+1338: sb_1 true 
+1339: sb_2 false 
+1340: sb_3 true 
+1341: sb_4 false 
+1342: sb_5 false 
+1343: sb_6 false 
+1344: sb_7 false 
+1345: sb_8 true 
+1346: sb_9 false 
+1347: sb_10 false 
+1348: sb_11 true 
+1349: sb_12 false 
+1350: sb_13 false 
+1351: sb_14 false 
+1352: sb_15 true 
+1353: P U sb_0 
+1354: G PD.__return 
+1355: P.__func_close_78 
+1356: G P.__func_close_79 
+1357: P.print_ru_V 
+1358: sb_0 true 
+1359: sb_1 true 
+1360: sb_2 false 
+1361: sb_3 true 
+1362: sb_4 false 
+1363: sb_5 false 
+1364: sb_6 false 
+1365: sb_7 false 
+1366: sb_8 true 
+1367: sb_9 false 
+1368: sb_10 false 
+1369: sb_11 true 
+1370: sb_12 false 
+1371: sb_13 false 
+1372: sb_14 true 
+1373: sb_15 false 
+1374: P U sb_0 
+1375: G PD.__return 
+1376: P.__func_close_79 
+1377: G P.__func_close_80 
+1378: P.print_ru_G 
+1379: sb_0 true 
+1380: sb_1 true 
+1381: sb_2 false 
+1382: sb_3 true 
+1383: sb_4 false 
+1384: sb_5 false 
+1385: sb_6 false 
+1386: sb_7 false 
+1387: sb_8 true 
+1388: sb_9 false 
+1389: sb_10 false 
+1390: sb_11 true 
+1391: sb_12 false 
+1392: sb_13 false 
+1393: sb_14 true 
+1394: sb_15 true 
+1395: P U sb_0 
+1396: G PD.__return 
+1397: P.__func_close_80 
+1398: G P.__func_close_81 
+1399: P.print_ru_D 
+1400: sb_0 true 
+1401: sb_1 true 
+1402: sb_2 false 
+1403: sb_3 true 
+1404: sb_4 false 
+1405: sb_5 false 
+1406: sb_6 false 
+1407: sb_7 false 
+1408: sb_8 true 
+1409: sb_9 false 
+1410: sb_10 false 
+1411: sb_11 true 
+1412: sb_12 false 
+1413: sb_13 true 
+1414: sb_14 false 
+1415: sb_15 false 
+1416: P U sb_0 
+1417: G PD.__return 
+1418: P.__func_close_81 
+1419: G P.__func_close_82 
+1420: P.print_ru_E 
+1421: sb_0 true 
+1422: sb_1 true 
+1423: sb_2 false 
+1424: sb_3 true 
+1425: sb_4 false 
+1426: sb_5 false 
+1427: sb_6 false 
+1428: sb_7 false 
+1429: sb_8 true 
+1430: sb_9 false 
+1431: sb_10 false 
+1432: sb_11 true 
+1433: sb_12 false 
+1434: sb_13 true 
+1435: sb_14 false 
+1436: sb_15 true 
+1437: P U sb_0 
+1438: G PD.__return 
+1439: P.__func_close_82 
+1440: G P.__func_close_83 
+1441: P.print_ru_ZH 
+1442: sb_0 true 
+1443: sb_1 true 
+1444: sb_2 false 
+1445: sb_3 true 
+1446: sb_4 false 
+1447: sb_5 false 
+1448: sb_6 false 
+1449: sb_7 false 
+1450: sb_8 true 
+1451: sb_9 false 
+1452: sb_10 false 
+1453: sb_11 true 
+1454: sb_12 false 
+1455: sb_13 true 
+1456: sb_14 true 
+1457: sb_15 false 
+1458: P U sb_0 
+1459: G PD.__return 
+1460: P.__func_close_83 
+1461: G P.__func_close_84 
+1462: P.print_ru_Z 
+1463: sb_0 true 
+1464: sb_1 true 
+1465: sb_2 false 
+1466: sb_3 true 
+1467: sb_4 false 
+1468: sb_5 false 
+1469: sb_6 false 
+1470: sb_7 false 
+1471: sb_8 true 
+1472: sb_9 false 
+1473: sb_10 false 
+1474: sb_11 true 
+1475: sb_12 false 
+1476: sb_13 true 
+1477: sb_14 true 
+1478: sb_15 true 
+1479: P U sb_0 
+1480: G PD.__return 
+1481: P.__func_close_84 
+1482: G P.__func_close_85 
+1483: P.print_ru_I 
+1484: sb_0 true 
+1485: sb_1 true 
+1486: sb_2 false 
+1487: sb_3 true 
+1488: sb_4 false 
+1489: sb_5 false 
+1490: sb_6 false 
+1491: sb_7 false 
+1492: sb_8 true 
+1493: sb_9 false 
+1494: sb_10 false 
+1495: sb_11 true 
+1496: sb_12 true 
+1497: sb_13 false 
+1498: sb_14 false 
+1499: sb_15 false 
+1500: P U sb_0 
+1501: G PD.__return 
+1502: P.__func_close_85 
+1503: G P.__func_close_86 
+1504: P.print_ru_J 
+1505: sb_0 true 
+1506: sb_1 true 
+1507: sb_2 false 
+1508: sb_3 true 
+1509: sb_4 false 
+1510: sb_5 false 
+1511: sb_6 false 
+1512: sb_7 false 
+1513: sb_8 true 
+1514: sb_9 false 
+1515: sb_10 false 
+1516: sb_11 true 
+1517: sb_12 true 
+1518: sb_13 false 
+1519: sb_14 false 
+1520: sb_15 true 
+1521: P U sb_0 
+1522: G PD.__return 
+1523: P.__func_close_86 
+1524: G P.__func_close_87 
+1525: P.print_ru_K 
+1526: sb_0 true 
+1527: sb_1 true 
+1528: sb_2 false 
+1529: sb_3 true 
+1530: sb_4 false 
+1531: sb_5 false 
+1532: sb_6 false 
+1533: sb_7 false 
+1534: sb_8 true 
+1535: sb_9 false 
+1536: sb_10 false 
+1537: sb_11 true 
+1538: sb_12 true 
+1539: sb_13 false 
+1540: sb_14 true 
+1541: sb_15 false 
+1542: P U sb_0 
+1543: G PD.__return 
+1544: P.__func_close_87 
+1545: G P.__func_close_88 
+1546: P.print_ru_L 
+1547: sb_0 true 
+1548: sb_1 true 
+1549: sb_2 false 
+1550: sb_3 true 
+1551: sb_4 false 
+1552: sb_5 false 
+1553: sb_6 false 
+1554: sb_7 false 
+1555: sb_8 true 
+1556: sb_9 false 
+1557: sb_10 false 
+1558: sb_11 true 
+1559: sb_12 true 
+1560: sb_13 false 
+1561: sb_14 true 
+1562: sb_15 true 
+1563: P U sb_0 
+1564: G PD.__return 
+1565: P.__func_close_88 
+1566: G P.__func_close_89 
+1567: P.print_ru_M 
+1568: sb_0 true 
+1569: sb_1 true 
+1570: sb_2 false 
+1571: sb_3 true 
+1572: sb_4 false 
+1573: sb_5 false 
+1574: sb_6 false 
+1575: sb_7 false 
+1576: sb_8 true 
+1577: sb_9 false 
+1578: sb_10 false 
+1579: sb_11 true 
+1580: sb_12 true 
+1581: sb_13 true 
+1582: sb_14 false 
+1583: sb_15 false 
+1584: P U sb_0 
+1585: G PD.__return 
+1586: P.__func_close_89 
+1587: G P.__func_close_90 
+1588: P.print_ru_N 
+1589: sb_0 true 
+1590: sb_1 true 
+1591: sb_2 false 
+1592: sb_3 true 
+1593: sb_4 false 
+1594: sb_5 false 
+1595: sb_6 false 
+1596: sb_7 false 
+1597: sb_8 true 
+1598: sb_9 false 
+1599: sb_10 false 
+1600: sb_11 true 
+1601: sb_12 true 
+1602: sb_13 true 
+1603: sb_14 false 
+1604: sb_15 true 
+1605: P U sb_0 
+1606: G PD.__return 
+1607: P.__func_close_90 
+1608: G P.__func_close_91 
+1609: P.print_ru_O 
+1610: sb_0 true 
+1611: sb_1 true 
+1612: sb_2 false 
+1613: sb_3 true 
+1614: sb_4 false 
+1615: sb_5 false 
+1616: sb_6 false 
+1617: sb_7 false 
+1618: sb_8 true 
+1619: sb_9 false 
+1620: sb_10 false 
+1621: sb_11 true 
+1622: sb_12 true 
+1623: sb_13 true 
+1624: sb_14 true 
+1625: sb_15 false 
+1626: P U sb_0 
+1627: G PD.__return 
+1628: P.__func_close_91 
+1629: G P.__func_close_92 
+1630: P.print_ru_P 
+1631: sb_0 true 
+1632: sb_1 true 
+1633: sb_2 false 
+1634: sb_3 true 
+1635: sb_4 false 
+1636: sb_5 false 
+1637: sb_6 false 
+1638: sb_7 false 
+1639: sb_8 true 
+1640: sb_9 false 
+1641: sb_10 false 
+1642: sb_11 true 
+1643: sb_12 true 
+1644: sb_13 true 
+1645: sb_14 true 
+1646: sb_15 true 
+1647: P U sb_0 
+1648: G PD.__return 
+1649: P.__func_close_92 
+1650: G P.__func_close_93 
+1651: P.print_ru_R 
+1652: sb_0 true 
+1653: sb_1 true 
+1654: sb_2 false 
+1655: sb_3 true 
+1656: sb_4 false 
+1657: sb_5 false 
+1658: sb_6 false 
+1659: sb_7 false 
+1660: sb_8 true 
+1661: sb_9 false 
+1662: sb_10 true 
+1663: sb_11 false 
+1664: sb_12 false 
+1665: sb_13 false 
+1666: sb_14 false 
+1667: sb_15 false 
+1668: P U sb_0 
+1669: G PD.__return 
+1670: P.__func_close_93 
+1671: G P.__func_close_94 
+1672: P.print_ru_S 
+1673: sb_0 true 
+1674: sb_1 true 
+1675: sb_2 false 
+1676: sb_3 true 
+1677: sb_4 false 
+1678: sb_5 false 
+1679: sb_6 false 
+1680: sb_7 false 
+1681: sb_8 true 
+1682: sb_9 false 
+1683: sb_10 true 
+1684: sb_11 false 
+1685: sb_12 false 
+1686: sb_13 false 
+1687: sb_14 false 
+1688: sb_15 true 
+1689: P U sb_0 
+1690: G PD.__return 
+1691: P.__func_close_94 
+1692: G P.__func_close_95 
+1693: P.print_ru_T 
+1694: sb_0 true 
+1695: sb_1 true 
+1696: sb_2 false 
+1697: sb_3 true 
+1698: sb_4 false 
+1699: sb_5 false 
+1700: sb_6 false 
+1701: sb_7 false 
+1702: sb_8 true 
+1703: sb_9 false 
+1704: sb_10 true 
+1705: sb_11 false 
+1706: sb_12 false 
+1707: sb_13 false 
+1708: sb_14 true 
+1709: sb_15 false 
+1710: P U sb_0 
+1711: G PD.__return 
+1712: P.__func_close_95 
+1713: G P.__func_close_96 
+1714: P.print_ru_U 
+1715: sb_0 true 
+1716: sb_1 true 
+1717: sb_2 false 
+1718: sb_3 true 
+1719: sb_4 false 
+1720: sb_5 false 
+1721: sb_6 false 
+1722: sb_7 false 
+1723: sb_8 true 
+1724: sb_9 false 
+1725: sb_10 true 
+1726: sb_11 false 
+1727: sb_12 false 
+1728: sb_13 false 
+1729: sb_14 true 
+1730: sb_15 true 
+1731: P U sb_0 
+1732: G PD.__return 
+1733: P.__func_close_96 
+1734: G P.__func_close_97 
+1735: P.print_ru_F 
+1736: sb_0 true 
+1737: sb_1 true 
+1738: sb_2 false 
+1739: sb_3 true 
+1740: sb_4 false 
+1741: sb_5 false 
+1742: sb_6 false 
+1743: sb_7 false 
+1744: sb_8 true 
+1745: sb_9 false 
+1746: sb_10 true 
+1747: sb_11 false 
+1748: sb_12 false 
+1749: sb_13 true 
+1750: sb_14 false 
+1751: sb_15 false 
+1752: P U sb_0 
+1753: G PD.__return 
+1754: P.__func_close_97 
+1755: G P.__func_close_98 
+1756: P.print_ru_H 
+1757: sb_0 true 
+1758: sb_1 true 
+1759: sb_2 false 
+1760: sb_3 true 
+1761: sb_4 false 
+1762: sb_5 false 
+1763: sb_6 false 
+1764: sb_7 false 
+1765: sb_8 true 
+1766: sb_9 false 
+1767: sb_10 true 
+1768: sb_11 false 
+1769: sb_12 false 
+1770: sb_13 true 
+1771: sb_14 false 
+1772: sb_15 true 
+1773: P U sb_0 
+1774: G PD.__return 
+1775: P.__func_close_98 
+1776: G P.__func_close_99 
+1777: P.print_ru_TS 
+1778: sb_0 true 
+1779: sb_1 true 
+1780: sb_2 false 
+1781: sb_3 true 
+1782: sb_4 false 
+1783: sb_5 false 
+1784: sb_6 false 
+1785: sb_7 false 
+1786: sb_8 true 
+1787: sb_9 false 
+1788: sb_10 true 
+1789: sb_11 false 
+1790: sb_12 false 
+1791: sb_13 true 
+1792: sb_14 true 
+1793: sb_15 false 
+1794: P U sb_0 
+1795: G PD.__return 
+1796: P.__func_close_99 
+1797: G P.__func_close_100 
+1798: P.print_ru_CH 
+1799: sb_0 true 
+1800: sb_1 true 
+1801: sb_2 false 
+1802: sb_3 true 
+1803: sb_4 false 
+1804: sb_5 false 
+1805: sb_6 false 
+1806: sb_7 false 
+1807: sb_8 true 
+1808: sb_9 false 
+1809: sb_10 true 
+1810: sb_11 false 
+1811: sb_12 false 
+1812: sb_13 true 
+1813: sb_14 true 
+1814: sb_15 true 
+1815: P U sb_0 
+1816: G PD.__return 
+1817: P.__func_close_100 
+1818: G P.__func_close_101 
+1819: P.print_ru_SH 
+1820: sb_0 true 
+1821: sb_1 true 
+1822: sb_2 false 
+1823: sb_3 true 
+1824: sb_4 false 
+1825: sb_5 false 
+1826: sb_6 false 
+1827: sb_7 false 
+1828: sb_8 true 
+1829: sb_9 false 
+1830: sb_10 true 
+1831: sb_11 false 
+1832: sb_12 true 
+1833: sb_13 false 
+1834: sb_14 false 
+1835: sb_15 false 
+1836: P U sb_0 
+1837: G PD.__return 
+1838: P.__func_close_101 
+1839: G P.__func_close_102 
+1840: P.print_ru_SHCH 
+1841: sb_0 true 
+1842: sb_1 true 
+1843: sb_2 false 
+1844: sb_3 true 
+1845: sb_4 false 
+1846: sb_5 false 
+1847: sb_6 false 
+1848: sb_7 false 
+1849: sb_8 true 
+1850: sb_9 false 
+1851: sb_10 true 
+1852: sb_11 false 
+1853: sb_12 true 
+1854: sb_13 false 
+1855: sb_14 false 
+1856: sb_15 true 
+1857: P U sb_0 
+1858: G PD.__return 
+1859: P.__func_close_102 
+1860: G P.__func_close_103 
+1861: P.print_ru_Y 
+1862: sb_0 true 
+1863: sb_1 true 
+1864: sb_2 false 
+1865: sb_3 true 
+1866: sb_4 false 
+1867: sb_5 false 
+1868: sb_6 false 
+1869: sb_7 false 
+1870: sb_8 true 
+1871: sb_9 false 
+1872: sb_10 true 
+1873: sb_11 false 
+1874: sb_12 true 
+1875: sb_13 false 
+1876: sb_14 true 
+1877: sb_15 true 
+1878: P U sb_0 
+1879: G PD.__return 
+1880: P.__func_close_103 
+1881: G P.__func_close_104 
+1882: P.print_ru_EH 
+1883: sb_0 true 
+1884: sb_1 true 
+1885: sb_2 false 
+1886: sb_3 true 
+1887: sb_4 false 
+1888: sb_5 false 
+1889: sb_6 false 
+1890: sb_7 false 
+1891: sb_8 true 
+1892: sb_9 false 
+1893: sb_10 true 
+1894: sb_11 false 
+1895: sb_12 true 
+1896: sb_13 true 
+1897: sb_14 false 
+1898: sb_15 true 
+1899: P U sb_0 
+1900: G PD.__return 
+1901: P.__func_close_104 
+1902: G P.__func_close_105 
+1903: P.print_ru_YU 
+1904: sb_0 true 
+1905: sb_1 true 
+1906: sb_2 false 
+1907: sb_3 true 
+1908: sb_4 false 
+1909: sb_5 false 
+1910: sb_6 false 
+1911: sb_7 false 
+1912: sb_8 true 
+1913: sb_9 false 
+1914: sb_10 true 
+1915: sb_11 false 
+1916: sb_12 true 
+1917: sb_13 true 
+1918: sb_14 true 
+1919: sb_15 false 
+1920: P U sb_0 
+1921: G PD.__return 
+1922: P.__func_close_105 
+1923: G P.__func_close_106 
+1924: P.print_ru_YA 
+1925: sb_0 true 
+1926: sb_1 true 
+1927: sb_2 false 
+1928: sb_3 true 
+1929: sb_4 false 
+1930: sb_5 false 
+1931: sb_6 false 
+1932: sb_7 false 
+1933: sb_8 true 
+1934: sb_9 false 
+1935: sb_10 true 
+1936: sb_11 false 
+1937: sb_12 true 
+1938: sb_13 true 
+1939: sb_14 true 
+1940: sb_15 true 
+1941: P U sb_0 
+1942: G PD.__return 
+1943: P.__func_close_106 
+1944: G P.__func_close_107 
+1945: P.print_ru_TVERDYI 
+1946: sb_0 true 
+1947: sb_1 true 
+1948: sb_2 false 
+1949: sb_3 true 
+1950: sb_4 false 
+1951: sb_5 false 
+1952: sb_6 false 
+1953: sb_7 false 
+1954: sb_8 true 
+1955: sb_9 false 
+1956: sb_10 true 
+1957: sb_11 false 
+1958: sb_12 true 
+1959: sb_13 true 
+1960: sb_14 false 
+1961: sb_15 false 
+1962: P U sb_0 
+1963: G PD.__return 
+1964: P.__func_close_107 
+1965: G P.__func_close_108 
+1966: P.print_ru_MAGKIY 
+1967: sb_0 true 
+1968: sb_1 true 
+1969: sb_2 false 
+1970: sb_3 true 
+1971: sb_4 false 
+1972: sb_5 false 
+1973: sb_6 false 
+1974: sb_7 false 
+1975: sb_8 true 
+1976: sb_9 false 
+1977: sb_10 true 
+1978: sb_11 false 
+1979: sb_12 true 
+1980: sb_13 false 
+1981: sb_14 true 
+1982: sb_15 false 
+1983: P U sb_0 
+1984: G PD.__return 
+1985: P.__func_close_108 
+1986: G P.__func_close_109 
+1987: P.print_ru_a 
+1988: sb_0 true 
+1989: sb_1 true 
+1990: sb_2 false 
+1991: sb_3 true 
+1992: sb_4 false 
+1993: sb_5 false 
+1994: sb_6 false 
+1995: sb_7 false 
+1996: sb_8 true 
+1997: sb_9 false 
+1998: sb_10 true 
+1999: sb_11 true 
+2000: sb_12 false 
+2001: sb_13 false 
+2002: sb_14 false 
+2003: sb_15 false 
+2004: P U sb_0 
+2005: G PD.__return 
+2006: P.__func_close_109 
+2007: G P.__func_close_110 
+2008: P.print_ru_b 
+2009: sb_0 true 
+2010: sb_1 true 
+2011: sb_2 false 
+2012: sb_3 true 
+2013: sb_4 false 
+2014: sb_5 false 
+2015: sb_6 false 
+2016: sb_7 false 
+2017: sb_8 true 
+2018: sb_9 false 
+2019: sb_10 true 
+2020: sb_11 true 
+2021: sb_12 false 
+2022: sb_13 false 
+2023: sb_14 false 
+2024: sb_15 true 
+2025: P U sb_0 
+2026: G PD.__return 
+2027: P.__func_close_110 
+2028: G P.__func_close_111 
+2029: P.print_ru_v 
+2030: sb_0 true 
+2031: sb_1 true 
+2032: sb_2 false 
+2033: sb_3 true 
+2034: sb_4 false 
+2035: sb_5 false 
+2036: sb_6 false 
+2037: sb_7 false 
+2038: sb_8 true 
+2039: sb_9 false 
+2040: sb_10 true 
+2041: sb_11 true 
+2042: sb_12 false 
+2043: sb_13 false 
+2044: sb_14 true 
+2045: sb_15 false 
+2046: P U sb_0 
+2047: G PD.__return 
+2048: P.__func_close_111 
+2049: G P.__func_close_112 
+2050: P.print_ru_g 
+2051: sb_0 true 
+2052: sb_1 true 
+2053: sb_2 false 
+2054: sb_3 true 
+2055: sb_4 false 
+2056: sb_5 false 
+2057: sb_6 false 
+2058: sb_7 false 
+2059: sb_8 true 
+2060: sb_9 false 
+2061: sb_10 true 
+2062: sb_11 true 
+2063: sb_12 false 
+2064: sb_13 false 
+2065: sb_14 true 
+2066: sb_15 true 
+2067: P U sb_0 
+2068: G PD.__return 
+2069: P.__func_close_112 
+2070: G P.__func_close_113 
+2071: P.print_ru_d 
+2072: sb_0 true 
+2073: sb_1 true 
+2074: sb_2 false 
+2075: sb_3 true 
+2076: sb_4 false 
+2077: sb_5 false 
+2078: sb_6 false 
+2079: sb_7 false 
+2080: sb_8 true 
+2081: sb_9 false 
+2082: sb_10 true 
+2083: sb_11 true 
+2084: sb_12 false 
+2085: sb_13 true 
+2086: sb_14 false 
+2087: sb_15 false 
+2088: P U sb_0 
+2089: G PD.__return 
+2090: P.__func_close_113 
+2091: G P.__func_close_114 
+2092: P.print_ru_e 
+2093: sb_0 true 
+2094: sb_1 true 
+2095: sb_2 false 
+2096: sb_3 true 
+2097: sb_4 false 
+2098: sb_5 false 
+2099: sb_6 false 
+2100: sb_7 false 
+2101: sb_8 true 
+2102: sb_9 false 
+2103: sb_10 true 
+2104: sb_11 true 
+2105: sb_12 false 
+2106: sb_13 true 
+2107: sb_14 false 
+2108: sb_15 true 
+2109: P U sb_0 
+2110: G PD.__return 
+2111: P.__func_close_114 
+2112: G P.__func_close_115 
+2113: P.print_ru_zh 
+2114: sb_0 true 
+2115: sb_1 true 
+2116: sb_2 false 
+2117: sb_3 true 
+2118: sb_4 false 
+2119: sb_5 false 
+2120: sb_6 false 
+2121: sb_7 false 
+2122: sb_8 true 
+2123: sb_9 false 
+2124: sb_10 true 
+2125: sb_11 true 
+2126: sb_12 false 
+2127: sb_13 true 
+2128: sb_14 true 
+2129: sb_15 false 
+2130: P U sb_0 
+2131: G PD.__return 
+2132: P.__func_close_115 
+2133: G P.__func_close_116 
+2134: P.print_ru_z 
+2135: sb_0 true 
+2136: sb_1 true 
+2137: sb_2 false 
+2138: sb_3 true 
+2139: sb_4 false 
+2140: sb_5 false 
+2141: sb_6 false 
+2142: sb_7 false 
+2143: sb_8 true 
+2144: sb_9 false 
+2145: sb_10 true 
+2146: sb_11 true 
+2147: sb_12 false 
+2148: sb_13 true 
+2149: sb_14 true 
+2150: sb_15 true 
+2151: P U sb_0 
+2152: G PD.__return 
+2153: P.__func_close_116 
+2154: G P.__func_close_117 
+2155: P.print_ru_i 
+2156: sb_0 true 
+2157: sb_1 true 
+2158: sb_2 false 
+2159: sb_3 true 
+2160: sb_4 false 
+2161: sb_5 false 
+2162: sb_6 false 
+2163: sb_7 false 
+2164: sb_8 true 
+2165: sb_9 false 
+2166: sb_10 true 
+2167: sb_11 true 
+2168: sb_12 true 
+2169: sb_13 false 
+2170: sb_14 false 
+2171: sb_15 false 
+2172: P U sb_0 
+2173: G PD.__return 
+2174: P.__func_close_117 
+2175: G P.__func_close_118 
+2176: P.print_ru_j 
+2177: sb_0 true 
+2178: sb_1 true 
+2179: sb_2 false 
+2180: sb_3 true 
+2181: sb_4 false 
+2182: sb_5 false 
+2183: sb_6 false 
+2184: sb_7 false 
+2185: sb_8 true 
+2186: sb_9 false 
+2187: sb_10 true 
+2188: sb_11 true 
+2189: sb_12 true 
+2190: sb_13 false 
+2191: sb_14 false 
+2192: sb_15 true 
+2193: P U sb_0 
+2194: G PD.__return 
+2195: P.__func_close_118 
+2196: G P.__func_close_119 
+2197: P.print_ru_k 
+2198: sb_0 true 
+2199: sb_1 true 
+2200: sb_2 false 
+2201: sb_3 true 
+2202: sb_4 false 
+2203: sb_5 false 
+2204: sb_6 false 
+2205: sb_7 false 
+2206: sb_8 true 
+2207: sb_9 false 
+2208: sb_10 true 
+2209: sb_11 true 
+2210: sb_12 true 
+2211: sb_13 false 
+2212: sb_14 true 
+2213: sb_15 false 
+2214: P U sb_0 
+2215: G PD.__return 
+2216: P.__func_close_119 
+2217: G P.__func_close_120 
+2218: P.print_ru_l 
+2219: sb_0 true 
+2220: sb_1 true 
+2221: sb_2 false 
+2222: sb_3 true 
+2223: sb_4 false 
+2224: sb_5 false 
+2225: sb_6 false 
+2226: sb_7 false 
+2227: sb_8 true 
+2228: sb_9 false 
+2229: sb_10 true 
+2230: sb_11 true 
+2231: sb_12 true 
+2232: sb_13 false 
+2233: sb_14 true 
+2234: sb_15 true 
+2235: P U sb_0 
+2236: G PD.__return 
+2237: P.__func_close_120 
+2238: G P.__func_close_121 
+2239: P.print_ru_m 
+2240: sb_0 true 
+2241: sb_1 true 
+2242: sb_2 false 
+2243: sb_3 true 
+2244: sb_4 false 
+2245: sb_5 false 
+2246: sb_6 false 
+2247: sb_7 false 
+2248: sb_8 true 
+2249: sb_9 false 
+2250: sb_10 true 
+2251: sb_11 true 
+2252: sb_12 true 
+2253: sb_13 true 
+2254: sb_14 false 
+2255: sb_15 false 
+2256: P U sb_0 
+2257: G PD.__return 
+2258: P.__func_close_121 
+2259: G P.__func_close_122 
+2260: P.print_ru_n 
+2261: sb_0 true 
+2262: sb_1 true 
+2263: sb_2 false 
+2264: sb_3 true 
+2265: sb_4 false 
+2266: sb_5 false 
+2267: sb_6 false 
+2268: sb_7 false 
+2269: sb_8 true 
+2270: sb_9 false 
+2271: sb_10 true 
+2272: sb_11 true 
+2273: sb_12 true 
+2274: sb_13 true 
+2275: sb_14 false 
+2276: sb_15 true 
+2277: P U sb_0 
+2278: G PD.__return 
+2279: P.__func_close_122 
+2280: G P.__func_close_123 
+2281: P.print_ru_o 
+2282: sb_0 true 
+2283: sb_1 true 
+2284: sb_2 false 
+2285: sb_3 true 
+2286: sb_4 false 
+2287: sb_5 false 
+2288: sb_6 false 
+2289: sb_7 false 
+2290: sb_8 true 
+2291: sb_9 false 
+2292: sb_10 true 
+2293: sb_11 true 
+2294: sb_12 true 
+2295: sb_13 true 
+2296: sb_14 true 
+2297: sb_15 false 
+2298: P U sb_0 
+2299: G PD.__return 
+2300: P.__func_close_123 
+2301: G P.__func_close_124 
+2302: P.print_ru_p 
+2303: sb_0 true 
+2304: sb_1 true 
+2305: sb_2 false 
+2306: sb_3 true 
+2307: sb_4 false 
+2308: sb_5 false 
+2309: sb_6 false 
+2310: sb_7 false 
+2311: sb_8 true 
+2312: sb_9 false 
+2313: sb_10 true 
+2314: sb_11 true 
+2315: sb_12 true 
+2316: sb_13 true 
+2317: sb_14 true 
+2318: sb_15 true 
+2319: P U sb_0 
+2320: G PD.__return 
+2321: P.__func_close_124 
+2322: G P.__func_close_125 
+2323: P.print_ru_r 
+2324: sb_0 true 
+2325: sb_1 true 
+2326: sb_2 false 
+2327: sb_3 true 
+2328: sb_4 false 
+2329: sb_5 false 
+2330: sb_6 false 
+2331: sb_7 true 
+2332: sb_8 true 
+2333: sb_9 false 
+2334: sb_10 false 
+2335: sb_11 false 
+2336: sb_12 false 
+2337: sb_13 false 
+2338: sb_14 false 
+2339: sb_15 false 
+2340: P U sb_0 
+2341: G PD.__return 
+2342: P.__func_close_125 
+2343: G P.__func_close_126 
+2344: P.print_ru_s 
+2345: sb_0 true 
+2346: sb_1 true 
+2347: sb_2 false 
+2348: sb_3 true 
+2349: sb_4 false 
+2350: sb_5 false 
+2351: sb_6 false 
+2352: sb_7 true 
+2353: sb_8 true 
+2354: sb_9 false 
+2355: sb_10 false 
+2356: sb_11 false 
+2357: sb_12 false 
+2358: sb_13 false 
+2359: sb_14 false 
+2360: sb_15 true 
+2361: P U sb_0 
+2362: G PD.__return 
+2363: P.__func_close_126 
+2364: G P.__func_close_127 
+2365: P.print_ru_t 
+2366: sb_0 true 
+2367: sb_1 true 
+2368: sb_2 false 
+2369: sb_3 true 
+2370: sb_4 false 
+2371: sb_5 false 
+2372: sb_6 false 
+2373: sb_7 true 
+2374: sb_8 true 
+2375: sb_9 false 
+2376: sb_10 false 
+2377: sb_11 false 
+2378: sb_12 false 
+2379: sb_13 false 
+2380: sb_14 true 
+2381: sb_15 false 
+2382: P U sb_0 
+2383: G PD.__return 
+2384: P.__func_close_127 
+2385: G P.__func_close_128 
+2386: P.print_ru_u 
+2387: sb_0 true 
+2388: sb_1 true 
+2389: sb_2 false 
+2390: sb_3 true 
+2391: sb_4 false 
+2392: sb_5 false 
+2393: sb_6 false 
+2394: sb_7 true 
+2395: sb_8 true 
+2396: sb_9 false 
+2397: sb_10 false 
+2398: sb_11 false 
+2399: sb_12 false 
+2400: sb_13 false 
+2401: sb_14 true 
+2402: sb_15 true 
+2403: P U sb_0 
+2404: G PD.__return 
+2405: P.__func_close_128 
+2406: G P.__func_close_129 
+2407: P.print_ru_f 
+2408: sb_0 true 
+2409: sb_1 true 
+2410: sb_2 false 
+2411: sb_3 true 
+2412: sb_4 false 
+2413: sb_5 false 
+2414: sb_6 false 
+2415: sb_7 true 
+2416: sb_8 true 
+2417: sb_9 false 
+2418: sb_10 false 
+2419: sb_11 false 
+2420: sb_12 false 
+2421: sb_13 true 
+2422: sb_14 false 
+2423: sb_15 false 
+2424: P U sb_0 
+2425: G PD.__return 
+2426: P.__func_close_129 
+2427: G P.__func_close_130 
+2428: P.print_ru_h 
+2429: sb_0 true 
+2430: sb_1 true 
+2431: sb_2 false 
+2432: sb_3 true 
+2433: sb_4 false 
+2434: sb_5 false 
+2435: sb_6 false 
+2436: sb_7 true 
+2437: sb_8 true 
+2438: sb_9 false 
+2439: sb_10 false 
+2440: sb_11 false 
+2441: sb_12 false 
+2442: sb_13 true 
+2443: sb_14 false 
+2444: sb_15 true 
+2445: P U sb_0 
+2446: G PD.__return 
+2447: P.__func_close_130 
+2448: G P.__func_close_131 
+2449: P.print_ru_ts 
+2450: sb_0 true 
+2451: sb_1 true 
+2452: sb_2 false 
+2453: sb_3 true 
+2454: sb_4 false 
+2455: sb_5 false 
+2456: sb_6 false 
+2457: sb_7 true 
+2458: sb_8 true 
+2459: sb_9 false 
+2460: sb_10 false 
+2461: sb_11 false 
+2462: sb_12 false 
+2463: sb_13 true 
+2464: sb_14 true 
+2465: sb_15 false 
+2466: P U sb_0 
+2467: G PD.__return 
+2468: P.__func_close_131 
+2469: G P.__func_close_132 
+2470: P.print_ru_ch 
+2471: sb_0 true 
+2472: sb_1 true 
+2473: sb_2 false 
+2474: sb_3 true 
+2475: sb_4 false 
+2476: sb_5 false 
+2477: sb_6 false 
+2478: sb_7 true 
+2479: sb_8 true 
+2480: sb_9 false 
+2481: sb_10 false 
+2482: sb_11 false 
+2483: sb_12 false 
+2484: sb_13 true 
+2485: sb_14 true 
+2486: sb_15 true 
+2487: P U sb_0 
+2488: G PD.__return 
+2489: P.__func_close_132 
+2490: G P.__func_close_133 
+2491: P.print_ru_sh 
+2492: sb_0 true 
+2493: sb_1 true 
+2494: sb_2 false 
+2495: sb_3 true 
+2496: sb_4 false 
+2497: sb_5 false 
+2498: sb_6 false 
+2499: sb_7 true 
+2500: sb_8 true 
+2501: sb_9 false 
+2502: sb_10 false 
+2503: sb_11 false 
+2504: sb_12 true 
+2505: sb_13 false 
+2506: sb_14 false 
+2507: sb_15 false 
+2508: P U sb_0 
+2509: G PD.__return 
+2510: P.__func_close_133 
+2511: G P.__func_close_134 
+2512: P.print_ru_shch 
+2513: sb_0 true 
+2514: sb_1 true 
+2515: sb_2 false 
+2516: sb_3 true 
+2517: sb_4 false 
+2518: sb_5 false 
+2519: sb_6 false 
+2520: sb_7 true 
+2521: sb_8 true 
+2522: sb_9 false 
+2523: sb_10 false 
+2524: sb_11 false 
+2525: sb_12 true 
+2526: sb_13 false 
+2527: sb_14 false 
+2528: sb_15 true 
+2529: P U sb_0 
+2530: G PD.__return 
+2531: P.__func_close_134 
+2532: G P.__func_close_135 
+2533: P.print_ru_magkiy 
+2534: sb_0 true 
+2535: sb_1 true 
+2536: sb_2 false 
+2537: sb_3 true 
+2538: sb_4 false 
+2539: sb_5 false 
+2540: sb_6 false 
+2541: sb_7 true 
+2542: sb_8 true 
+2543: sb_9 false 
+2544: sb_10 false 
+2545: sb_11 false 
+2546: sb_12 true 
+2547: sb_13 false 
+2548: sb_14 true 
+2549: sb_15 false 
+2550: P U sb_0 
+2551: G PD.__return 
+2552: P.__func_close_135 
+2553: G P.__func_close_136 
+2554: P.print_ru_y 
+2555: sb_0 true 
+2556: sb_1 true 
+2557: sb_2 false 
+2558: sb_3 true 
+2559: sb_4 false 
+2560: sb_5 false 
+2561: sb_6 false 
+2562: sb_7 true 
+2563: sb_8 true 
+2564: sb_9 false 
+2565: sb_10 false 
+2566: sb_11 false 
+2567: sb_12 true 
+2568: sb_13 false 
+2569: sb_14 true 
+2570: sb_15 true 
+2571: P U sb_0 
+2572: G PD.__return 
+2573: P.__func_close_136 
+2574: G P.__func_close_137 
+2575: P.print_ru_tverdyi 
+2576: sb_0 true 
+2577: sb_1 true 
+2578: sb_2 false 
+2579: sb_3 true 
+2580: sb_4 false 
+2581: sb_5 false 
+2582: sb_6 false 
+2583: sb_7 true 
+2584: sb_8 true 
+2585: sb_9 false 
+2586: sb_10 false 
+2587: sb_11 false 
+2588: sb_12 true 
+2589: sb_13 true 
+2590: sb_14 false 
+2591: sb_15 false 
+2592: P U sb_0 
+2593: G PD.__return 
+2594: P.__func_close_137 
+2595: G P.__func_close_138 
+2596: P.print_ru_eh 
+2597: sb_0 true 
+2598: sb_1 true 
+2599: sb_2 false 
+2600: sb_3 true 
+2601: sb_4 false 
+2602: sb_5 false 
+2603: sb_6 false 
+2604: sb_7 true 
+2605: sb_8 true 
+2606: sb_9 false 
+2607: sb_10 false 
+2608: sb_11 false 
+2609: sb_12 true 
+2610: sb_13 true 
+2611: sb_14 false 
+2612: sb_15 true 
+2613: P U sb_0 
+2614: G PD.__return 
+2615: P.__func_close_138 
+2616: G P.__func_close_139 
+2617: P.print_ru_yu 
+2618: sb_0 true 
+2619: sb_1 true 
+2620: sb_2 false 
+2621: sb_3 true 
+2622: sb_4 false 
+2623: sb_5 false 
+2624: sb_6 false 
+2625: sb_7 true 
+2626: sb_8 true 
+2627: sb_9 false 
+2628: sb_10 false 
+2629: sb_11 false 
+2630: sb_12 true 
+2631: sb_13 true 
+2632: sb_14 true 
+2633: sb_15 false 
+2634: P U sb_0 
+2635: G PD.__return 
+2636: P.__func_close_139 
+2637: G P.__func_close_140 
+2638: P.print_ru_ya 
+2639: sb_0 true 
+2640: sb_1 true 
+2641: sb_2 false 
+2642: sb_3 true 
+2643: sb_4 false 
+2644: sb_5 false 
+2645: sb_6 false 
+2646: sb_7 true 
+2647: sb_8 true 
+2648: sb_9 false 
+2649: sb_10 false 
+2650: sb_11 false 
+2651: sb_12 true 
+2652: sb_13 true 
+2653: sb_14 true 
+2654: sb_15 true 
+2655: P U sb_0 
+2656: G PD.__return 
+2657: P.__func_close_140 
+2658: G P.__func_close_141 
+2659: P.print_ru_yo 
+2660: sb_0 true 
+2661: sb_1 true 
+2662: sb_2 false 
+2663: sb_3 true 
+2664: sb_4 false 
+2665: sb_5 false 
+2666: sb_6 false 
+2667: sb_7 true 
+2668: sb_8 true 
+2669: sb_9 false 
+2670: sb_10 false 
+2671: sb_11 true 
+2672: sb_12 false 
+2673: sb_13 false 
+2674: sb_14 false 
+2675: sb_15 true 
+2676: P U sb_0 
+2677: G PD.__return 
+2678: P.__func_close_141 
+2679: G P.__func_close_142 
+2680: P.print_ru_YO 
+2681: sb_0 true 
+2682: sb_1 true 
+2683: sb_2 false 
+2684: sb_3 true 
+2685: sb_4 false 
+2686: sb_5 false 
+2687: sb_6 false 
+2688: sb_7 false 
+2689: sb_8 true 
+2690: sb_9 false 
+2691: sb_10 false 
+2692: sb_11 false 
+2693: sb_12 false 
+2694: sb_13 false 
+2695: sb_14 false 
+2696: sb_15 true 
+2697: P U sb_0 
+2698: G PD.__return 
+2699: P.__func_close_142 
+2700: P.print_lib_close 
+2701: P.vvod 
+2702: PD.__func_return_142 PD.__return 
+2703: PD.__return P.__local_func_38 
+2704: G P.first_num_print 
+2705: P.__local_func_38 
+2706: PD.__return P.__local_func_39 
+2707: G P.input_8 
+2708: P.__local_func_39 
+2709: i_0 ib_0 
+2710: i_1 ib_1 
+2711: i_2 ib_2 
+2712: i_3 ib_3 
+2713: i_4 ib_4 
+2714: i_5 ib_5 
+2715: i_6 ib_6 
+2716: i_7 ib_7 
+2717: P N 
+2718: P.vvod_2 
+2719: PD.__return P.__local_func_40 
+2720: G P.second_num_print 
+2721: P.__local_func_40 
+2722: PD.__return P.__local_func_41 
+2723: G P.input_8 
+2724: P.__local_func_41 
+2725: i2_0 ib_0 
+2726: i2_1 ib_1 
+2727: i2_2 ib_2 
+2728: i2_3 ib_3 
+2729: i2_4 ib_4 
+2730: i2_5 ib_5 
+2731: i2_6 ib_6 
+2732: i2_7 ib_7 
+2733: P N 
+2734: PD.__return P.__local_func_42 
+2735: G P.deistvie 
+2736: P.__local_func_42 
+2737: INBC 
+2738: IN 
+2739: minus INB 
+2740: I minus 
+2741: PD.__return P.__local_func_43 
+2742: G P.raznica 
+2743: P.__local_func_43 
+2744: PD.__return P.__local_func_44 
+2745: G P.sub 
+2746: P.__local_func_44 
+2747: E 
+2748: plus N minus 
+2749: I plus 
+2750: PD.__return P.__local_func_45 
+2751: G P.summa 
+2752: P.__local_func_45 
+2753: PD.__return P.__local_func_46 
+2754: G P.add 
+2755: P.__local_func_46 
+2756: E 
+2757: P N 
+2758: P o_7 
+2759: P o_6 
+2760: P o_5 
+2761: P o_4 
+2762: P o_3 
+2763: P o_2 
+2764: P o_1 
+2765: P o_0 
+2766: P N 
+2767: PD.__return P.__local_func_47 
+2768: G P.prodoljit 
+2769: P.__local_func_47 
+2770: INBC 
+2771: IN 
+2772: pdol INB 
+2773: IG pdol P.end 
+2774: PD.__return P.__local_func_48 
+2775: G P.prodoljit_2 
+2776: P.__local_func_48 
+2777: INBC 
+2778: IN 
+2779: pdol_2 INB 
+2780: I pdol_2 
+2781: i_0 o_0 
+2782: i_1 o_1 
+2783: i_2 o_2 
+2784: i_3 o_3 
+2785: i_4 o_4 
+2786: i_5 o_5 
+2787: i_6 o_6 
+2788: i_7 o_7 
+2789: PD.__return P.__local_func_49 
+2790: G P.first_num_print 
+2791: P.__local_func_49 
+2792: P N 
+2793: P o_7 
+2794: P o_6 
+2795: P o_5 
+2796: P o_4 
+2797: P o_3 
+2798: P o_2 
+2799: P o_1 
+2800: P o_0 
+2801: P N 
+2802: G P.vvod_2 
+2803: E 
+2804: G P.vvod 
+2805: E 
+2806: P.end 
+2807: G P.__func_close_143 
+2808: P.first_num_print 
+2809: PD.__func_return_143 PD.__return 
+2810: PD.__return P.__local_func_50 
+2811: G P.print_ru_P 
+2812: P.__local_func_50 
+2813: PD.__return P.__local_func_51 
+2814: G P.print_ru_e 
+2815: P.__local_func_51 
+2816: PD.__return P.__local_func_52 
+2817: G P.print_ru_r 
+2818: P.__local_func_52 
+2819: PD.__return P.__local_func_53 
+2820: G P.print_ru_v 
+2821: P.__local_func_53 
+2822: PD.__return P.__local_func_54 
+2823: G P.print_ru_e 
+2824: P.__local_func_54 
+2825: P S 
+2826: PD.__return P.__local_func_55 
+2827: G P.print_ru_b 
+2828: P.__local_func_55 
+2829: PD.__return P.__local_func_56 
+2830: G P.print_ru_i 
+2831: P.__local_func_56 
+2832: PD.__return P.__local_func_57 
+2833: G P.print_ru_t 
+2834: P.__local_func_57 
+2835: PD.__return P.__local_func_58 
+2836: G P.print_ru_y 
+2837: P.__local_func_58 
+2838: PD.__return P.__local_func_59 
+2839: G P.print_colon 
+2840: P.__local_func_59 
+2841: G PD.__func_return_143 
+2842: P.__func_close_143 
+2843: G P.__func_close_144 
+2844: P.second_num_print 
+2845: P N 
+2846: PD.__func_return_144 PD.__return 
+2847: PD.__return P.__local_func_60 
+2848: G P.print_ru_V 
+2849: P.__local_func_60 
+2850: PD.__return P.__local_func_61 
+2851: G P.print_ru_t 
+2852: P.__local_func_61 
+2853: PD.__return P.__local_func_62 
+2854: G P.print_ru_o 
+2855: P.__local_func_62 
+2856: PD.__return P.__local_func_63 
+2857: G P.print_ru_r 
+2858: P.__local_func_63 
+2859: PD.__return P.__local_func_64 
+2860: G P.print_ru_y 
+2861: P.__local_func_64 
+2862: PD.__return P.__local_func_65 
+2863: G P.print_ru_e 
+2864: P.__local_func_65 
+2865: P S 
+2866: PD.__return P.__local_func_66 
+2867: G P.print_ru_b 
+2868: P.__local_func_66 
+2869: PD.__return P.__local_func_67 
+2870: G P.print_ru_i 
+2871: P.__local_func_67 
+2872: PD.__return P.__local_func_68 
+2873: G P.print_ru_t 
+2874: P.__local_func_68 
+2875: PD.__return P.__local_func_69 
+2876: G P.print_ru_y 
+2877: P.__local_func_69 
+2878: PD.__return P.__local_func_70 
+2879: G P.print_colon 
+2880: P.__local_func_70 
+2881: G PD.__func_return_144 
+2882: P.__func_close_144 
+2883: G P.__func_close_145 
+2884: P.summa 
+2885: P N 
+2886: PD.__func_return_145 PD.__return 
+2887: PD.__return P.__local_func_71 
+2888: G P.print_ru_S 
+2889: P.__local_func_71 
+2890: PD.__return P.__local_func_72 
+2891: G P.print_ru_u 
+2892: P.__local_func_72 
+2893: PD.__return P.__local_func_73 
+2894: G P.print_ru_m 
+2895: P.__local_func_73 
+2896: PD.__return P.__local_func_74 
+2897: G P.print_ru_m 
+2898: P.__local_func_74 
+2899: PD.__return P.__local_func_75 
+2900: G P.print_ru_a 
+2901: P.__local_func_75 
+2902: PD.__return P.__local_func_76 
+2903: G P.print_colon 
+2904: P.__local_func_76 
+2905: P N 
+2906: G PD.__func_return_145 
+2907: P.__func_close_145 
+2908: G P.__func_close_146 
+2909: P.prodoljit 
+2910: P N 
+2911: PD.__func_return_146 PD.__return 
+2912: PD.__return P.__local_func_77 
+2913: G P.print_0 
+2914: P.__local_func_77 
+2915: P S 
+2916: P S 
+2917: PD.__return P.__local_func_78 
+2918: G P.print_ru_P 
+2919: P.__local_func_78 
+2920: PD.__return P.__local_func_79 
+2921: G P.print_ru_r 
+2922: P.__local_func_79 
+2923: PD.__return P.__local_func_80 
+2924: G P.print_ru_o 
+2925: P.__local_func_80 
+2926: PD.__return P.__local_func_81 
+2927: G P.print_ru_d 
+2928: P.__local_func_81 
+2929: PD.__return P.__local_func_82 
+2930: G P.print_ru_o 
+2931: P.__local_func_82 
+2932: PD.__return P.__local_func_83 
+2933: G P.print_ru_l 
+2934: P.__local_func_83 
+2935: PD.__return P.__local_func_84 
+2936: G P.print_ru_zh 
+2937: P.__local_func_84 
+2938: PD.__return P.__local_func_85 
+2939: G P.print_ru_i 
+2940: P.__local_func_85 
+2941: PD.__return P.__local_func_86 
+2942: G P.print_ru_t 
+2943: P.__local_func_86 
+2944: PD.__return P.__local_func_87 
+2945: G P.print_ru_magkiy 
+2946: P.__local_func_87 
+2947: P N 
+2948: PD.__return P.__local_func_88 
+2949: G P.print_1 
+2950: P.__local_func_88 
+2951: P S 
+2952: P S 
+2953: PD.__return P.__local_func_89 
+2954: G P.print_ru_V 
+2955: P.__local_func_89 
+2956: PD.__return P.__local_func_90 
+2957: G P.print_ru_y 
+2958: P.__local_func_90 
+2959: PD.__return P.__local_func_91 
+2960: G P.print_ru_h 
+2961: P.__local_func_91 
+2962: PD.__return P.__local_func_92 
+2963: G P.print_ru_o 
+2964: P.__local_func_92 
+2965: PD.__return P.__local_func_93 
+2966: G P.print_ru_d 
+2967: P.__local_func_93 
+2968: P N 
+2969: G PD.__func_return_146 
+2970: P.__func_close_146 
+2971: G P.__func_close_147 
+2972: P.prodoljit_2 
+2973: P N 
+2974: PD.__func_return_147 PD.__return 
+2975: PD.__return P.__local_func_94 
+2976: G P.print_0 
+2977: P.__local_func_94 
+2978: P S 
+2979: P S 
+2980: PD.__return P.__local_func_95 
+2981: G P.print_ru_N 
+2982: P.__local_func_95 
+2983: PD.__return P.__local_func_96 
+2984: G P.print_ru_o 
+2985: P.__local_func_96 
+2986: PD.__return P.__local_func_97 
+2987: G P.print_ru_v 
+2988: P.__local_func_97 
+2989: PD.__return P.__local_func_98 
+2990: G P.print_ru_y 
+2991: P.__local_func_98 
+2992: PD.__return P.__local_func_99 
+2993: G P.print_ru_e 
+2994: P.__local_func_99 
+2995: P S 
+2996: PD.__return P.__local_func_100 
+2997: G P.print_ru_b 
+2998: P.__local_func_100 
+2999: PD.__return P.__local_func_101 
+3000: G P.print_ru_i 
+3001: P.__local_func_101 
+3002: PD.__return P.__local_func_102 
+3003: G P.print_ru_t 
+3004: P.__local_func_102 
+3005: PD.__return P.__local_func_103 
+3006: G P.print_ru_y 
+3007: P.__local_func_103 
+3008: P N 
+3009: PD.__return P.__local_func_104 
+3010: G P.print_1 
+3011: P.__local_func_104 
+3012: P S 
+3013: P S 
+3014: PD.__return P.__local_func_105 
+3015: G P.print_ru_P 
+3016: P.__local_func_105 
+3017: PD.__return P.__local_func_106 
+3018: G P.print_ru_r 
+3019: P.__local_func_106 
+3020: PD.__return P.__local_func_107 
+3021: G P.print_ru_o 
+3022: P.__local_func_107 
+3023: PD.__return P.__local_func_108 
+3024: G P.print_ru_d 
+3025: P.__local_func_108 
+3026: PD.__return P.__local_func_109 
+3027: G P.print_ru_l 
+3028: P.__local_func_109 
+3029: PD.__return P.__local_func_110 
+3030: G P.print_ru_zh 
+3031: P.__local_func_110 
+3032: PD.__return P.__local_func_111 
+3033: G P.print_ru_i 
+3034: P.__local_func_111 
+3035: PD.__return P.__local_func_112 
+3036: G P.print_ru_t 
+3037: P.__local_func_112 
+3038: PD.__return P.__local_func_113 
+3039: G P.print_ru_magkiy 
+3040: P.__local_func_113 
+3041: P N 
+3042: G PD.__func_return_147 
+3043: P.__func_close_147 
+3044: G P.__func_close_148 
+3045: P.deistvie 
+3046: P N 
+3047: PD.__func_return_148 PD.__return 
+3048: PD.__return P.__local_func_114 
+3049: G P.print_0 
+3050: P.__local_func_114 
+3051: P S 
+3052: P S 
+3053: PD.__return P.__local_func_115 
+3054: G P.print_ru_P 
+3055: P.__local_func_115 
+3056: PD.__return P.__local_func_116 
+3057: G P.print_ru_l 
+3058: P.__local_func_116 
+3059: PD.__return P.__local_func_117 
+3060: G P.print_ru_yu 
+3061: P.__local_func_117 
+3062: PD.__return P.__local_func_118 
+3063: G P.print_ru_s 
+3064: P.__local_func_118 
+3065: P N 
+3066: PD.__return P.__local_func_119 
+3067: G P.print_1 
+3068: P.__local_func_119 
+3069: P S 
+3070: P S 
+3071: PD.__return P.__local_func_120 
+3072: G P.print_ru_M 
+3073: P.__local_func_120 
+3074: PD.__return P.__local_func_121 
+3075: G P.print_ru_i 
+3076: P.__local_func_121 
+3077: PD.__return P.__local_func_122 
+3078: G P.print_ru_n 
+3079: P.__local_func_122 
+3080: PD.__return P.__local_func_123 
+3081: G P.print_ru_u 
+3082: P.__local_func_123 
+3083: PD.__return P.__local_func_124 
+3084: G P.print_ru_s 
+3085: P.__local_func_124 
+3086: P N 
+3087: G PD.__func_return_148 
+3088: P.__func_close_148 
+3089: G P.__func_close_149 
+3090: P.raznica 
+3091: P N 
+3092: PD.__func_return_149 PD.__return 
+3093: PD.__return P.__local_func_125 
+3094: G P.print_ru_R 
+3095: P.__local_func_125 
+3096: PD.__return P.__local_func_126 
+3097: G P.print_ru_a 
+3098: P.__local_func_126 
+3099: PD.__return P.__local_func_127 
+3100: G P.print_ru_z 
+3101: P.__local_func_127 
+3102: PD.__return P.__local_func_128 
+3103: G P.print_ru_n 
+3104: P.__local_func_128 
+3105: PD.__return P.__local_func_129 
+3106: G P.print_ru_i 
+3107: P.__local_func_129 
+3108: PD.__return P.__local_func_130 
+3109: G P.print_ru_ts 
+3110: P.__local_func_130 
+3111: PD.__return P.__local_func_131 
+3112: G P.print_ru_a 
+3113: P.__local_func_131 
+3114: PD.__return P.__local_func_132 
+3115: G P.print_colon 
+3116: P.__local_func_132 
+3117: P N 
+3118: G PD.__func_return_149 
+3119: P.__func_close_149 
