@@ -4,15 +4,13 @@ use std::fs;
 use std::process;
 use std::path::Path;
 
-mod function_preprocessor;
+mod preprocessors;
 mod vm;
 mod tokens;
 mod to_bytecode;
 mod namezator;
 mod name_map;
 mod importer;
-mod parentheses_preprocessor;
-mod range_expander;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -80,9 +78,11 @@ fn main() {
                     if debug_mode {
                         save_tokens_to_file(&filename, "tokens.txt", &tokens);
                     }
-                    let tokens = range_expander::expand_ranges(tokens);
+                    let tokens = preprocessors::expand_ranges(tokens);
                     let tokens = importer::importing(tokens, base_path).expect("Ошибка импорта");
-                    let expanded_tokens = function_preprocessor::expand(tokens);
+                    let tokens = preprocessors::else_processing(tokens);
+                    let expanded_tokens = preprocessors::expand(tokens);
+                    
                     
                     match expanded_tokens {
                         tokens => {

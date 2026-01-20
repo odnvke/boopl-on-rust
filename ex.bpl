@@ -1,3 +1,13 @@
-i_{0..2} T;
+first F;
+second T;
 
-(4) P i_{0..2};
+I first;
+    P T; P T;
+E; ELSE I second;
+    P F; P T;
+E; ELSE;
+    P F; P F;
+E;
+
+
+E;

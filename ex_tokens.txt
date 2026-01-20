@@ -1,7 +1,20 @@
 === ТОКЕНЫ ===
 
-1: i_{0..2} true 
-2: P i_{0..2} 
-3: P i_{0..2} 
-4: P i_{0..2} 
-5: P i_{0..2} 
+1: first false 
+2: second true 
+3: I first 
+4: P true 
+5: P true 
+6: E 
+7: ELSE 
+8: I second 
+9: P false 
+10: P true 
+11: E 
+12: ELSE 
+13: P false 
+14: P false 
+15: E 
+16: P N 
+17: P true 
+18: P false 

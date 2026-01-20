@@ -1,5 +1,5 @@
 //use std::{fmt::format, i32};
-use crate::parentheses_preprocessor::parentheses_process;
+use crate::preprocessors::parentheses_process;
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Token {
@@ -236,7 +236,7 @@ fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
     }
 
     if s.len() == 4 {
-        if matches!(s, "INBC" | "CALL" | "FUNC" | "STEP") {
+        if matches!(s, "INBC" | "CALL" | "FUNC" | "STEP" | "ELSE") {
             return Ok(RawToken::Keyword(s.to_string(), *line_n));
         }
     }
@@ -282,79 +282,3 @@ fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
 
     Err(format!("   >>  ! не получилось обработать слово: {s}  ({})\n\n", line_n))
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// fn remove_comments(string: String) -> String {
-//     let mut new_string = "".to_string();
-//     let mut flag_multi = false;
-//     let mut flag_single = false;
-//     let mut _flag = false;
-
-//     let mut string = string.replace("\r\n", "\n");
-
-//     string = string.replace("/*", " /* ").replace("*/", " */ ").replace("//", " // ").replace("\n", " \n ").replace(";", " ; ");
-
-//     for i in string.split(' ') {
-//         let mut flag = false;
-
-//         if i == "//" {
-//             // print!("удалён комментарий: ");
-//             flag_single = true
-//         }
-//         if flag_single || i == "\n" {
-//             flag = true;
-//         }
-        
-//         if i == "\n" {
-//             flag_single = false;
-//             //println!()
-//         }
-        
-//         if flag_single {
-//             // print!("{}", i)
-//         }
-        
-
-//         if i == "/*" {
-//             flag_multi = true;
-//             print!("  >>  замечено начало мульти строчного комментария: '{}' удаляется: ", i)
-//         }
-
-//         if flag_multi {
-//             flag = true;
-//         }
-
-//         if i.contains("*/") {
-//             println!(" '{}'", i);
-//             flag_multi = false;
-//             println!("  >>  замечен конец мульти строчного комментария: '{}'", i)
-//         }
-//         if flag_multi {
-//             //print!(" {}", i)
-//         }
-
-//         if !flag {
-//             new_string.push(' ');
-//             new_string.push_str(i);
-//             //println!("add: '{}'", i)
-//         } else { 
-//             //println!("not add: '{}'", i)
-//         }
-//     }
-//     new_string
-// }

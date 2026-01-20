@@ -1,13 +1,20 @@
 === ТОКЕНЫ ===
 
 1: PD.__return 
-2: i_0 true 
-3: i_1 true 
-4: P i_0 
-5: P i_1 
-6: P i_0 
-7: P i_1 
-8: P i_0 
-9: P i_1 
-10: P i_0 
-11: P i_1 
+2: first false 
+3: second true 
+4: I first 
+5: P true 
+6: P true 
+7: G P.__else_close_0 
+8: E 
+9: I second 
+10: P false 
+11: P true 
+12: E 
+13: P false 
+14: P false 
+15: P.__else_close_0 
+16: P N 
+17: P true 
+18: P false 
