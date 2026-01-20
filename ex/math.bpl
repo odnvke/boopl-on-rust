@@ -24,27 +24,40 @@ CALL input_8;
 i2_0 ib_0;  i2_1 ib_1;  i2_2 ib_2;  i2_3 ib_3;
 i2_4 ib_4;  i2_5 ib_5;  i2_6 ib_6;  i2_7 ib_7;
 
+
+
+P.loop_deistvie;
 P N;
 
 CALL deistvie;
 
 INBC;
 IN;
-minus INB;
+t INBC;
+t N t;
 
-I minus;
-    CALL raznica;
+I t;
+    minus INB;
 
-    CALL sub;
+    I minus;
+        CALL raznica;
+
+        CALL sub;
+    E;
+
+    plus N minus;
+
+    I plus;
+        CALL summa;
+            
+        CALL add;
+    E;  
+
+    G P.else_close1;
 E;
+G P.loop_deistvie;
 
-plus N minus;
-
-I plus;
-    CALL summa;
-        
-    CALL add;
-E;
+P.else_close1;
 
 P N;
 P o_7; P o_6; P o_5; P o_4; P o_3; P o_2; P o_1; P o_0; P N;
@@ -80,7 +93,7 @@ G P.vvod;
 E;
 
 P.end;
-
+E;
 
 
 

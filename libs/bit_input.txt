@@ -84,7 +84,7 @@ FUNC bit_input_cont_input;
     P.bit_input_close_if;
 
     INBC;
-    
+
     CALL print_bit_input_info;
 
     I bit_input_7;
@@ -92,6 +92,8 @@ FUNC bit_input_cont_input;
     E;
 
     CALL print_remaining_info;
+
+    G P.bit_input_cont_input;
 
 RET E;
 

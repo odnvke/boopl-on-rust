@@ -56,8 +56,8 @@
       |
 730:  |  730             (DEBUG STEP)
       |
-760:  |  760 -1          (DEBUG_ON <STEP, LOG>)    STEP = 0
-761:  |  761 -1          (DEBUG_OFF <STEP, LOG>)   LOG = 1
+760:  |  760 -1          (DEBUG_ON STEP, LOG)    STEP = 0
+761:  |  761 -1          (DEBUG_OFF STEP, LOG)   LOG = 1
       |
 ------+------------------------------
       |

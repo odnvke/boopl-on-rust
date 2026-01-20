@@ -70,6 +70,7 @@ impl VM {
                     self.memory[line[0] as usize] = val;
                     if log_mode {print!("{} <= {} ({})", ident_name_map.get_name(line[0]), ident_name_map.get_name(line[1]), val == 1)}
                 }
+
                 // PD.10      ! P.10 небудет
                 201 => {
                     if (line[0] as usize) >= self.memory_pd.len() {
@@ -395,12 +396,15 @@ impl VM {
 
                 760 => {
                     if log_mode {print!("log_mode: {}; step_mode: {}", log_mode, step_mode)}
-                    if line[0] == 0 {step_mode = true} else {log_mode = true}
+                    if line[0] == 0 || line[0] == 2 {step_mode = true}
+                    if line[0] == 1 || line[0] == 2 {log_mode = true} 
                 }
 
                 761 => {
                     if log_mode {print!("log_mode: {}; step_mode: {}", log_mode, step_mode)}
-                    if line[0] == 0 {step_mode = false} else {log_mode = false}
+                    if line[0] == 0 || line[0] == 2 {step_mode = false}
+                    if line[0] == 1 || line[0] == 2 {log_mode = false} 
+                    
                 }
                 _ => {panic!("AAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!")}
             }
