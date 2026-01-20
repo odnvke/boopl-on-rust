@@ -1,7 +1,3 @@
-DEBUG_ON LOG;
+i_{0..2} T;
 
-P.loop;
-
-P T; P F; P S;
-
-G P.loop;
+(4) P i_{0..2};

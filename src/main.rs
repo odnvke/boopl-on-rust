@@ -12,6 +12,7 @@ mod namezator;
 mod name_map;
 mod importer;
 mod parentheses_preprocessor;
+mod range_expander;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -79,7 +80,7 @@ fn main() {
                     if debug_mode {
                         save_tokens_to_file(&filename, "tokens.txt", &tokens);
                     }
-                    
+                    let tokens = range_expander::expand_ranges(tokens);
                     let tokens = importer::importing(tokens, base_path).expect("Ошибка импорта");
                     let expanded_tokens = function_preprocessor::expand(tokens);
                     

@@ -35,6 +35,54 @@ pub fn start(content: String) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
 }
 
 
+pub fn is_range_token(s: &str) -> bool {
+    s.contains("{") && s.ends_with("}")
+}
+
+pub fn parse_range_token(s: &str) -> Option<(String, i32, i32)> {
+    if !is_range_token(s) {
+        return None;
+    }
+    
+    // Разделяем на базовое имя и часть с диапазоном
+    if let Some((base, range_part)) = s.split_once("{") {
+        let range_part = range_part.strip_suffix('}')?;
+        
+        // Проверяем, что базовая часть валидна
+        if !base.chars().all(|c| c.is_ascii_alphanumeric() || c == '_') || base.is_empty() {
+            return None;
+        }
+        
+        // Парсим диапазон
+        if range_part.contains("..") {
+            let parts: Vec<&str> = range_part.split("..").collect();
+            if parts.len() == 2 {
+                match (parts[0].parse::<i32>(), parts[1].parse::<i32>()) {
+                    (Ok(start), Ok(end)) => {
+                        // end исключительно, как в Rust: 0..8 = 0,1,2,3,4,5,6,7
+                        // Проверяем, что диапазон не пустой
+                        if start >= end {
+                            eprintln!("Ошибка: пустой или неверный диапазон в '{}': {}..{} (начало >= конца)", 
+                                s, start, end);
+                            return None;
+                        }
+                        return Some((base.to_string(), start, end - 1)); // end-1!
+                    }
+                    _ => return None,
+                }
+            }
+        } else {
+            // Одиночное число: {5}
+            match range_part.parse::<i32>() {
+                Ok(num) => return Some((base.to_string(), num, num)),
+                _ => return None,
+            }
+        }
+    }
+    
+    None
+}
+
 fn tokenize(input: &str) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
     let mut all_tokens = Vec::new();
     let mut current_line = 1;
@@ -227,7 +275,7 @@ fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
     }
 
         // Числа: 10 test test_10
-    if s.chars().all(|c| c.is_ascii_alphabetic() || c.is_ascii_alphanumeric() || c == '_') {
+    if s.chars().all(|c| c.is_ascii_alphabetic() || c.is_ascii_alphanumeric() || c == '_' || c == '{' || c == '.' || c == '}') {
         //print!("{s} ");
         return Ok(RawToken::Number(s.to_string(), *line_n));
     }

@@ -1,8 +1,7 @@
 === ТОКЕНЫ ===
 
-1: DEBUG_ON LOG 
-2: P.loop 
-3: P true 
-4: P false 
-5: P S 
-6: G P.loop 
+1: i_{0..2} true 
+2: P i_{0..2} 
+3: P i_{0..2} 
+4: P i_{0..2} 
+5: P i_{0..2} 

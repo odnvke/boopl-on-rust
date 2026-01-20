@@ -1,9 +1,13 @@
 === ТОКЕНЫ ===
 
 1: PD.__return 
-2: DEBUG_ON LOG 
-3: P.loop 
-4: P true 
-5: P false 
-6: P S 
-7: G P.loop 
+2: i_0 true 
+3: i_1 true 
+4: P i_0 
+5: P i_1 
+6: P i_0 
+7: P i_1 
+8: P i_0 
+9: P i_1 
+10: P i_0 
+11: P i_1 
