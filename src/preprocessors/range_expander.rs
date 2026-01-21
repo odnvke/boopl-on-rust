@@ -8,7 +8,7 @@ pub fn expand_ranges(tokens: Vec<Vec<RawToken>>) -> Vec<Vec<RawToken>> {
         // Проверяем, есть ли в строке токены с диапазонами
         let mut has_ranges = false;
         let mut ranges_info = Vec::new();
-        let mut line_num = 0;
+        let mut line_num ;
         
         for token in &line {
             if let RawToken::Number(s, l_num) = token {
@@ -76,7 +76,7 @@ pub fn expand_ranges(tokens: Vec<Vec<RawToken>>) -> Vec<Vec<RawToken>> {
                     RawToken::Number(s, line_num) => {
                         if is_range_token(s) {
                             match parse_range_token(s) {
-                                Some((base, start, end)) => {
+                                Some((base, start, _end)) => {
                                     let actual_index = start + current_index;
                                     // Теперь это всегда true, так как длины одинаковы
                                     let new_name = format!("{}{}", base, actual_index);
