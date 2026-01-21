@@ -3,45 +3,47 @@ IMPORT math;
 IMPORT print;
 
 
-P.vvod;
+P.input1;
+    P N;  // выводим 1 сообщение 
+    CALL first_num_print;
+    
+    // вызываем input_8 из bit_input
+    CALL input_8;
+    
+    // переносим с ib_0-7 в i_0-7
+    i_{0..8} ib_{0..8};
+    // ib_N вывод bit_input
+    // i_N вход math
 
-CALL first_num_print;
 
-CALL input_8;
+P.input2;
 
-i_0 ib_0;  i_1 ib_1;  i_2 ib_2;  i_3 ib_3;
-i_4 ib_4;  i_5 ib_5;  i_6 ib_6;  i_7 ib_7;
+    P N;
+    CALL second_num_print;
 
+    CALL input_8;
 
-P N;
-
-P.vvod_2;
-
-CALL second_num_print;
-
-CALL input_8;
-
-i2_0 ib_0;  i2_1 ib_1;  i2_2 ib_2;  i2_3 ib_3;
-i2_4 ib_4;  i2_5 ib_5;  i2_6 ib_6;  i2_7 ib_7;
-
+    i2_{0..8} ib_{0..8};
+    // i2_N второй вход math
 
 
 P.loop_deistvie;
-P N;
+    P N;
+    CALL deistvie;
 
-CALL deistvie;
-
-INBC;
-IN;
-t INBC;
-t N t;
-
-I t;
+    INBC;  // очищаем буфер ввода
+    IN;    // запрашиваем ввод
+    t INBC;// t = (буфер ввода?)
+    
+    // если да переходим в начало
+    IG t P.loop_deistvie;
+    
+    // minus = первый знак из буфера
     minus INB;
 
     I minus;
         CALL raznica;
-
+        // если 1(true) выводим сообщение и вызываем sub из math
         CALL sub;
     E;
 
@@ -49,49 +51,60 @@ I t;
 
     I plus;
         CALL summa;
-            
+        // если 0(false) выводим сообщение и вызываем add из math
         CALL add;
     E;  
 
-    G P.else_close1;
-E;
-G P.loop_deistvie;
-
-P.else_close1;
-
-P N;
-P o_7; P o_6; P o_5; P o_4; P o_3; P o_2; P o_1; P o_0; P N;
-
-CALL prodoljit;
-
-INBC;
-IN;
-pdol INB;
-
-IG pdol P.end;
-
-CALL prodoljit_2;
-
-INBC;
-IN;
-pdol_2 INB;
-
-I pdol_2;
-    i_0 o_0;  i_1 o_1;  i_2 o_2;  i_3 o_3;
-    i_4 o_4;  i_5 o_5;  i_6 o_6;  i_7 o_7;
-    
-    CALL first_num_print;
-
     P N;
-    P o_7; P o_6; P o_5; P o_4; P o_3; P o_2; P o_1; P o_0; P N;
+    P o_{0..8};
+    // выводим выход math
 
-    G P.vvod_2;
-E;
 
-G P.vvod;
+P.loop2;
+    CALL prodoljit;
 
-E;
+    INBC;
+    IN;
+    t INBC;
+    
+    IG t P.loop2;
 
+    exit INB;
+
+    IG exit P.end;
+    // 0 продолжить; 1 выход
+
+P.loop3;
+    CALL prodoljit_2;
+
+    INBC;
+    IN;
+    t INBC;
+    
+    IG t P.loop3
+
+    pdol_2 INB;
+    
+    // 1 задать первому входу math выход
+
+    I pdol_2;
+         i_{0..8} o_{0..8};
+    
+         CALL first_num_print;
+
+         P N;
+         P i_{0..8};
+
+         G P.input2;
+         // выводим и переходим к вводу второго входа
+    E;
+
+    G P.input1;
+    // переходим к вводу двух 
+
+
+
+// метка конца (необязательна)
 P.end;
 E;
 
@@ -113,8 +126,9 @@ E;
 
 
 
-
+// ФУНК имя метки без P.
 FUNC first_num_print;
+    // вызовы принта букв
     CALL print_ru_P;
     CALL print_ru_e;
     CALL print_ru_r;
@@ -128,7 +142,7 @@ FUNC first_num_print;
     CALL print_ru_t;
     CALL print_ru_y;
     CALL print_colon;
-
+    // возврат
     RET E;
 
 
@@ -211,6 +225,22 @@ FUNC prodoljit_2;
     CALL print_0;
     P S; P S;
 
+    CALL print_ru_P;
+    CALL print_ru_r;
+    CALL print_ru_o;
+    CALL print_ru_d;
+    CALL print_ru_l;
+    CALL print_ru_zh;
+    CALL print_ru_i;
+    CALL print_ru_t;
+    CALL print_ru_magkiy;  
+
+    P N;
+
+    CALL print_1;
+    P S; P S;
+
+
     CALL print_ru_N;
     CALL print_ru_o;
     CALL print_ru_v;
@@ -223,22 +253,6 @@ FUNC prodoljit_2;
     CALL print_ru_i;
     CALL print_ru_t;
     CALL print_ru_y;
-
-    P N;
-
-    CALL print_1;
-    P S; P S;
-
-    CALL print_ru_P;
-    CALL print_ru_r;
-    CALL print_ru_o;
-    CALL print_ru_d;
-    CALL print_ru_l;
-    CALL print_ru_zh;
-    CALL print_ru_i;
-    CALL print_ru_t;
-    CALL print_ru_magkiy;
-
     P N;
 
     RET E;
