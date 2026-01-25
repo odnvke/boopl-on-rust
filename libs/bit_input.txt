@@ -9,12 +9,10 @@ FUNC input_8;
     bit_input_0 F; bit_input_1 F; bit_input_2 F; bit_input_3 F;
     bit_input_4 F; bit_input_5 F; bit_input_6 F; bit_input_7 F;
 
-    _0 F; _1 F; _2 F; _3 F; _4 F; _5 F; _6 F; _ F;
+    _0 F; _1 F; _2 F; _3 F; _4 F; _5 F; _6 F; _7 F;
 
-    CALL bit_input_cont_input;
-RET E;
+    P.bit_input_cont_input;
 
-FUNC bit_input_cont_input;
     P N;
     IN;
 

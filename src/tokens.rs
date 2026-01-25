@@ -44,35 +44,33 @@ pub fn parse_range_token(s: &str) -> Option<(String, i32, i32)> {
         return None;
     }
     
-    // Разделяем на базовое имя и часть с диапазоном
     if let Some((base, range_part)) = s.split_once("{") {
         let range_part = range_part.strip_suffix('}')?;
         
-        // Проверяем, что базовая часть валидна
         if !base.chars().all(|c| c.is_ascii_alphanumeric() || c == '_') || base.is_empty() {
             return None;
         }
         
-        // Парсим диапазон
         if range_part.contains("..") {
             let parts: Vec<&str> = range_part.split("..").collect();
             if parts.len() == 2 {
                 match (parts[0].parse::<i32>(), parts[1].parse::<i32>()) {
                     (Ok(start), Ok(end)) => {
-                        // end исключительно, как в Rust: 0..8 = 0,1,2,3,4,5,6,7
-                        // Проверяем, что диапазон не пустой
-                        if start >= end {
-                            eprintln!("Ошибка: пустой или неверный диапазон в '{}': {}..{} (начало >= конца)", 
-                                s, start, end);
-                            return None;
+                        // end - ВКЛЮЧИТЕЛЬНЫЙ (inclusive)
+                        // 0..7 = 0,1,2,3,4,5,6,7 (8 элементов)
+                        // 8..1 = 8,7,6,5,4,3,2,1 (8 элементов)
+                        
+                        if start == end {
+                            // Одно значение
+                            return Some((base.to_string(), start, end));
                         }
-                        return Some((base.to_string(), start, end - 1)); // end-1!
+                        
+                        return Some((base.to_string(), start, end));
                     }
                     _ => return None,
                 }
             }
         } else {
-            // Одиночное число: {5}
             match range_part.parse::<i32>() {
                 Ok(num) => return Some((base.to_string(), num, num)),
                 _ => return None,

@@ -6,12 +6,12 @@ IMPORT print;
 P.input1;
     P N;  // выводим 1 сообщение 
     CALL first_num_print;
-    
+
     // вызываем input_8 из bit_input
     CALL input_8;
-    
+
     // переносим с ib_0-7 в i_0-7
-    i_{0..8} ib_{0..8};
+    i_{0..7} ib_{0..7};
     // ib_N вывод bit_input
     // i_N вход math
 
@@ -23,7 +23,7 @@ P.input2;
 
     CALL input_8;
 
-    i2_{0..8} ib_{0..8};
+    i2_{0..7} ib_{0..7};
     // i2_N второй вход math
 
 
@@ -34,10 +34,10 @@ P.loop_deistvie;
     INBC;  // очищаем буфер ввода
     IN;    // запрашиваем ввод
     t INBC;// t = (буфер ввода?)
-    
+
     // если да переходим в начало
     IG t P.loop_deistvie;
-    
+
     // minus = первый знак из буфера
     minus INB;
 
@@ -55,8 +55,7 @@ P.loop_deistvie;
         CALL add;
     E;  
 
-    P N;
-    P o_{0..8};
+    P o_{7..0}; P N;
     // выводим выход math
 
 
@@ -66,7 +65,7 @@ P.loop2;
     INBC;
     IN;
     t INBC;
-    
+
     IG t P.loop2;
 
     exit INB;
@@ -80,27 +79,28 @@ P.loop3;
     INBC;
     IN;
     t INBC;
-    
-    IG t P.loop3
+
+    IG t P.loop3;
 
     pdol_2 INB;
-    
-    // 1 задать первому входу math выход
 
+    // 0 задать первому входу math выход
+    pdol_2 N pdol_2;
     I pdol_2;
-         i_{0..8} o_{0..8};
-    
-         CALL first_num_print;
+        i_{0..7} o_{0..7};
+        
+        P N;
+        CALL first_num_print;
 
-         P N;
-         P i_{0..8};
+        P N;
+        P i_{7..0};
 
-         G P.input2;
-         // выводим и переходим к вводу второго входа
+        G P.input2;
+        // выводим и переходим к вводу второго входа
     E;
 
     G P.input1;
-    // переходим к вводу двух 
+    // переходим к вводу двух 'цисел'
 
 
 

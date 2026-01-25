@@ -1,4 +1,3 @@
-// function_preprocessor.rs
 use crate::tokens::RawToken;
 
 pub fn expand(tokens: Vec<Vec<RawToken>>) -> Vec<Vec<RawToken>> {
@@ -9,8 +8,6 @@ pub fn expand(tokens: Vec<Vec<RawToken>>) -> Vec<Vec<RawToken>> {
 struct Data {
     ident_index: i32,
     local_p_index: i32,
-    is_need_label_p: bool,
-
     is_in_func: bool,
     func_name: Option<String>,
     return_point_name_t: String,
@@ -22,10 +19,8 @@ struct Data {
 impl Data {
     pub fn new() -> Self {
         Self {
-            ident_index: 0,
-            local_p_index: 0,
-            is_need_label_p: false,
-
+            ident_index: 0, // индекс для вызовов P.индекс
+            local_p_index: 0, // индекс для сохронения __return
             is_in_func: false,
             func_name: None,
             return_point_name_t: "__func_return_{}".to_string(),
@@ -40,7 +35,7 @@ impl Data {
 
         out_vec.push(vec![RawToken::LabelPD(self.return_point_name.to_string(), 0)]);
 
-        for line in tokens {
+        for (_line_n, line) in tokens.iter().enumerate() {
             match line.as_slice() {
 
                 // FUNC func_a;
@@ -52,18 +47,15 @@ impl Data {
                     self.func_name = Some(n.to_string());
                     self.is_in_func = true;
                     self.local_p_index += 1;
-                    self.is_need_label_p = false;
 
                     out_vec.push(self._go_func_close(*l_n));
                     out_vec.push(vec![RawToken::LabelP(self.func_name.clone().unwrap_or("не определена".to_string()), *l_n)]);
-                }
 
+                    out_vec.push(self._add_write_pointer(*l_n));
+                }
                 // CALL func_a;
                 [RawToken::Keyword(s, l_n), RawToken::Number(n, l_n2)] if s == "CALL" => {
-                    if !self.is_need_label_p {
-                        out_vec.push(self._add_write_pointer(*l_n));
-                        self.is_need_label_p = true;
-                    }
+
                     self.ident_index += 1;
                     
                     out_vec.push(self._add_pre_func_l(*l_n));
@@ -74,30 +66,36 @@ impl Data {
                 [RawToken::Keyword(s, l_n), RawToken::Keyword(s2, l_n2)] if s == "RET" && s2 == "E" => {
                     out_vec.push(self._add_return_func(*l_n));
                     out_vec.push(self._func_close(*l_n));
-                    self.is_in_func = true;
+                    self.is_in_func = false;
                     self.func_name = None;
                 }
 
                 [RawToken::Keyword(s, l_n)] if s == "RET" => {
                     if self.is_in_func {
                         out_vec.push(self._add_return_func(*l_n));
+                    } else {
+                        eprintln!("\n RET не в функции ({})", l_n); 
+                        std::process::exit(1);
                     }
                 }
 
-                
+
 
                 _ => {
-                    for token in &line {
-                        if let RawToken::Keyword(s, _) = token {
-                            if matches!(s.as_str(), "CALL" | "FUNC" | "RET") {
-                                eprintln!("\n ! препроцессор функций:\n\n   >>  ! неудалось обработать {:?}", line);
+                    for token in line {
+                        match token {
+                            RawToken::Keyword(s, l_n) if s == "RET" || s == "FUNC" || s == "CALL" => {
+                                eprintln!("препроцессор функций: не удалось оброботать {:?} ({})", line, l_n);
                                 std::process::exit(1);
                             }
+
+                            _ => {}
                         }
                     }
-                    out_vec.push(line);
+                    out_vec.push(line.clone());
                 }
-            }
+                }
+            
         }
 
         out_vec
@@ -111,7 +109,7 @@ impl Data {
     }   
 
     // перед вызовом внутри функции
-    // PD.R P.local_new
+    // PD.R P.1
     fn _add_pre_func_l(&self, line_n: i32) -> Vec<RawToken> {
         vec![RawToken::LabelPD(self.return_point_name.to_string(), line_n),
              RawToken::LabelP(self.local_rp_template.replace("{}", &self.ident_index.to_string()), line_n)]
@@ -125,7 +123,7 @@ impl Data {
 
     
     // после вызова внутри функции
-    // P.local_new
+    // P.1
     fn _add_post_func_l(&self, line_n: i32) -> Vec<RawToken> {
         vec![RawToken::LabelP(self.local_rp_template.replace("{}", &self.ident_index.to_string()), line_n)]
     }
@@ -133,13 +131,8 @@ impl Data {
 
     // G PD.local
     fn _add_return_func(&self, line_n: i32) -> Vec<RawToken> {
-        if self.is_need_label_p {
-            vec![RawToken::Keyword("G".to_string(), line_n),
-            RawToken::LabelPD(self.return_point_name_t.replace("{}", &self.local_p_index.to_string()), line_n)]
-        } else {
-            vec![RawToken::Keyword("G".to_string(), line_n),
-            RawToken::LabelPD(self.return_point_name.to_string(), line_n)]
-        }
+        vec![RawToken::Keyword("G".to_string(), line_n),
+        RawToken::LabelPD(self.return_point_name_t.replace("{}", &self.local_p_index.to_string()), line_n)]
     }
 
     fn _func_close(&self, line_n: i32) -> Vec<RawToken> {

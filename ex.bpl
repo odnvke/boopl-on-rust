@@ -11,19 +11,19 @@ P.input1;
     CALL input_8;
 
     // переносим с ib_0-7 в i_0-7
-    i_{0..8} ib_{0..8};
+    i_{0..7} ib_{0..7};
     // ib_N вывод bit_input
     // i_N вход math
 
 
-P.input2;
+    P.input2;
 
     P N;
     CALL second_num_print;
 
     CALL input_8;
 
-    i2_{0..8} ib_{0..8};
+    i2_{0..7} ib_{0..7};
     // i2_N второй вход math
 
 
@@ -56,7 +56,7 @@ P.loop_deistvie;
     E;  
 
     P N;
-    P o_{0..8};
+    P o_{7..0};
     // выводим выход math
 
 
@@ -81,19 +81,19 @@ P.loop3;
     IN;
     t INBC;
 
-    IG t P.loop3
+    IG t P.loop3;
 
     pdol_2 INB;
 
+    pdol_2 N pdol_2;
     // 1 задать первому входу math выход
-
     I pdol_2;
-         i_{0..8} o_{0..8};
+         i_{0..7} o_{0..7};
 
          CALL first_num_print;
 
          P N;
-         P i_{0..8};
+         P i_{7..0};
 
          G P.input2;
          // выводим и переходим к вводу второго входа
@@ -142,8 +142,8 @@ FUNC first_num_print;
     CALL print_ru_t;
     CALL print_ru_y;
     CALL print_colon;
-    // возврат
-    RET E;
+// возврат
+RET E;
 
 
 
@@ -165,7 +165,7 @@ FUNC second_num_print;
     CALL print_ru_y;
     CALL print_colon;
 
-    RET E;
+RET E;
 
 
 FUNC summa;
@@ -180,7 +180,7 @@ FUNC summa;
 
     P N;
 
-    RET E;
+RET E;
 
 
 
@@ -214,7 +214,7 @@ FUNC prodoljit;
 
     P N;
 
-    RET E;
+RET E;
 
 
 
@@ -255,7 +255,7 @@ FUNC prodoljit_2;
     CALL print_ru_y;
     P N;
 
-    RET E;
+RET E;
 
 FUNC deistvie;
     P N;
@@ -281,7 +281,7 @@ FUNC deistvie;
 
     P N;
 
-    RET E;
+RET E;
 
 
 
@@ -299,4 +299,4 @@ FUNC raznica;
 
     P N;
 
-    RET E;
+RET E;
