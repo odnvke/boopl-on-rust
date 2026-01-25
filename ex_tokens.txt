@@ -1,78 +1,187 @@
 === ТОКЕНЫ ===
 
-1: 1 true 
-2: 2 false 
-3: 3 true 
-4: 4 false 
-5: 10 false 
-6: 11 true 
-7: 12 false 
-8: 13 true 
-9: 20 true 
-10: 21 false 
-11: 22 true 
-12: 23 false 
-13: I 1 
-14: I 10 
-15: P false 
-16: ELSE I 11 
-17: P true 
-18: I 20 
-19: I 1 
-20: P true 
-21: P true 
-22: ELSE I 2 
-23: P false 
-24: ELSE 
-25: P false 
-26: E 
-27: ELSE I 21 
-28: I 3 
-29: P true 
-30: ELSE 
-31: P false 
-32: E 
-33: ELSE 
-34: P false 
-35: E 
-36: ELSE I 12 
-37: P false 
-38: ELSE 
-39: P false 
-40: E 
-41: ELSE I 2 
-42: P false 
-43: ELSE I 3 
-44: P true 
-45: I 20 
-46: P true 
-47: I 10 
-48: P false 
-49: ELSE I 11 
-50: P true 
-51: ELSE I 12 
-52: P false 
-53: ELSE I 13 
-54: P true 
-55: ELSE 
-56: P false 
-57: E 
-58: ELSE 
-59: P false 
-60: E 
-61: ELSE 
-62: P false 
-63: I 4 
-64: P false 
-65: ELSE 
-66: I 20 
-67: I 21 
-68: I 22 
-69: P true 
-70: E 
-71: E 
-72: E 
-73: E 
-74: E 
-75: P true 
-76: P true 
+1: IMPORT bit_input 
+2: IMPORT math 
+3: IMPORT print 
+4: P.input1 
+5: P N 
+6: CALL first_num_print 
+7: CALL input_8 
+8: i_{0..7} ib_{0..7} 
+9: P.input2 
+10: P N 
+11: CALL second_num_print 
+12: CALL input_8 
+13: i2_{0..7} ib_{0..7} 
+14: P.loop_deistvie 
+15: P N 
+16: CALL deistvie 
+17: INBC 
+18: IN 
+19: t INBC 
+20: IFG t P.loop_deistvie 
+21: minus INB 
+22: IF minus 
+23: CALL raznica 
+24: CALL sub 
+25: E 
+26: plus N minus 
+27: IF plus 
+28: CALL summa 
+29: CALL add 
+30: E 
+31: P o_{7..0} 
+32: P N 
+33: P.loop2 
+34: CALL prodoljit 
+35: INBC 
+36: IN 
+37: t INBC 
+38: IFG t P.loop2 
+39: exit INB 
+40: IFG exit P.end 
+41: P.loop3 
+42: CALL prodoljit_2 
+43: INBC 
+44: IN 
+45: t INBC 
+46: IFG t P.loop3 
+47: pdol_2 INB 
+48: pdol_2 N pdol_2 
+49: IF pdol_2 
+50: i_{0..7} o_{0..7} 
+51: P N 
+52: CALL first_num_print 
+53: P N 
+54: P i_{7..0} 
+55: G P.input2 
+56: E 
+57: G P.input1 
+58: P.end 
+59: E 
+60: FUNC first_num_print 
+61: CALL print_ru_P 
+62: CALL print_ru_e 
+63: CALL print_ru_r 
+64: CALL print_ru_v 
+65: CALL print_ru_e 
+66: P S 
+67: CALL print_ru_b 
+68: CALL print_ru_i 
+69: CALL print_ru_t 
+70: CALL print_ru_y 
+71: CALL print_colon 
+72: RET E 
+73: FUNC second_num_print 
+74: P N 
+75: CALL print_ru_V 
+76: CALL print_ru_t 
+77: CALL print_ru_o 
+78: CALL print_ru_r 
+79: CALL print_ru_y 
+80: CALL print_ru_e 
+81: P S 
+82: CALL print_ru_b 
+83: CALL print_ru_i 
+84: CALL print_ru_t 
+85: CALL print_ru_y 
+86: CALL print_colon 
+87: RET E 
+88: FUNC summa 
+89: P N 
+90: CALL print_ru_S 
+91: CALL print_ru_u 
+92: CALL print_ru_m 
+93: CALL print_ru_m 
+94: CALL print_ru_a 
+95: CALL print_colon 
+96: P N 
+97: RET E 
+98: FUNC prodoljit 
+99: P N 
+100: CALL print_0 
+101: P S 
+102: P S 
+103: CALL print_ru_P 
+104: CALL print_ru_r 
+105: CALL print_ru_o 
+106: CALL print_ru_d 
+107: CALL print_ru_o 
+108: CALL print_ru_l 
+109: CALL print_ru_zh 
+110: CALL print_ru_i 
+111: CALL print_ru_t 
+112: CALL print_ru_magkiy 
+113: P N 
+114: CALL print_1 
+115: P S 
+116: P S 
+117: CALL print_ru_V 
+118: CALL print_ru_y 
+119: CALL print_ru_h 
+120: CALL print_ru_o 
+121: CALL print_ru_d 
+122: P N 
+123: RET E 
+124: FUNC prodoljit_2 
+125: P N 
+126: CALL print_0 
+127: P S 
+128: P S 
+129: CALL print_ru_P 
+130: CALL print_ru_r 
+131: CALL print_ru_o 
+132: CALL print_ru_d 
+133: CALL print_ru_l 
+134: CALL print_ru_zh 
+135: CALL print_ru_i 
+136: CALL print_ru_t 
+137: CALL print_ru_magkiy 
+138: P N 
+139: CALL print_1 
+140: P S 
+141: P S 
+142: CALL print_ru_N 
+143: CALL print_ru_o 
+144: CALL print_ru_v 
+145: CALL print_ru_y 
+146: CALL print_ru_e 
+147: P S 
+148: CALL print_ru_b 
+149: CALL print_ru_i 
+150: CALL print_ru_t 
+151: CALL print_ru_y 
+152: P N 
+153: RET E 
+154: FUNC deistvie 
+155: P N 
+156: CALL print_0 
+157: P S 
+158: P S 
+159: CALL print_ru_P 
+160: CALL print_ru_l 
+161: CALL print_ru_yu 
+162: CALL print_ru_s 
+163: P N 
+164: CALL print_1 
+165: P S 
+166: P S 
+167: CALL print_ru_M 
+168: CALL print_ru_i 
+169: CALL print_ru_n 
+170: CALL print_ru_u 
+171: CALL print_ru_s 
+172: P N 
+173: RET E 
+174: FUNC raznica 
+175: P N 
+176: CALL print_ru_R 
+177: CALL print_ru_a 
+178: CALL print_ru_z 
+179: CALL print_ru_n 
+180: CALL print_ru_i 
+181: CALL print_ru_ts 
+182: CALL print_ru_a 
+183: CALL print_colon 
+184: P N 
+185: RET E 

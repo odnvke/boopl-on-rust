@@ -17,64 +17,64 @@ FUNC input_8;
     IN;
 
     lib_t2 N bit_input_0;
-    I lib_t2;
+    IF lib_t2;
         lib_t INBC;
-        IG lib_t P.bit_input_close_if;
+        IFG lib_t P.bit_input_close_if;
         bit_input_0 T;
         ib_7 INB;
     E;
 
     lib_t2 N bit_input_1;
-    I lib_t2;
+    IF lib_t2;
         lib_t INBC;
-        IG lib_t P.bit_input_close_if;
+        IFG lib_t P.bit_input_close_if;
         bit_input_1 T;
         ib_6 INB;
     E;
 
     lib_t2 N bit_input_2;
-    I lib_t2;
+    IF lib_t2;
         lib_t INBC;
-        IG lib_t P.bit_input_close_if;
+        IFG lib_t P.bit_input_close_if;
         bit_input_2 T;
         ib_5 INB;
     E;
 
     lib_t2 N bit_input_3;
-    I lib_t2;
+    IF lib_t2;
         lib_t INBC;
-        IG lib_t P.bit_input_close_if;
+        IFG lib_t P.bit_input_close_if;
         bit_input_3 T;
         ib_4 INB;
     E;
 
     lib_t2 N bit_input_4;
-    I lib_t2;
+    IF lib_t2;
         lib_t INBC;
-        IG lib_t P.bit_input_close_if;
+        IFG lib_t P.bit_input_close_if;
         bit_input_4 T;
         ib_3 INB;
     E;
 
     lib_t2 N bit_input_5;
-    I lib_t2;
+    IF lib_t2;
         lib_t INBC;
-        IG lib_t P.bit_input_close_if;
+        IFG lib_t P.bit_input_close_if;
         bit_input_5 T;
         ib_2 INB;
     E;
 
     lib_t2 N bit_input_6;
-    I lib_t2;
+    IF lib_t2;
         lib_t INBC;
-        IG lib_t P.bit_input_close_if;
+        IFG lib_t P.bit_input_close_if;
         bit_input_6 T;
         ib_1 INB;
     E;
 
 
     lib_t INBC;
-    IG lib_t P.bit_input_close_if;
+    IFG lib_t P.bit_input_close_if;
     ib_0 INB;
 
     bit_input_7 T;
@@ -85,7 +85,7 @@ FUNC input_8;
 
     CALL print_bit_input_info;
 
-    I bit_input_7;
+    IF bit_input_7;
         RET;
     E;
 
@@ -105,34 +105,34 @@ FUNC print_bit_input_info;
     CALL print_colon;
     P S;
     
-    I bit_input_0;
+    IF bit_input_0;
         P ib_7;
     E;
-    I bit_input_1;
+    IF bit_input_1;
         P ib_6;
     E;
-    I bit_input_2;
+    IF bit_input_2;
         P ib_5; 
     E;
-    I bit_input_3;
+    IF bit_input_3;
         P ib_4;
     E;
-    I bit_input_4;
+    IF bit_input_4;
         P S;
         P ib_3;
     E;
-    I bit_input_5;
+    IF bit_input_5;
         P ib_2;
     E;
-    I bit_input_6;
+    IF bit_input_6;
         P ib_1;
     E;
-    I bit_input_7;
+    IF bit_input_7;
         P ib_0;
     E;
     
     lib_t N bit_input_0;
-    I lib_t;
+    IF lib_t;
         CALL print_ru_p;
         CALL print_ru_u;
         CALL print_ru_s;
@@ -142,7 +142,7 @@ FUNC print_bit_input_info;
         P S; P S;
     E;
 
-    I bit_input_0;
+    IF bit_input_0;
         CALL print_semicolon;
         P S; P S;
     E;
@@ -156,13 +156,13 @@ FUNC print_remaining_info;
     CALL print_colon;
     P S;
 
-    I bit_input_0;
-        I bit_input_1;
-            I bit_input_2;
-                I bit_input_3;
-                    I bit_input_4;
-                        I bit_input_5;
-                            I bit_input_6;            
+    IF bit_input_0;
+        IF bit_input_1;
+            IF bit_input_2;
+                IF bit_input_3;
+                    IF bit_input_4;
+                        IF bit_input_5;
+                            IF bit_input_6;            
                                 CALL print_1;
                                 G P.skip_print;
                             E;

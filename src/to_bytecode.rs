@@ -47,14 +47,14 @@ fn process_line(tokens: Vec<Token>, ident_name_map: &IdentNameMap) -> Result<(Ve
         // PD.10 PD.10
         [Token::LabelPD(n, l_n), Token::LabelPD(n2, _l_n2)] => Ok((vec![261, *n, *n2], *l_n)),
 
-        // I 10
-        [Token::Keyword(s, l_n), Token::Number(n, l_n2)] if s == "I" => Ok((vec![300, *n], *l_n)),
+        // IF 10
+        [Token::Keyword(s, l_n), Token::Number(n, l_n2)] if s == "IF" => Ok((vec![300, *n], *l_n)),
 
-        // IG 10 P.10
-        [Token::Keyword(s, l_n), Token::Number(n, l_n2), Token::LabelP(n2, l_n3)] if s == "IG" => Ok((vec![302, *n, *n2], *l_n)),
+        // IFG 10 P.10
+        [Token::Keyword(s, l_n), Token::Number(n, l_n2), Token::LabelP(n2, l_n3)] if s == "IFG" => Ok((vec![302, *n, *n2], *l_n)),
 
-        // IG 10 PD.10
-        [Token::Keyword(s, l_n), Token::Number(n, l_n2), Token::LabelPD(n2, l_n3)] if s == "IG" => Ok((vec![303, *n, *n2], *l_n)),
+        // IFG 10 PD.10
+        [Token::Keyword(s, l_n), Token::Number(n, l_n2), Token::LabelPD(n2, l_n3)] if s == "IFG" => Ok((vec![303, *n, *n2], *l_n)),
 
         // P T | P F
         [Token::Keyword(s, l_n), Token::Bool(b, l_n2)] if s == "P" => {
@@ -118,9 +118,9 @@ fn process_line(tokens: Vec<Token>, ident_name_map: &IdentNameMap) -> Result<(Ve
         [Token::Keyword(s, l_n), Token::Keyword(s2, _), Token::Number(n, _)] 
                 if s == "DEBUG" && s2 == "BP" => Ok((vec![701, *n], *l_n)),
 
-        // DEBUG STEP;        
+        // DEBUG STOP;        
         [Token::Keyword(s, l_n), Token::Keyword(s2, _)] 
-                if s == "DEBUG" && s2 == "STEP" => Ok((vec![730], *l_n)),
+                if s == "DEBUG" && s2 == "STOP" => Ok((vec![730], *l_n)),
 
         // DEBUG_ON STEP;        
         [Token::Keyword(s, l_n), Token::Keyword(s2, _)] 

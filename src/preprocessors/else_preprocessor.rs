@@ -22,12 +22,12 @@ fn process_tokens(tokens: &[Vec<RawToken>], label_id: &mut i32) -> Vec<Vec<RawTo
 }
 
 fn is_if(line: &[RawToken]) -> bool {
-    matches!(line, [RawToken::Keyword(s, _), RawToken::Number(_, _)] if s == "I")
+    matches!(line, [RawToken::Keyword(s, _), RawToken::Number(_, _)] if s == "IF")
 }
 
 fn is_else_if(line: &[RawToken]) -> bool {
     matches!(line, [RawToken::Keyword(s1, _), RawToken::Keyword(s2, _), RawToken::Number(_, _)] 
-        if s1 == "ELSE" && s2 == "I")
+        if s1 == "ELSE" && s2 == "IF")
 }
 
 fn is_else(line: &[RawToken]) -> bool {
@@ -140,7 +140,7 @@ fn process_chain(tokens: &[Vec<RawToken>], start: usize, label_id: &mut i32) -> 
         // Условие IF/ELSE IF
         if let Some(c) = cond {
             result.push(vec![
-                RawToken::Keyword("I".to_string(), l_n),
+                RawToken::Keyword("IF".to_string(), l_n),
                 RawToken::Number(c.clone(), l_n)
             ]);
         }

@@ -36,12 +36,12 @@ P.loop_deistvie;
     t INBC;// t = (буфер ввода?)
 
     // если да переходим в начало
-    IG t P.loop_deistvie;
+    IFG t P.loop_deistvie;
 
     // minus = первый знак из буфера
     minus INB;
 
-    I minus;
+    IF minus;
         CALL raznica;
         // если 1(true) выводим сообщение и вызываем sub из math
         CALL sub;
@@ -49,7 +49,7 @@ P.loop_deistvie;
 
     plus N minus;
 
-    I plus;
+    IF plus;
         CALL summa;
         // если 0(false) выводим сообщение и вызываем add из math
         CALL add;
@@ -66,11 +66,11 @@ P.loop2;
     IN;
     t INBC;
 
-    IG t P.loop2;
+    IFG t P.loop2;
 
     exit INB;
 
-    IG exit P.end;
+    IFG exit P.end;
     // 0 продолжить; 1 выход
 
 P.loop3;
@@ -80,13 +80,13 @@ P.loop3;
     IN;
     t INBC;
 
-    IG t P.loop3;
+    IFG t P.loop3;
 
     pdol_2 INB;
 
     // 0 задать первому входу math выход
     pdol_2 N pdol_2;
-    I pdol_2;
+    IF pdol_2;
         i_{0..7} o_{0..7};
         
         P N;

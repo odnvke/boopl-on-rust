@@ -213,28 +213,28 @@ fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
         return Ok(RawToken::Bool(s == "T", *line_n));
     }
 
-    // Односимвольные ключевые слова: "X", "A", "N", "I", "G", "P", "E", "L", "S"
+    // Односимвольные ключевые слова: "X", "A", "N", "G", "P", "E", "L", "S"
     if s.len() == 1 {
         let c = s.chars().next().unwrap();
-        if matches!(c, 'X' | 'A' | 'O' | 'N' | 'I' | 'G' | 'P' | 'E' | 'L' | 'S' | 'U') {
+        if matches!(c, 'X' | 'A' | 'O' | 'N' | 'G' | 'P' | 'E' | 'L' | 'S' | 'U') {
             return Ok(RawToken::Keyword(c.to_string(), *line_n));
         }
     }
 
     if s.len() == 2 {
-        if matches!(s, "IN" | "IG" | "BP") {
+        if matches!(s, "IN" | "IF" | "BP") {
             return Ok(RawToken::Keyword(s.to_string(), *line_n));
         }
     }
 
     if s.len() == 3 {
-        if matches!(s, "INB" | "RET" | "LOG") {
+        if matches!(s, "INB" | "RET" | "LOG" | "IFG" ) {
             return Ok(RawToken::Keyword(s.to_string(), *line_n));
         }
     }
 
     if s.len() == 4 {
-        if matches!(s, "INBC" | "CALL" | "FUNC" | "STEP" | "ELSE") {
+        if matches!(s, "INBC" | "CALL" | "FUNC" | "STEP" | "STOP" | "ELSE") {
             return Ok(RawToken::Keyword(s.to_string(), *line_n));
         }
     }
