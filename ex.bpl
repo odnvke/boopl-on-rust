@@ -1,302 +1,78 @@
-IMPORT bit_input;
-IMPORT math;
-IMPORT print;
+10 F; 11 F; 12 F;
 
-
-P.input1;
-    P N;  // выводим 1 сообщение 
-    CALL first_num_print;
-
-    // вызываем input_8 из bit_input
-    CALL input_8;
-
-    // переносим с ib_0-7 в i_0-7
-    i_{0..7} ib_{0..7};
-    // ib_N вывод bit_input
-    // i_N вход math
-
-
-    P.input2;
-
-    P N;
-    CALL second_num_print;
-
-    CALL input_8;
-
-    i2_{0..7} ib_{0..7};
-    // i2_N второй вход math
-
-
-P.loop_deistvie;
-    P N;
-    CALL deistvie;
-
-    INBC;  // очищаем буфер ввода
-    IN;    // запрашиваем ввод
-    t INBC;// t = (буфер ввода?)
-
-    // если да переходим в начало
-    IG t P.loop_deistvie;
-
-    // minus = первый знак из буфера
-    minus INB;
-
-    I minus;
-        CALL raznica;
-        // если 1(true) выводим сообщение и вызываем sub из math
-        CALL sub;
-    E;
-
-    plus N minus;
-
-    I plus;
-        CALL summa;
-        // если 0(false) выводим сообщение и вызываем add из math
-        CALL add;
-    E;  
-
-    P N;
-    P o_{7..0};
-    // выводим выход math
-
-
-P.loop2;
-    CALL prodoljit;
-
-    INBC;
-    IN;
-    t INBC;
-
-    IG t P.loop2;
-
-    exit INB;
-
-    IG exit P.end;
-    // 0 продолжить; 1 выход
-
-P.loop3;
-    CALL prodoljit_2;
-
-    INBC;
-    IN;
-    t INBC;
-
-    IG t P.loop3;
-
-    pdol_2 INB;
-
-    pdol_2 N pdol_2;
-    // 1 задать первому входу math выход
-    I pdol_2;
-         i_{0..7} o_{0..7};
-
-         CALL first_num_print;
-
-         P N;
-         P i_{7..0};
-
-         G P.input2;
-         // выводим и переходим к вводу второго входа
-    E;
-
-    G P.input1;
-    // переходим к вводу двух 
-
-
-
-// метка конца (необязательна)
-P.end;
+I 10;
+    P F; P F; P F; P T;   P N;
+ELSE I 11;
+    P F; P F; P T; P F;   P N;
+ELSE I 12;
+    P F; P T; P F; P F;   P N;
+ELSE;
+    P F; P T; P F; P F;   P N;
 E;
 
+P N; P N;
 
+20 F; 21 T;
+30 F; 31 F;
 
+I 20;
+    CALL print_a;
 
+    I 30;
+        CALL print_a;
+    ELSE I 31;
+        CALL print_b;
+    ELSE;
+        CALL print_else;
+    E;
 
+ELSE I 21;
+    CALL print_b;
 
+    I 30;
+        CALL print_a;
+    ELSE I 31;
+        CALL print_b;
+    ELSE;
+        CALL print_else;
+    E;
 
+ELSE;
+    CALL print_else;
 
+    I 30;
+        CALL print_a;
+    ELSE I 31;
+        CALL print_b;
+    ELSE;
+        CALL print_else;
+    E;
+E;
 
+FUNC print_a;
+    sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 F;  sb_6 F;  sb_7 T;
+    P U sb_0; P S;
+    RET E;
 
+FUNC print_b;
+    sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 F;  sb_6 T;  sb_7 F;
+    P U sb_0; P S;
+    RET E;
 
+FUNC print_else;
+    sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 T;  sb_6 F;  sb_7 T;
+    P U sb_0;
 
+    sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 T;  sb_5 T;  sb_6 F;  sb_7 F;
+    P U sb_0;
+    
+    sb_0 F;  sb_1 T;  sb_2 T;  sb_3 T;  sb_4 F;  sb_5 F;  sb_6 T;  sb_7 T;
+    P U sb_0;
 
-
-
-
-
-
-
-// ФУНК имя метки без P.
-FUNC first_num_print;
-    // вызовы принта букв
-    CALL print_ru_P;
-    CALL print_ru_e;
-    CALL print_ru_r;
-    CALL print_ru_v;
-    CALL print_ru_e;
-
-    P S;
-
-    CALL print_ru_b;
-    CALL print_ru_i;
-    CALL print_ru_t;
-    CALL print_ru_y;
-    CALL print_colon;
-// возврат
-RET E;
-
-
-
-FUNC second_num_print;
-    P N;
-
-    CALL print_ru_V;
-    CALL print_ru_t;
-    CALL print_ru_o;
-    CALL print_ru_r;
-    CALL print_ru_y;
-    CALL print_ru_e;
-
-    P S;
-
-    CALL print_ru_b;
-    CALL print_ru_i;
-    CALL print_ru_t;
-    CALL print_ru_y;
-    CALL print_colon;
-
-RET E;
-
-
-FUNC summa;
-    P N;
-
-    CALL print_ru_S;
-    CALL print_ru_u;
-    CALL print_ru_m;
-    CALL print_ru_m;
-    CALL print_ru_a;
-    CALL print_colon;
-
-    P N;
-
-RET E;
-
-
-
-FUNC prodoljit;
-    P N;
-
-    CALL print_0;
-    P S; P S;
-
-    CALL print_ru_P;
-    CALL print_ru_r;
-    CALL print_ru_o;
-    CALL print_ru_d;
-    CALL print_ru_o;
-    CALL print_ru_l;
-    CALL print_ru_zh;
-    CALL print_ru_i;
-    CALL print_ru_t;
-    CALL print_ru_magkiy;
-
-    P N;
-
-    CALL print_1;
-    P S; P S;
-
-    CALL print_ru_V;
-    CALL print_ru_y;
-    CALL print_ru_h;
-    CALL print_ru_o;
-    CALL print_ru_d;
-
-    P N;
-
-RET E;
-
-
-
-
-FUNC prodoljit_2;
-    P N;
-
-    CALL print_0;
-    P S; P S;
-
-    CALL print_ru_P;
-    CALL print_ru_r;
-    CALL print_ru_o;
-    CALL print_ru_d;
-    CALL print_ru_l;
-    CALL print_ru_zh;
-    CALL print_ru_i;
-    CALL print_ru_t;
-    CALL print_ru_magkiy;  
-
-    P N;
-
-    CALL print_1;
-    P S; P S;
-
-
-    CALL print_ru_N;
-    CALL print_ru_o;
-    CALL print_ru_v;
-    CALL print_ru_y;
-    CALL print_ru_e;
+    sb_0 F;  sb_1 T;  sb_2 T;  sb_3 F;  sb_4 F;  sb_5 T;  sb_6 F;  sb_7 T;
+    P U sb_0;
 
     P S;
 
-    CALL print_ru_b;
-    CALL print_ru_i;
-    CALL print_ru_t;
-    CALL print_ru_y;
-    P N;
+    RET E;
 
-RET E;
-
-FUNC deistvie;
-    P N;
-
-    CALL print_0;
-    P S; P S;
-
-    CALL print_ru_P;
-    CALL print_ru_l;
-    CALL print_ru_yu;
-    CALL print_ru_s;
-
-    P N;
-
-    CALL print_1;
-    P S; P S;
-
-    CALL print_ru_M;
-    CALL print_ru_i;
-    CALL print_ru_n;
-    CALL print_ru_u;
-    CALL print_ru_s;
-
-    P N;
-
-RET E;
-
-
-
-FUNC raznica;
-    P N;
-
-    CALL print_ru_R;
-    CALL print_ru_a;
-    CALL print_ru_z;
-    CALL print_ru_n;
-    CALL print_ru_i;
-    CALL print_ru_ts;
-    CALL print_ru_a;
-    CALL print_colon;
-
-    P N;
-
-RET E;
