@@ -1,24 +1,37 @@
 //   ##############  Labels  #############
 
-// craete static label
+// create static label
 P.name_label;
 
-// craete dynamic label
+// create dynamic label
 PD.name_label;
 
+// goto label;
+G P.name_label;
+G PD.name_label;
+
+
+PD.temp P.label; //PD.temp = P.label (20)
+G PD.temp; //goto 20;
+
+// code
+
+P.label; // static label on line 20
+
+PD.label1 PD.temp;
 
 // static:
 //     error:
 //         P.test;
-//         P.test //error overwriting of static label
+//         P.test; // error: redefinition of static label
 
-           PD.test; //10: PD.test = 10;
-           PD.test; //11: PD.test = 11;
+           PD.test; // 10: PD.test = 10;
+           PD.test; // 11: PD.test = 11;
 
 // dynamic:
 //     error:
-//       //goto PD.test
-//         G PD.test; //now label PD.test undefended
+//       // goto PD.test
+//         G PD.test; // now label PD.test undefined
 //         PD.test;
 
            G P.test;
