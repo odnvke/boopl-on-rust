@@ -7,9 +7,19 @@ P.name_label;
 PD.name_label;
 
 
-// different:
+// static:
 //     error:
 //         P.test;
-//         P.test //error overwriting of static  label
-           PD.test; //10
-           PD.test; //11 
+//         P.test //error overwriting of static label
+
+           PD.test; //10: PD.test = 10;
+           PD.test; //11: PD.test = 11;
+
+// dynamic:
+//     error:
+//       //goto PD.test
+//         G PD.test; //now label PD.test undefended
+//         PD.test;
+
+           G P.test;
+           P.test;
