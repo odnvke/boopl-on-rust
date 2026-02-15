@@ -1,0 +1,15 @@
+//   ##############  Labels  #############
+
+// craete static label
+P.name_label;
+
+// craete dynamic label
+PD.name_label;
+
+
+// different:
+//     error:
+//         P.test;
+//         P.test //error overwriting of static  label
+           PD.test; //10
+           PD.test; //11 
