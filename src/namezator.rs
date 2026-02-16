@@ -1,6 +1,6 @@
 // namezator.rs
 use std::collections::{HashMap, BTreeMap};
-use crate::{name_map::{IdentNameMap}, tokens::{RawToken, Token}};
+use crate::{name_map::IdentNameMap, tokens::{RawToken, Token}};
 
 // Часть имени (текст или число)
 #[derive(Debug, Clone, PartialEq, Eq, Hash, PartialOrd, Ord)]
@@ -43,7 +43,7 @@ impl NumberingContext {
             self.next_base_id += self.block_size;
         }
         
-        self.base_ids[path]
+        *self.base_ids.get(path).unwrap()
     }
     
     fn get_next_local_id(&mut self, path: &[NamePart]) -> i32 {
@@ -130,39 +130,21 @@ fn parse_name(name: &str) -> Vec<NamePart> {
     parts
 }
 
-fn extract_names(raw_tokens: &[Vec<RawToken>], token_type: RawToken) -> Vec<String> {
+fn extract_names(raw_tokens: &[Vec<RawToken>], token_type: &RawToken) -> Vec<String> {
     let mut unique_names = Vec::new();
     
-    // Определяем тип по варианту, игнорируя содержимое
-    let type_to_match = match token_type {
-        RawToken::Number(_, _) => "Number",
-        RawToken::LabelP(_, _) => "LabelP", 
-        RawToken::LabelPD(_, _) => "LabelPD",
-        _ => {
-            eprintln!("\n\n       наймезатор: нельзя взять имена типа {:?}", token_type);
-            return Vec::new();
-        }
-    };
-
     for line in raw_tokens {
         for token in line {
-            // Сравниваем по варианту, а не по значению
-            let token_type_name = match token {
-                RawToken::Number(_, _) => "Number",
-                RawToken::LabelP(_, _) => "LabelP",
-                RawToken::LabelPD(_, _) => "LabelPD",
-                _ => continue,
-            };
-            
-            if token_type_name == type_to_match {
-                let name = match token {
-                    RawToken::Number(s, _) | RawToken::LabelP(s, _) | RawToken::LabelPD(s, _) => s.clone(),
-                    _ => unreachable!(),
-                };
-                
-                if !unique_names.contains(&name) {
-                    unique_names.push(name);
-                }
+            match (token, token_type) {
+                (RawToken::Number(name, _), RawToken::Number(_, _)) |
+                (RawToken::LabelP(name, _), RawToken::LabelP(_, _)) |
+                (RawToken::LabelPD(name, _), RawToken::LabelPD(_, _)) => {
+                    let name_clone = name.clone();
+                    if !unique_names.contains(&name_clone) {
+                        unique_names.push(name_clone);
+                    }
+                },
+                _ => {}
             }
         }
     }
@@ -172,70 +154,77 @@ fn extract_names(raw_tokens: &[Vec<RawToken>], token_type: RawToken) -> Vec<Stri
 
 // Основная функция
 pub fn namezating(raw_tokens: Vec<Vec<RawToken>>, debug_mode: bool) -> (Vec<Vec<Token>>, IdentNameMap) {
-    let unique_names_P = extract_names(&raw_tokens, RawToken::LabelP(String::new(), 0));
-    let unique_names_PD = extract_names(&raw_tokens, RawToken::LabelPD(String::new(), 0));
-    let unique_names_N = extract_names(&raw_tokens, RawToken::Number(String::new(), 0));
+    let unique_names_p = extract_names(&raw_tokens, &RawToken::LabelP(String::new(), 0));
+    let unique_names_pd = extract_names(&raw_tokens, &RawToken::LabelPD(String::new(), 0));
+    let unique_names_n = extract_names(&raw_tokens, &RawToken::Number(String::new(), 0));
     
-    let mut tree_P = TreeNode::default();
-    let mut tree_PD = TreeNode::default();
-    let mut tree_N = TreeNode::default();
+    let mut tree_p = TreeNode::default();
+    let mut tree_pd = TreeNode::default();
+    let mut tree_n = TreeNode::default();
 
-    for name in &unique_names_P {
-        tree_P.insert(name);
+    for name in &unique_names_p {
+        tree_p.insert(name);
     }
-    for name in &unique_names_PD {
-        tree_PD.insert(name);
+    for name in &unique_names_pd {
+        tree_pd.insert(name);
     }
-    for name in &unique_names_N {
-        tree_N.insert(name);
+    for name in &unique_names_n {
+        tree_n.insert(name);
     }
 
-    let mut name_to_id_P: HashMap<String, i32> = HashMap::new();
-    let mut name_to_id_PD: HashMap<String, i32> = HashMap::new();
-    let mut name_to_id_N: HashMap<String, i32> = HashMap::new();
-    let mut context = NumberingContext::new(1);
+    let mut name_to_id_p: HashMap<String, i32> = HashMap::new();
+    let mut name_to_id_pd: HashMap<String, i32> = HashMap::new();
+    let mut name_to_id_n: HashMap<String, i32> = HashMap::new();
+    
+    // Создаем отдельные контексты для каждого типа
+    let mut context_p = NumberingContext::new(1);
+    let mut context_pd = NumberingContext::new(1);
+    let mut context_n = NumberingContext::new(1);
+    
     let mut current_path = Vec::new();
     
-    tree_P.assign_ids(&mut name_to_id_P, &mut context, &mut current_path);
-    tree_PD.assign_ids(&mut name_to_id_PD, &mut context, &mut current_path);
-    tree_N.assign_ids(&mut name_to_id_N, &mut context, &mut current_path);
+    tree_p.assign_ids(&mut name_to_id_p, &mut context_p, &mut current_path);
+    current_path.clear();
+    tree_pd.assign_ids(&mut name_to_id_pd, &mut context_pd, &mut current_path);
+    current_path.clear();
+    tree_n.assign_ids(&mut name_to_id_n, &mut context_n, &mut current_path);
 
     if debug_mode {
         println!("=~=~=~=~=~ Таблица имен =~=~=~=~=~");
         println!(" Labels Static:");
-        // Собираем владеющи значения
-        let mut sorted_entries: Vec<(String, i32)> = name_to_id_P
+        // Собираем владеющие значения
+        let mut sorted_entries: Vec<(String, i32)> = name_to_id_p
             .iter()
             .map(|(k, &v)| (k.clone(), v))
             .collect();
 
-        sorted_entries.sort_by_key(|(_, id)| *id);
+        sorted_entries.sort_by_key(|&(_, id)| id);
         
         for (name, id) in &sorted_entries {
             println!("{:30} → {}", name, id);
         }
 
         println!(" Labels Dynamic:");
-        // Собираем владеющи значения
-        let mut sorted_entries: Vec<(String, i32)> = name_to_id_PD
+        // Собираем владеющие значения
+        let mut sorted_entries: Vec<(String, i32)> = name_to_id_pd
             .iter()
             .map(|(k, &v)| (k.clone(), v))
             .collect();
 
-        sorted_entries.sort_by_key(|(_, id)| *id);
+        sorted_entries.sort_by_key(|&(_, id)| id);
         
         for (name, id) in &sorted_entries {
             println!("{:30} → {}", name, id);
         }
         
         println!(" Vars:");
-        // Собираем владеющи значения
-        let mut sorted_entries: Vec<(String, i32)> = name_to_id_N
+        // Собираем владеющие значения
+        let mut sorted_entries: Vec<(String, i32)> = name_to_id_n
             .iter()
             .map(|(k, &v)| (k.clone(), v))
             .collect();
 
-        sorted_entries.sort_by_key(|(_, id)| *id);
+        sorted_entries.sort_by_key(|&(_, id)| id);
         
         for (name, id) in &sorted_entries {
             println!("{:30} → {}", name, id);
@@ -254,18 +243,18 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>, debug_mode: bool) -> (Vec<Vec<
                 RawToken::Bool(b, l_n) => converted_line.push(Token::Bool(*b, *l_n)),
                 RawToken::Keyword(k, l_n) => converted_line.push(Token::Keyword(k.clone(), *l_n)),
                 RawToken::Number(name, l_n) => {
-                    let id = *name_to_id_N.get(name)
-                        .unwrap_or_else(|| panic!("Имя не найдено: {}", name));
+                    let id = *name_to_id_n.get(name)
+                        .unwrap_or_else(|| panic!("Имя переменной не найдено: {}", name));
                     converted_line.push(Token::Number(id, *l_n));
                 }
                 RawToken::LabelP(name, l_n) => {
-                    let id = *name_to_id_P.get(name)
-                        .unwrap_or_else(|| panic!("Указатель P не найдено: {}", name));
+                    let id = *name_to_id_p.get(name)
+                        .unwrap_or_else(|| panic!("Статическая метка не найдена: {}", name));
                     converted_line.push(Token::LabelP(id, *l_n));
                 }
                 RawToken::LabelPD(name, l_n) => {
-                    let id = *name_to_id_PD.get(name)
-                        .unwrap_or_else(|| panic!("Указатель PD не найдено: {}", name));
+                    let id = *name_to_id_pd.get(name)
+                        .unwrap_or_else(|| panic!("Динамическая метка не найдена: {}", name));
                     converted_line.push(Token::LabelPD(id, *l_n));
                 }
             }
@@ -280,20 +269,24 @@ pub fn namezating(raw_tokens: Vec<Vec<RawToken>>, debug_mode: bool) -> (Vec<Vec<
     let mut ident_name_map = IdentNameMap::new(); 
 
     let mut id_to_name: HashMap<i32, String> = HashMap::new();
-    for (v, k) in name_to_id_P {
-        id_to_name.insert(k, v);
+    for (name, id) in name_to_id_p {
+        id_to_name.insert(id, name);
     }
-    ident_name_map.load_P(id_to_name.clone());
+    ident_name_map.load_p(id_to_name.clone());
 
-    for (v, k) in name_to_id_PD {
-        id_to_name.insert(k, v);
+    // Очищаем и заполняем для PD
+    id_to_name.clear();
+    for (name, id) in name_to_id_pd {
+        id_to_name.insert(id, name);
     }
-    ident_name_map.load_PD(id_to_name.clone());
+    ident_name_map.load_pd(id_to_name.clone());
 
-    for (v, k) in name_to_id_N {
-        id_to_name.insert(k, v);
+    // Очищаем и заполняем для N
+    id_to_name.clear();
+    for (name, id) in name_to_id_n {
+        id_to_name.insert(id, name);
     }
-    ident_name_map.load_N(id_to_name);
+    ident_name_map.load_n(id_to_name);
 
     (result, ident_name_map)
 }

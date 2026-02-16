@@ -16,43 +16,36 @@ impl IdentNameMap {
         }
     }
 
-    pub fn load_P(&mut self, _hash_map: HashMap<i32, String>) {
-        self.id_to_name_static = _hash_map;
+    pub fn load_p(&mut self, hash_map: HashMap<i32, String>) {
+        self.id_to_name_static = hash_map;
     }
     
-    pub fn load_PD(&mut self, _hash_map: HashMap<i32, String>) {
-        self.id_to_name_dynamic = _hash_map;
+    pub fn load_pd(&mut self, hash_map: HashMap<i32, String>) {
+        self.id_to_name_dynamic = hash_map;
     }
     
-    pub fn load_N(&mut self, _hash_map: HashMap<i32, String>) {
-        self.id_to_name_var = _hash_map;
+    pub fn load_n(&mut self, hash_map: HashMap<i32, String>) {
+        self.id_to_name_var = hash_map;
     }
 
-
-    pub fn get_name_P(&self, id: i32) -> String {
+    pub fn get_name_p(&self, id: i32) -> String {
         match self.id_to_name_static.get(&id) {
             Some(name) => name.clone(),
-            None => {
-                panic!("Имя статической метки с ID {} не найдено", id);
-            }
+            None => panic!("Имя статической метки с ID {} не найдено", id),
         }
     }
 
-    pub fn get_name_PD(&self, id: i32) -> String {
+    pub fn get_name_pd(&self, id: i32) -> String {
         match self.id_to_name_dynamic.get(&id) {
             Some(name) => name.clone(),
-            None => {
-                panic!("Имя динамической метки с ID {} не найдено", id);
-            }
+            None => panic!("Имя динамической метки с ID {} не найдено", id),
         }
     }
 
-    pub fn get_name_N(&self, id: i32) -> String {
+    pub fn get_name_n(&self, id: i32) -> String {
         match self.id_to_name_var.get(&id) {
             Some(name) => name.clone(),
-            None => {
-                panic!("Имя переменной с ID {} не найдено", id);
-            }
+            None => panic!("Имя переменной с ID {} не найдено", id),
         }
     }
 }
