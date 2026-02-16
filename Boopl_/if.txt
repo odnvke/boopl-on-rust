@@ -6,7 +6,7 @@ v2 F;
 
 
 //если v == true;
-I V;
+IF V;
     v  F;
     v2 T;
 E; // конец условия
@@ -14,18 +14,18 @@ E; // конец условия
 
 // переменная temp = v2;
 temp v2;
-I temp;
+IF temp;
     v T; 
 E;
 
 //v F;
 
 // условие
-I v;
+IF v;
     P T;
 
     // вложенное условие
-    I v2; 
+    IF v2; 
         P T;
         G P.end;
     E;

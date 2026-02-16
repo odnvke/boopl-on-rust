@@ -1,18 +1,19 @@
 // ############ ОПЕРАЦИИ ##############
 
+//переменная value1 хранит true
 value1 T;
 
 value2 F;
 
 
-// not
+// V = not value1
 V N value1;
 
-// or
+// V = value1 or value2;
 V O value1 value2;
 
-// and 
+// V = value1 and value2;
 V A value1 value2;
 
-// xor
+// V = value1 xor value2;
 V X value1 value2;
