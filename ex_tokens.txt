@@ -1,32 +1,6 @@
 === ТОКЕНЫ ===
 
-1: var1_{0..15} true 
-2: var2_{0..15} var1_{15..0} 
-3: var2_{10..10} var1_{10..10} 
-4: var2_{10..10} var1_{10..10} 
-5: var2_{10..10} var1_{10..10} 
-6: var2_{10..10} var1_{10..10} 
-7: var2_{10..10} var1_{10..10} 
-8: var2_{10..10} var1_{10..10} 
-9: var2_{10..10} var1_{10..10} 
-10: var2_{10..10} var1_{10..10} 
-11: var2_{10..10} var1_{10..10} 
-12: var2_{10..10} var1_{10..10} 
-13: P var1_{5..15} 
-14: P N 
-15: P true 
-16: P true 
-17: P true 
-18: P true 
-19: P true 
-20: P true 
-21: P true 
-22: P true 
-23: P true 
-24: P true 
-25: P false 
-26: P false 
-27: P false 
-28: P false 
-29: P false 
-30: P N 
+1: _ true 
+2: P._ 
+3: P._2 
+4: PD._ 

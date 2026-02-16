@@ -57,7 +57,7 @@ impl VM {
                         self.memory.resize(line[0] as usize + 1, 0);
                     }
                     self.memory[line[0] as usize] = 0;
-                    if log_mode {print!("{} <= False", ident_name_map.get_name(line[0]))}
+                    if log_mode {print!("{} <= False", ident_name_map.get_name_N(line[0]))}
                 }
                 // 10 T
                 101 => {
@@ -65,19 +65,19 @@ impl VM {
                         self.memory.resize(line[0] as usize + 1, 0);
                     }
                     self.memory[line[0] as usize] = 1;
-                    if log_mode {print!("{} <= True", ident_name_map.get_name(line[0]))}
+                    if log_mode {print!("{} <= True", ident_name_map.get_name_N(line[0]))}
                 }
                 // 10 10
                 150 => {
                     if (line[1] as usize) >= self.memory.len() {
-                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[1])), line_n));
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name_N(line[1])), line_n));
                     }
                     let val = self.memory[line[1] as usize];
                     if (line[0] as usize) >= self.memory.len() {
                         self.memory.resize(line[0] as usize + 1, 0);
                     }
                     self.memory[line[0] as usize] = val;
-                    if log_mode {print!("{} <= {} ({})", ident_name_map.get_name(line[0]), ident_name_map.get_name(line[1]), val == 1)}
+                    if log_mode {print!("{} <= {} ({})", ident_name_map.get_name_N(line[0]), ident_name_map.get_name_N(line[1]), val == 1)}
                 }
 
                 // PD.10      ! P.10 небудет
@@ -86,7 +86,7 @@ impl VM {
                         self.memory_pd.resize(line[0] as usize + 1, -1);
                     }
                     self.memory_pd[line[0] as usize] = pc as i32;
-                    if log_mode {print!("PD.{} <= {}", ident_name_map.get_name(line[0]), pc)}
+                    if log_mode {print!("PD.{} <= {}", ident_name_map.get_name_PD(line[0]), pc)}
                 }
 
                 // G P.10
@@ -97,10 +97,10 @@ impl VM {
                 // G PD.10
                 231 => { 
                     if (line[0] as usize) < self.memory_pd.len() && self.memory_pd[line[0] as usize] >= 0 {
-                        if log_mode {print!("GO TO: PD.{} (from: {})", ident_name_map.get_name(line[0]), pc)}
+                        if log_mode {print!("GO TO: PD.{} (from: {})", ident_name_map.get_name_PD(line[0]), pc)}
                         pc = self.memory_pd[line[0] as usize] as usize
                     } else {
-                        return Err(vm_error(format!("   >>  ! несуществующий динамический указатель PD.{}", ident_name_map.get_name(line[0])), line_n));
+                        return Err(vm_error(format!("   >>  ! несуществующий динамический указатель PD.{}", ident_name_map.get_name_PD(line[0])), line_n));
                     }
                 }
 
@@ -110,7 +110,7 @@ impl VM {
                         self.memory_pd.resize(line[0] as usize + 1, -1);
                     }
                     self.memory_pd[line[0] as usize] = line[1];
-                    if log_mode {print!("PD.{} <= {}(instr)", ident_name_map.get_name(line[0]), line[1])}
+                    if log_mode {print!("PD.{} <= {}(instr)", ident_name_map.get_name_PD(line[0]), line[1])}
                 }
                 // PD.10 PD.10
                 261 => { 
@@ -120,16 +120,16 @@ impl VM {
                             self.memory_pd.resize(line[0] as usize + 1, -1);
                         }
                         self.memory_pd[line[0] as usize] = val;
-                        if log_mode {print!("PD.{} <= PD.{} ({})", ident_name_map.get_name(line[0]), ident_name_map.get_name(line[1]), val)}
+                        if log_mode {print!("PD.{} <= PD.{} ({})", ident_name_map.get_name_PD(line[0]), ident_name_map.get_name_PD(line[1]), val)}
                     } else {
-                        return Err(vm_error(format!("   >>  ! несуществующий динамический указатель PD.{}", ident_name_map.get_name(line[1])), line_n));
+                        return Err(vm_error(format!("   >>  ! несуществующий динамический указатель PD.{}", ident_name_map.get_name_PD(line[1])), line_n));
                     }
                 }
 
                 // I 10 6(указатель на иначе)
                 300 => {
                     if (line[0] as usize) < self.memory.len() {
-                        if log_mode {print!("IF {} (end on {}) : ", ident_name_map.get_name(line[0]), line[1])}
+                        if log_mode {print!("IF {} (end on {}) : ", ident_name_map.get_name_N(line[0]), line[1])}
                         if self.memory[line[0] as usize] == 1 {
                             if log_mode {print!("Run IF Block")}
                         }
@@ -138,33 +138,33 @@ impl VM {
                             if log_mode {print!("GO TO End IF")}
                         }
                     } else {
-                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[0])), line_n));
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name_N(line[0])), line_n));
                     }
                 }
                 // IG 10 P.10
                 302 => {
                     if (line[0] as usize) < self.memory.len() {
-                        if log_mode {print!("IF {} GO TO {}(instr) : ", ident_name_map.get_name(line[0]), line[1])}
+                        if log_mode {print!("IF {} GO TO {}(instr) : ", ident_name_map.get_name_N(line[0]), line[1])}
                         if self.memory[line[0] as usize] == 1 {pc = line[1] as usize; if log_mode {print!("GO TO")}}
                         else {if log_mode {print!("next instr")}}
                     } else {
-                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[0])), line_n));
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name_N(line[0])), line_n));
                     }
                 }
                 // IG 10 PD.10
                 303 => {
                     if (line[0] as usize) < self.memory.len() {
                         if (line[1] as usize) < self.memory_pd.len() && self.memory_pd[line[1] as usize] >= 0 {
-                            if log_mode {print!("IF {} GOTO {} ({}) :", ident_name_map.get_name(line[0]), 
-                                    ident_name_map.get_name(line[1]), self.memory_pd[line[1] as usize])}
+                            if log_mode {print!("IF {} GOTO {} ({}) :", ident_name_map.get_name_N(line[0]), 
+                                    ident_name_map.get_name_PD(line[1]), self.memory_pd[line[1] as usize])}
                             if self.memory[line[0] as usize] == 1 {pc = self.memory_pd[line[1] as usize] as usize; if log_mode {print!("GO TO")}}
                             else {if log_mode {print!("next instr")}}
                         }
                         else {
-                            return Err(vm_error(format!("   >>  ! несуществующий динамический указатель PD.{}", ident_name_map.get_name(line[1])), line_n));
+                            return Err(vm_error(format!("   >>  ! несуществующий динамический указатель PD.{}", ident_name_map.get_name_PD(line[1])), line_n));
                         }
                     } else {
-                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[0])), line_n));
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name_N(line[0])), line_n));
                     }
                 }
 
@@ -181,10 +181,10 @@ impl VM {
                 // P 10
                 402 => {
                     if (line[0] as usize) < self.memory.len() {
-                        if log_mode {print!("PRINT {}: ", ident_name_map.get_name(line[0]))}
+                        if log_mode {print!("PRINT {}: ", ident_name_map.get_name_N(line[0]))}
                         if self.memory[line[0] as usize] == 1 {print!("#")} else {print!(".")}
                     } else {
-                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[0])), line_n));
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name_N(line[0])), line_n));
                     }
                 }
                 // P N
@@ -200,7 +200,7 @@ impl VM {
 
                 // P U 10
                 405 => {
-                    if log_mode {print!("PRINT UTF-8 (from: {}): ", ident_name_map.get_name(line[0]))}
+                    if log_mode {print!("PRINT UTF-8 (from: {}): ", ident_name_map.get_name_N(line[0]))}
                     let start_addr = line[0] as usize;
                     let mut bytes = Vec::new();
 
@@ -209,7 +209,7 @@ impl VM {
                         let mut byte_value: u8 = 0;
                         for i in 0..8 {
                             if start_addr + i >= self.memory.len() {
-                                return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name((start_addr + i) as i32)), line_n));
+                                return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name_N((start_addr + i) as i32)), line_n));
                             }
                             let bit = self.memory[start_addr + i];
                             byte_value = (byte_value << 1) | (bit as u8)
@@ -235,7 +235,7 @@ impl VM {
                     for i in 0..additional_bytes {
                         let byte_addr = start_addr + 8 + (i * 8);
                         if byte_addr + 7 >= self.memory.len() {
-                            return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(byte_addr as i32)), line_n));
+                            return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name_N(byte_addr as i32)), line_n));
                         }
                         let next_byte = {
                             let mut byte_value: u8 = 0;
@@ -264,9 +264,9 @@ impl VM {
                             self.memory.resize(line[0] as usize + 1, 0);
                         }
                         self.memory[line[0] as usize] = if val == 1 {0} else {1};
-                        if log_mode {print!("{} <= NOT {}", ident_name_map.get_name(line[0]), ident_name_map.get_name(line[1]))}
+                        if log_mode {print!("{} <= NOT {}", ident_name_map.get_name_N(line[0]), ident_name_map.get_name_N(line[1]))}
                     } else {
-                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[1])), line_n));
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name_N(line[1])), line_n));
                     }
                 }
 
@@ -279,11 +279,11 @@ impl VM {
                             self.memory.resize(line[0] as usize + 1, 0);
                         }
                         self.memory[line[0] as usize] = if a == 1 || b == 1 {1} else {0};
-                        if log_mode {print!("{} <= {} OR {}", ident_name_map.get_name(line[0]), 
-                                ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2]))}
+                        if log_mode {print!("{} <= {} OR {}", ident_name_map.get_name_N(line[0]), 
+                                ident_name_map.get_name_N(line[1]), ident_name_map.get_name_N(line[2]))}
                     } else {
                         return Err(vm_error(format!("   >>  ! несуществующая ячейка {} или {}", 
-                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2])), line_n));
+                            ident_name_map.get_name_N(line[1]), ident_name_map.get_name_N(line[2])), line_n));
                     }
                 }
                 // 10 A 10 10
@@ -295,11 +295,11 @@ impl VM {
                             self.memory.resize(line[0] as usize + 1, 0);
                         }
                         self.memory[line[0] as usize] = if a == 1 && b == 1 {1} else {0};
-                        if log_mode {print!("{} <= {} AND {}", ident_name_map.get_name(line[0]), 
-                                ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2]))}
+                        if log_mode {print!("{} <= {} AND {}", ident_name_map.get_name_N(line[0]), 
+                                ident_name_map.get_name_N(line[1]), ident_name_map.get_name_N(line[2]))}
                     } else {
                         return Err(vm_error(format!("   >>  ! несуществующая ячейка {} или {}", 
-                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2])), line_n));
+                            ident_name_map.get_name_N(line[1]), ident_name_map.get_name_N(line[2])), line_n));
                     }
                 }
                 // 10 X 10 10
@@ -311,11 +311,11 @@ impl VM {
                             self.memory.resize(line[0] as usize + 1, 0);
                         }
                         self.memory[line[0] as usize] = if (a == 1) != (b == 1) {1} else {0};
-                        if log_mode {print!("{} <= {} XOR {}", ident_name_map.get_name(line[0]), 
-                                ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2]))}
+                        if log_mode {print!("{} <= {} XOR {}", ident_name_map.get_name_N(line[0]), 
+                                ident_name_map.get_name_N(line[1]), ident_name_map.get_name_N(line[2]))}
                     } else {
                         return Err(vm_error(format!("   >>  ! несуществующая ячейка {} или {}", 
-                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2])), line_n));
+                            ident_name_map.get_name_N(line[1]), ident_name_map.get_name_N(line[2])), line_n));
                     }
                 }
 
@@ -358,7 +358,7 @@ impl VM {
                         self.memory.resize(line[0] as usize + 1, 0);
                     }
                     self.memory[line[0] as usize] = if self.input_buffer.is_empty() { 1 } else { 0 };
-                    if log_mode {print!("{} <= IF INPUT Buffer clear ({})", ident_name_map.get_name(line[0]), self.input_buffer.is_empty())}
+                    if log_mode {print!("{} <= IF INPUT Buffer clear ({})", ident_name_map.get_name_N(line[0]), self.input_buffer.is_empty())}
                 }
 
                 // 10 INB    берёт следующий символ
@@ -373,7 +373,7 @@ impl VM {
                             _ => {return Err(vm_error(format!("   >> ! символ неподходящий для ячейки памяти {}", ch), line_n))}
                         };
                         self.memory[line[0] as usize] = value;
-                        if log_mode {print!("{} <= First Char From INPUT Buffer ({})", ident_name_map.get_name(line[0]), ch)}
+                        if log_mode {print!("{} <= First Char From INPUT Buffer ({})", ident_name_map.get_name_N(line[0]), ch)}
                     } else {
                         return Err(vm_error(format!("   >>  ! буфер ввода пустой"), line_n));
                     }
@@ -382,7 +382,7 @@ impl VM {
                 // 676: 10 U INB - взять первый символ из буфера
                 676 => {
                     if let Some(ch) = self.input_buffer.pop_front() {
-                        if log_mode {print!("{} <= First Char UTF-8 From INPUT Buffer ({})", ident_name_map.get_name(line[0]), ch)}
+                        if log_mode {print!("{} <= First Char UTF-8 From INPUT Buffer ({})", ident_name_map.get_name_N(line[0]), ch)}
                         self.store_char_to_memory(line[0], ch);
                     } else {
                         return Err(vm_error("   >>  ! буфер ввода пустой (utf-8) ".to_string(), line_n));

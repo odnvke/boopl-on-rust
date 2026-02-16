@@ -154,15 +154,15 @@ fn process_line(tokens: Vec<Token>, ident_name_map: &IdentNameMap) -> Result<(Ve
                 match i {
                     Token::Number(n, l_n) => {
                         line_n = *l_n; 
-                        line.push(format!("{}", ident_name_map.get_name(*n)));
+                        line.push(format!("{}", ident_name_map.get_name_N(*n)));
                     }
                     Token::LabelP(n, l_n) => {
                         line_n = *l_n;
-                        line.push(format!("P.{}", ident_name_map.get_name(*n)));
+                        line.push(format!("P.{}", ident_name_map.get_name_P(*n)));
                     }
                     Token::LabelPD(n, l_n) => {
                         line_n = *l_n;
-                        line.push(format!("PD.{}", ident_name_map.get_name(*n)));
+                        line.push(format!("PD.{}", ident_name_map.get_name_PD(*n)));
                     }
                     Token::Bool(b, l_n) => {line.push(format!("{}", if *b {"T"} else {"F"})); line_n = *l_n;}
                     Token::Keyword(b, l_n) => {line.push(format!("{}", *b)); line_n = *l_n;}
