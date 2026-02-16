@@ -1,7 +1,8 @@
 // range_expander.rs
 use crate::tokens::{RawToken, is_range_token, parse_range_token};
+use crate::error::{BooplError, Result};
 
-pub fn expand_ranges(tokens: Vec<Vec<RawToken>>) -> Vec<Vec<RawToken>> {
+pub fn expand_ranges(tokens: Vec<Vec<RawToken>>) -> Result<Vec<Vec<RawToken>>> {
     let mut expanded_tokens = Vec::new();
     
     for line in tokens {
@@ -9,35 +10,38 @@ pub fn expand_ranges(tokens: Vec<Vec<RawToken>>) -> Vec<Vec<RawToken>> {
         let mut ranges_info = Vec::new();
         
         for token in &line {
-            if let RawToken::Number(s, l_num) = token {
-                if is_range_token(s) {
-                    has_ranges = true;
-                    match parse_range_token(s) {
-                        Some((base, start, end)) => {
-                            ranges_info.push((base, start, end, *l_num));
-                        }
-                        None => {
-                            eprintln!("Ошибка в '{}' (строка {})", s, l_num);
-                            std::process::exit(1);
+                if let RawToken::Number(s, l_num) = token {
+                    if is_range_token(s) {
+                        has_ranges = true;
+                        match parse_range_token(s) {
+                            Some((base, start, end)) => {
+                                ranges_info.push((base, start, end, *l_num));
+                            }
+                            None => {
+                                return Err(BooplError::new(
+                                    format!("Некорректный range токен '{}'", s),
+                                    *l_num
+                                ));
+                            }
                         }
                     }
                 }
             }
-        }
         
         if !has_ranges {
             expanded_tokens.push(line);
             continue;
         }
         
-        // Проверяем длины
         if ranges_info.len() > 1 {
-            let first_len = (ranges_info[0].2 - ranges_info[0].1).abs() + 1; // +1 т.к. inclusive
+            let first_len = (ranges_info[0].2 - ranges_info[0].1).abs() + 1;
             for (_base, start, end, l_num) in &ranges_info[1..] {
                 let current_len = (end - start).abs() + 1;
                 if current_len != first_len {
-                    eprintln!("Ошибка в строке {}", l_num);
-                    std::process::exit(1);
+                    return Err(BooplError::new(
+                        "Разные длины в range expansion",
+                        *l_num
+                    ));
                 }
             }
         }
@@ -83,5 +87,5 @@ pub fn expand_ranges(tokens: Vec<Vec<RawToken>>) -> Vec<Vec<RawToken>> {
         }
     }
     
-    expanded_tokens
+    Ok(expanded_tokens)
 }

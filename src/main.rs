@@ -1,8 +1,8 @@
-// main.rs
 use std::env;
 use std::fs;
-use std::process;
 use std::path::Path;
+use std::process;
+use std::error::Error;
 
 mod preprocessors;
 mod vm;
@@ -11,129 +11,128 @@ mod to_bytecode;
 mod namezator;
 mod name_map;
 mod importer;
+mod error;
 
 fn main() {
-    let args: Vec<String> = env::args().collect();
-    
-    if args.len() < 2 {
-        show_usage(&args[0]);
+    if let Err(e) = run() {
+        eprintln!("{}", e);
         process::exit(1);
-    }
-    
-    // Парсим аргументы
-    let mut debug_mode = false;
-    let mut filename_arg = None;
-    
-    // Пропускаем первый аргумент (имя программы)
-    for i in 1..args.len() {
-        let arg = &args[i];
-        
-        // Если аргумент начинается с '-', это флаг
-        if arg.starts_with('-') {
-            if arg == "--debug" || arg == "-debug" {
-                debug_mode = true;
-            }
-            // Игнорируем другие флаги
-        } else {
-            // Это не флаг, значит это имя файла
-            filename_arg = Some(arg.clone());
-            // После имени файла не должно быть других аргументов (кроме флагов)
-        }
-    }
-    
-    let filename = match filename_arg {
-        Some(f) => f,
-        None => {
-            eprintln!("Ошибка: не указано имя файла");
-            show_usage(&args[0]);
-            process::exit(1);
-        }
-    };
-    
-    // Проверяем существование файла
-    if !Path::new(&filename).exists() {
-        eprintln!("Файл '{}' не найден", filename);
-        eprintln!("Текущая директория: {:?}", std::env::current_dir().unwrap());
-        process::exit(1);
-    }
-    
-    if debug_mode {
-        println!("=== ЗАПУСК С ОТЛАДКОЙ ===");
-        println!("Файл: {}", filename);
-    }
-    
-    let base_path = Path::new(&filename).parent().unwrap_or(Path::new("."));
-    
-    match fs::read_to_string(&filename) {
-        Ok(content) => {
-            let tokens = tokens::start(content);
-            match tokens {
-                Ok(tokens) => {
-                    if tokens.is_empty() { 
-                        println!("Файл пуст");
-                        return; 
-                    }
-                    
-                    // Сохраняем исходные токены
-                    if debug_mode {
-                        save_tokens_to_file(&filename, "tokens.txt", &tokens);
-                    }
-                    let tokens = preprocessors::expand_ranges(tokens);
-                    let tokens = importer::importing(tokens, base_path).expect("Ошибка импорта");
-                    let tokens = preprocessors::else_processing(tokens);
-                    let expanded_tokens = preprocessors::expand(tokens);
-                    
-                    
-                    match expanded_tokens {
-                        tokens => {
-                            // Сохраняем расширенные токены
-                            if debug_mode {
-                                save_tokens_to_file(&filename, "expanded.txt", &tokens);
-                            }
-                            
-                            let (tokens, ident_name_map) = namezator::namezating(tokens, debug_mode);
-                            
-                            let bytecode = to_bytecode::to_bytecode(tokens, &ident_name_map);
-                            match bytecode {
-                                Ok(bytecode) => {
-                                    if bytecode.is_empty() {
-                                        println!("Байткод пуст");
-                                    } else {
-                                        // Сохраняем байткод
-                                        // if debug_mode {
-                                        //     save_bytecode_to_file(&filename, "bytecode.txt", &bytecode);
-                                        // }
-                                        
-                                        vm::start(bytecode, ident_name_map);
-                                    }
-                                }
-                                Err(e) => {
-                                    eprintln!("Ошибка байткода: {}", e);
-                                    process::exit(1);
-                                }
-                            }
-                        }
-                    }
-                }
-                Err((e, _)) => {
-                    eprintln!("Ошибка токенизации: {}", e);
-                    process::exit(1);
-                }
-            }
-        }
-        Err(e) => {
-            eprintln!("Ошибка чтения файла '{}': {}", filename, e);
-            process::exit(1);
-        }
     }
 }
 
-fn show_usage(program_name: &str) {
-    eprintln!("Использование: {} [--debug] <файл>", program_name);
-    eprintln!();
-    eprintln!("Примеры:");
-    eprintln!("  {} program.bpl", program_name);
-    eprintln!("  {} --debug program.bpl", program_name);
+fn run() -> Result<(), Box<dyn Error>> {
+    // читаем аргументы
+    let (filename, debug_mode) = parse_args()?;
+    
+    // читаем название файла
+    if !Path::new(&filename).exists() {
+        return Err(format!("Файл '{}' не найден", filename).into());
+    }
+
+    if debug_mode {
+        println!("=== ЗАПУСК С ОТЛАДКОЙ ===\nФайл: {}", filename);
+    }
+
+    // Читаем файл
+    let content = fs::read_to_string(&filename)?;
+    let base_path = Path::new(&filename).parent().unwrap_or(Path::new("."));
+    
+
+
+    // =======================
+    //     токенизация
+    // =======================
+    let raw_tokens = tokens::start(content)?;
+
+    
+    if raw_tokens.is_empty() {
+        println!("Файл пуст");
+        return Ok(());
+    }
+
+    // Debug: сохраняем исходные токены
+    if debug_mode {
+        save_tokens_to_file(&filename, "tokens.txt", &raw_tokens);
+    }
+
+
+
+    // ================================================================
+    //     Конвейер препроцессинга (каждый шаг может вернуть ошибку)
+    // ================================================================
+    let tokens = preprocessors::expand_ranges(raw_tokens)?;
+    let tokens = importer::importing(tokens, base_path)?;
+    let tokens = preprocessors::else_processing(tokens)?;
+    let expanded = preprocessors::expand(tokens)?;
+
+    if debug_mode {
+        save_tokens_to_file(&filename, "expanded.txt", &expanded);
+    }
+
+
+    // ====================
+    //      змена имён
+    // ====================
+    let (processed_tokens, ident_map) = namezator::namezating(expanded, debug_mode);
+    
+    if debug_mode {
+        // Таблица имён уже печатается внутри namezating
+    }
+
+
+    // ============================
+    //      Генерация байткода
+    // ============================
+    let bytecode = to_bytecode::to_bytecode(processed_tokens, &ident_map)?;
+    
+    if bytecode.is_empty() {
+        println!("Байткод пуст");
+        return Ok(());
+    }
+
+    if debug_mode {
+        // save_bytecode_to_file(&filename, "bytecode.txt", &bytecode);
+    }
+
+
+
+    // =======================
+    //       Иполнение
+    // =======================
+    vm::start(bytecode, ident_map)?;
+    
+    Ok(())
+}
+
+
+
+
+
+    // ===========================
+    //          Утилиты
+    // ===========================
+fn parse_args() -> Result<(String, bool), Box<dyn Error>> {
+    let args: Vec<String> = env::args().collect();
+    
+    if args.len() < 2 {
+        return Err("Использование: boopl [--debug] <файл>".into());
+    }
+
+    let mut debug = false;
+    let mut file = None;
+
+    for arg in &args[1..] {
+        if arg == "--debug" || arg == "-debug" {
+            debug = true;
+        } else if !arg.starts_with('-') {
+            file = Some(arg.clone());
+        }
+    }
+
+    match file {
+        Some(f) => Ok((f, debug)),
+        None => Err("Ошибка: не указано имя файла".into()),
+    }
 }
 
 // Функции для сохранения отладочной информации:

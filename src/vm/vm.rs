@@ -1,7 +1,12 @@
 use std::{collections::VecDeque, io::{self, Write}};
+use crate::error::{BooplError, Result};
 
 use crate::name_map::IdentNameMap;
 use super::pre_run;
+
+// Предполагается, что BooplError определен где-то в проекте
+// use crate::error::BooplError;
+// type Result<T> = std::result::Result<T, BooplError>;
 
 struct VM {
     memory: Vec<u8>,
@@ -20,15 +25,20 @@ impl VM {
         }
     }
 
-    fn run(&mut self, program: Vec<Vec<i32>>, ident_name_map: IdentNameMap, lines_n: Vec<i32>) {
+    fn run(&mut self, program: Vec<Vec<i32>>, ident_name_map: IdentNameMap, lines_n: Vec<i32>) -> Result<()> {
         self.bytecode = program;
         let mut pc = 0;
         let mut instr_couter = 0;
         let mut log_mode = false;
         let mut step_mode = false;
         loop {
-            if pc >= self.bytecode.len() {break;}
-            let line: &Vec<i32> = &self.bytecode[pc]; 
+            if pc >= self.bytecode.len() { break; }
+            let line: &Vec<i32> = &self.bytecode[pc];
+            
+            if line.is_empty() {
+                return Err(vm_error("Пустая инструкция".to_string(), lines_n.get(pc).copied().unwrap_or(-1)));
+            }
+
             let opcode = line[0];
             let line = &line[1..];
             let line_n = lines_n[pc];
@@ -60,8 +70,7 @@ impl VM {
                 // 10 10
                 150 => {
                     if (line[1] as usize) >= self.memory.len() {
-                        error_print(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[1])), line_n);
-                        continue;
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[1])), line_n));
                     }
                     let val = self.memory[line[1] as usize];
                     if (line[0] as usize) >= self.memory.len() {
@@ -91,7 +100,7 @@ impl VM {
                         if log_mode {print!("GO TO: PD.{} (from: {})", ident_name_map.get_name(line[0]), pc)}
                         pc = self.memory_pd[line[0] as usize] as usize
                     } else {
-                        error_print(format!("   >>  ! несуществующий динамический указатель PD.{}", ident_name_map.get_name(line[0])), line_n)
+                        return Err(vm_error(format!("   >>  ! несуществующий динамический указатель PD.{}", ident_name_map.get_name(line[0])), line_n));
                     }
                 }
 
@@ -113,7 +122,7 @@ impl VM {
                         self.memory_pd[line[0] as usize] = val;
                         if log_mode {print!("PD.{} <= PD.{} ({})", ident_name_map.get_name(line[0]), ident_name_map.get_name(line[1]), val)}
                     } else {
-                        error_print(format!("   >>  ! несуществующий динамический указатель PD.{}", ident_name_map.get_name(line[1])), line_n)
+                        return Err(vm_error(format!("   >>  ! несуществующий динамический указатель PD.{}", ident_name_map.get_name(line[1])), line_n));
                     }
                 }
 
@@ -129,7 +138,7 @@ impl VM {
                             if log_mode {print!("GO TO End IF")}
                         }
                     } else {
-                        error_print(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[0])), line_n));
                     }
                 }
                 // IG 10 P.10
@@ -139,7 +148,7 @@ impl VM {
                         if self.memory[line[0] as usize] == 1 {pc = line[1] as usize; if log_mode {print!("GO TO")}}
                         else {if log_mode {print!("next instr")}}
                     } else {
-                        error_print(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[0])), line_n));
                     }
                 }
                 // IG 10 PD.10
@@ -152,10 +161,10 @@ impl VM {
                             else {if log_mode {print!("next instr")}}
                         }
                         else {
-                            error_print(format!("   >>  ! несуществующий динамический указатель PD.{}", ident_name_map.get_name(line[1])), line_n)
+                            return Err(vm_error(format!("   >>  ! несуществующий динамический указатель PD.{}", ident_name_map.get_name(line[1])), line_n));
                         }
                     } else {
-                        error_print(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[0])), line_n));
                     }
                 }
 
@@ -175,7 +184,7 @@ impl VM {
                         if log_mode {print!("PRINT {}: ", ident_name_map.get_name(line[0]))}
                         if self.memory[line[0] as usize] == 1 {print!("#")} else {print!(".")}
                     } else {
-                        error_print(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[0])), line_n)
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[0])), line_n));
                     }
                 }
                 // P N
@@ -200,8 +209,7 @@ impl VM {
                         let mut byte_value: u8 = 0;
                         for i in 0..8 {
                             if start_addr + i >= self.memory.len() {
-                                error_print(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name((start_addr + i) as i32)), line_n);
-                                panic!();
+                                return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name((start_addr + i) as i32)), line_n));
                             }
                             let bit = self.memory[start_addr + i];
                             byte_value = (byte_value << 1) | (bit as u8)
@@ -227,8 +235,7 @@ impl VM {
                     for i in 0..additional_bytes {
                         let byte_addr = start_addr + 8 + (i * 8);
                         if byte_addr + 7 >= self.memory.len() {
-                            error_print(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(byte_addr as i32)), line_n);
-                            panic!()
+                            return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(byte_addr as i32)), line_n));
                         }
                         let next_byte = {
                             let mut byte_value: u8 = 0;
@@ -259,7 +266,7 @@ impl VM {
                         self.memory[line[0] as usize] = if val == 1 {0} else {1};
                         if log_mode {print!("{} <= NOT {}", ident_name_map.get_name(line[0]), ident_name_map.get_name(line[1]))}
                     } else {
-                        error_print(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[1])), line_n)
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {}", ident_name_map.get_name(line[1])), line_n));
                     }
                 }
 
@@ -275,8 +282,8 @@ impl VM {
                         if log_mode {print!("{} <= {} OR {}", ident_name_map.get_name(line[0]), 
                                 ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2]))}
                     } else {
-                        error_print(format!("   >>  ! несуществующая ячейка {} или {}", 
-                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2])), line_n)
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {} или {}", 
+                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2])), line_n));
                     }
                 }
                 // 10 A 10 10
@@ -291,8 +298,8 @@ impl VM {
                         if log_mode {print!("{} <= {} AND {}", ident_name_map.get_name(line[0]), 
                                 ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2]))}
                     } else {
-                        error_print(format!("   >>  ! несуществующая ячейка {} или {}", 
-                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2])), line_n)
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {} или {}", 
+                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2])), line_n));
                     }
                 }
                 // 10 X 10 10
@@ -307,8 +314,8 @@ impl VM {
                         if log_mode {print!("{} <= {} XOR {}", ident_name_map.get_name(line[0]), 
                                 ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2]))}
                     } else {
-                        error_print(format!("   >>  ! несуществующая ячейка {} или {}", 
-                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2])), line_n);
+                        return Err(vm_error(format!("   >>  ! несуществующая ячейка {} или {}", 
+                            ident_name_map.get_name(line[1]), ident_name_map.get_name(line[2])), line_n));
                     }
                 }
 
@@ -363,12 +370,12 @@ impl VM {
                         let value = match ch {
                             'T' | 't' | '1' | '#' => 1,
                             'F' | 'f' | '0' | '.' => 0,
-                            _ => {error_print(format!("   >> ! символ неподходящий для ячейки памяти {}", ch), line_n); std::process::exit(1)}
+                            _ => {return Err(vm_error(format!("   >> ! символ неподходящий для ячейки памяти {}", ch), line_n))}
                         };
                         self.memory[line[0] as usize] = value;
                         if log_mode {print!("{} <= First Char From INPUT Buffer ({})", ident_name_map.get_name(line[0]), ch)}
                     } else {
-                        error_print(format!("   >>  ! буфер ввода пустой"), line_n);
+                        return Err(vm_error(format!("   >>  ! буфер ввода пустой"), line_n));
                     }
                 }
 
@@ -378,7 +385,7 @@ impl VM {
                         if log_mode {print!("{} <= First Char UTF-8 From INPUT Buffer ({})", ident_name_map.get_name(line[0]), ch)}
                         self.store_char_to_memory(line[0], ch);
                     } else {
-                        error_print("   >>  ! буфер ввода пустой (utf-8) ".to_string(), line_n);
+                        return Err(vm_error("   >>  ! буфер ввода пустой (utf-8) ".to_string(), line_n));
                     }
                 }
 
@@ -406,7 +413,10 @@ impl VM {
                     if line[0] == 1 || line[0] == 2 {log_mode = false} 
                     
                 }
-                _ => {panic!("AAAAAAAAAAAAAAAAAAAAAAAAAAAA!!!")}
+                
+                _ => {
+                    return Err(vm_error(format!("Неизвестный опкод: {}", opcode), line_n));
+                }
             }
 
             if step_mode {
@@ -418,6 +428,7 @@ impl VM {
             pc += 1;
             instr_couter += 1;
         }
+        Ok(())
     }
 
     fn store_char_to_memory(&mut self, start_addr: i32, ch: char) {
@@ -448,17 +459,24 @@ impl VM {
     }
 }
 
-fn error_print(s: String, line_n: i32) {
-    eprintln!("\n ! ран-тайм\n\n{}  ({})\n\n", s, line_n); 
-    std::process::exit(1)
+fn vm_error(s: String, line_n: i32) -> BooplError {
+    BooplError::new(s, line_n)
 }
 
-pub fn start(bytecode: Vec<(Vec<i32>, i32)>, ident_name_map: IdentNameMap) {
+
+
+pub fn start(bytecode: Vec<(Vec<i32>, i32)>, ident_name_map: IdentNameMap) -> Result<()> {
     let mut vm = VM::new();
     let (program, lines_n) = pre_run::pre_run(bytecode, &ident_name_map);
+    
     if program.len() != lines_n.len() {
-        error_print(format!("АААААА!!! байткод длина: {}; лайн_н длина: {}", 
-            program.len(), lines_n.len()), -1);
+        return Err(BooplError::new(
+            format!("длина байткода ({}) != длина номеров строк ({})", 
+                program.len(), lines_n.len()),
+            -1
+        ));
     }
-    vm.run(program, ident_name_map, lines_n);
+    
+    vm.run(program, ident_name_map, lines_n)?;  // Пробрасываем ошибку вверх
+    Ok(())
 }

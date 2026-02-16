@@ -67,7 +67,52 @@ FUNC _add;
     tc  O t   t2;
 
     c_out tc;
-    RET E;
+RET E;
+
+
+FUNC inc;
+    tc T;
+    
+    t X i_0 tc;
+    o_0 t;
+    t A i_0 tc;
+    tc t;
+    
+    t X i_1 tc;
+    o_1 t;
+    t A i_1 tc;
+    tc t;
+    
+    t X i_2 tc;
+    o_2 t;
+    t A i_2 tc;
+    tc t;
+    
+    t X i_3 tc;
+    o_3 t;
+    t A i_3 tc;
+    tc t;
+    
+    t X i_4 tc;
+    o_4 t;
+    t A i_4 tc;
+    tc t;
+    
+    t X i_5 tc;
+    o_5 t;
+    t A i_5 tc;
+    tc t;
+    
+    t X i_6 tc;
+    o_6 t;
+    t A i_6 tc;
+    tc t;
+    
+    t X i_7 tc;
+    o_7 t;
+    t A i_7 tc;
+    c_out t;
+RET E;
 
 
 FUNC sub;
@@ -80,7 +125,7 @@ FUNC sub;
     
     CALL _add;
 
-    RET E;
+RET E;
 
 
 FUNC add;
@@ -88,9 +133,7 @@ FUNC add;
 
     CALL _add;
 
-    RET E;
-
-
+RET E;
 
 
 P.math_lib_close;

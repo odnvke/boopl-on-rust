@@ -1,0 +1,11 @@
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on package cache
+    Blocking waiting for file lock on shared package cache
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.04s
+     Running `target\debug\leng1.exe tests/golden\error\bad_cell.bpl`
+
+   >>  !    >>  ! несуществующая ячейка 999  (2)
+
+
+error: process didn't exit successfully: `target\debug\leng1.exe tests/golden\error\bad_cell.bpl` (exit code: 1)

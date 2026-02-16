@@ -1,5 +1,6 @@
 //use std::{fmt::format, i32};
 use crate::preprocessors::parentheses_process;
+use crate::error::{Result, BooplError};
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum Token {
@@ -19,7 +20,7 @@ pub enum RawToken {
     Number(String, i32)
 }
 
-pub fn start(content: String) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
+pub fn start(content: String) -> Result<Vec<Vec<RawToken>>> {
     //let content = remove_comments(content);
     
     match tokenize(&content) {
@@ -81,7 +82,7 @@ pub fn parse_range_token(s: &str) -> Option<(String, i32, i32)> {
     None
 }
 
-fn tokenize(input: &str) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
+fn tokenize(input: &str) -> Result<Vec<Vec<RawToken>>> {
     let mut all_tokens = Vec::new();
     let mut current_line = 1;
     let mut in_single_comment = false;
@@ -93,7 +94,8 @@ fn tokenize(input: &str) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
     let mut in_parentheses_vec: Vec<char> = Vec::new();
 
     let mut chars = input.chars().peekable();
-    
+    let mut has_parentheses = false;
+
     while let Some(ch) = chars.next() {
         // Считаем строки
         if ch == '\n' {
@@ -136,58 +138,85 @@ fn tokenize(input: &str) -> Result<Vec<Vec<RawToken>>, (String, i32)> {
             ';' => {
                 // Конец инструкции
                 if !current_instruction.trim().is_empty() {
-                    let n = parentheses_process(&in_parentheses_vec);
+                    let n = parentheses_process(&in_parentheses_vec, instruction_line)?;
                     
                     match parse_instruction(&current_instruction, instruction_line) {
                         Ok(tokens) => {
                             if n == 1 {
                                 all_tokens.push(tokens);
-                            } else { for _ in 0..n {
-                                all_tokens.push(tokens.clone());
-                            }} 
-                            
+                            } else { 
+                                for _ in 0..n {
+                                    all_tokens.push(tokens.clone());
+                                }
+                            } 
                         }
-                        Err(e) => return Err((e, instruction_line)),
+                        Err(e) => return Err(BooplError::new(e, instruction_line)),
                     }
                 }
                 current_instruction.clear();
                 in_parentheses_vec.clear();
-                instruction_line = current_line; // СЛЕДУЮЩАЯ инструкция начнётся с текущей строки
+                has_parentheses = false;  // ← СБРАСЫВАЕМ ФЛАГ
+                instruction_line = current_line;
             }
-            '(' => {in_parentheses = true}
-            ')' => {in_parentheses = false}
+            '(' => {
+                if has_parentheses { 
+                    return Err(BooplError::new(
+                        "Синтаксическая ошибка: несколько пар скобок", 
+                        current_line
+                    )); 
+                }
+                in_parentheses = true;
+                has_parentheses = true;
+            }
+            
+            ')' => {
+                in_parentheses = false;
+            }
             _ => {
-                if in_parentheses {in_parentheses_vec.push(ch);}
+                if in_parentheses {
+                    in_parentheses_vec.push(ch);
+                }
                 // Если инструкция пустая (только что начали), запоминаем строку
                 else if current_instruction.trim().is_empty() && !ch.is_whitespace() {
                     instruction_line = current_line;
                 }
-                if !in_parentheses {current_instruction.push(ch);}
+                
+                if !in_parentheses {
+                    current_instruction.push(ch);
+                }
             }
         }
     }
     
     // Последняя инструкция (если нет ';' в конце)
     if !current_instruction.trim().is_empty() {
+        let n = parentheses_process(&in_parentheses_vec, instruction_line)?;
+        
         match parse_instruction(&current_instruction, instruction_line) {
             Ok(tokens) => {
-                all_tokens.push(tokens);
+                if n == 1 {
+                    all_tokens.push(tokens);
+                } else { 
+                    for _ in 0..n {
+                        all_tokens.push(tokens.clone());
+                    }
+                } 
             }
-            Err(e) => return Err((e, instruction_line)),
+            Err(e) => return Err(BooplError::new(e, instruction_line)),
         }
     }
     
     Ok(all_tokens)
 }
 
-fn parse_instruction(instruction: &str, line_num: i32) -> Result<Vec<RawToken>, String> {
+fn parse_instruction(instruction: &str, line_num: i32) -> std::result::Result<Vec<RawToken>, String> {
     let mut tokens = Vec::new();
     let mut buffer = String::new();
     
     for ch in instruction.chars() {
         if ch.is_whitespace() {
             if !buffer.is_empty() {
-                tokens.push(parse_token(&buffer, &line_num)?);
+                tokens.push(parse_token(&buffer, line_num)?);
                 buffer.clear();
             }
         } else {
@@ -196,7 +225,7 @@ fn parse_instruction(instruction: &str, line_num: i32) -> Result<Vec<RawToken>, 
     }
     
     if !buffer.is_empty() {
-        tokens.push(parse_token(&buffer, &line_num)?);
+        tokens.push(parse_token(&buffer, line_num)?);
     }
     
     if tokens.len() > 4 {
@@ -206,76 +235,71 @@ fn parse_instruction(instruction: &str, line_num: i32) -> Result<Vec<RawToken>, 
     Ok(tokens)
 }
 
-
-fn parse_token(s: &str, line_n: &i32) -> Result<RawToken, String> {
+fn parse_token(s: &str, line_n: i32) -> std::result::Result<RawToken, String> {
     // Булевы: "T", "F"
     if s == "T" || s == "F" {
-        return Ok(RawToken::Bool(s == "T", *line_n));
+        return Ok(RawToken::Bool(s == "T", line_n));
     }
 
     // Односимвольные ключевые слова: "X", "A", "N", "G", "P", "E", "L", "S"
     if s.len() == 1 {
         let c = s.chars().next().unwrap();
         if matches!(c, 'X' | 'A' | 'O' | 'N' | 'G' | 'P' | 'E' | 'L' | 'S' | 'U') {
-            return Ok(RawToken::Keyword(c.to_string(), *line_n));
+            return Ok(RawToken::Keyword(c.to_string(), line_n));
         }
     }
 
     if s.len() == 2 {
         if matches!(s, "IN" | "IF" | "BP") {
-            return Ok(RawToken::Keyword(s.to_string(), *line_n));
+            return Ok(RawToken::Keyword(s.to_string(), line_n));
         }
     }
 
     if s.len() == 3 {
         if matches!(s, "INB" | "RET" | "LOG" | "IFG" ) {
-            return Ok(RawToken::Keyword(s.to_string(), *line_n));
+            return Ok(RawToken::Keyword(s.to_string(), line_n));
         }
     }
 
     if s.len() == 4 {
         if matches!(s, "INBC" | "CALL" | "FUNC" | "STEP" | "STOP" | "ELSE") {
-            return Ok(RawToken::Keyword(s.to_string(), *line_n));
+            return Ok(RawToken::Keyword(s.to_string(), line_n));
         }
     }
     
     if s.len() == 5 {
         if matches!(s, "DEBUG") {
-            return  Ok(RawToken::Keyword(s.to_string(), *line_n));
+            return Ok(RawToken::Keyword(s.to_string(), line_n));
         }
     }
 
     if s.len() == 6 {
         if s == "IMPORT" {
-            return  Ok(RawToken::Keyword(s.to_string(), *line_n));
+            return Ok(RawToken::Keyword(s.to_string(), line_n));
         }
     }
 
     if matches!(s, "DEBUG_ON" | "DEBUG_OFF") {
-        return  Ok(RawToken::Keyword(s.to_string(), *line_n));
+        return Ok(RawToken::Keyword(s.to_string(), line_n));
     }
 
-
-    
-    
     if s.len() >= 3 { 
         // Метки: P.10 P.test PD.10 PD.test
         if s.contains('.') {
             let parts: Vec<&str> = s.split('.').collect();
             if parts.len() == 2 {
                 return match parts[0] {
-                    "P" => Ok(RawToken::LabelP(parts[1].to_string(), *line_n)),
-                    "PD" => Ok(RawToken::LabelPD(parts[1].to_string(), *line_n)),
+                    "P" => Ok(RawToken::LabelP(parts[1].to_string(), line_n)),
+                    "PD" => Ok(RawToken::LabelPD(parts[1].to_string(), line_n)),
                     _ => Err(format!("   >>  ! не удальсь обработать указатель {}  ({})\n\n", s, line_n))                         
                 }   
             }
         }
     }
 
-        // Числа: 10 test test_10
+    // Числа: 10 test test_10
     if s.chars().all(|c| c.is_ascii_alphabetic() || c.is_ascii_alphanumeric() || c == '_' || c == '{' || c == '.' || c == '}') {
-        //print!("{s} ");
-        return Ok(RawToken::Number(s.to_string(), *line_n));
+        return Ok(RawToken::Number(s.to_string(), line_n));
     }
 
     Err(format!("   >>  ! не получилось обработать слово: {s}  ({})\n\n", line_n))

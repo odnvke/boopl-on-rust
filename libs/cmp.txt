@@ -1,0 +1,304 @@
+// Библиотека сравнения 8-битных значений с использованием переходов
+// Входы: i_0..i_7 (число A, младший бит i_0), i2_0..i2_7 (число B)
+// Выходы: eq_flag (A == B), gt_flag (A > B), lt_flag (A < B), neq_flag (A != B)
+
+i_0 F; i_1 F; i_2 F; i_3 F;
+i_4 F; i_5 F; i_6 F; i_7 F;
+
+i2_0 F; i2_1 F; i2_2 F; i2_3 F;
+i2_4 F; i2_5 F; i2_6 F; i2_7 F;
+
+eq_flag F;
+gt_flag F;
+lt_flag F;
+neq_flag F;
+
+// Временные переменные
+lib_t F;
+
+G P.cmp_lib_close;
+
+
+FUNC cmp_eq;
+    // Проверяем побитно, при первом несовпадении - выход с 0
+    lib_t X i_7 i2_7;
+    IF lib_t;
+        eq_flag F;
+        G P.cmp_eq_end;
+    E;
+    
+    lib_t X i_6 i2_6;
+    IF lib_t;
+        eq_flag F;
+        G P.cmp_eq_end;
+    E;
+    
+    lib_t X i_5 i2_5;
+    IF lib_t;
+        eq_flag F;
+        G P.cmp_eq_end;
+    E;
+    
+    lib_t X i_4 i2_4;
+    IF lib_t;
+        eq_flag F;
+        G P.cmp_eq_end;
+    E;
+    
+    lib_t X i_3 i2_3;
+    IF lib_t;
+        eq_flag F;
+        G P.cmp_eq_end;
+    E;
+    
+    lib_t X i_2 i2_2;
+    IF lib_t;
+        eq_flag F;
+        G P.cmp_eq_end;
+    E;
+    
+    lib_t X i_1 i2_1;
+    IF lib_t;
+        eq_flag F;
+        G P.cmp_eq_end;
+    E;
+    
+    lib_t X i_0 i2_0;
+    IF lib_t;
+        eq_flag F;
+        G P.cmp_eq_end;
+    E;
+    
+    // Все биты равны
+    eq_flag T;
+
+P.cmp_eq_end;
+    RET E;
+
+
+FUNC cmp_gt;
+    // Сравнение от старшего бита к младшему
+    // Бит 7
+    IF i_7;
+        IF i2_7;
+            // Оба 1 - равны, проверяем дальше
+        E;
+        // i_7=1, i2_7=0 -> A>B
+        gt_flag T;
+        G P.cmp_gt_end;
+    E;
+    // i_7=0
+    IF i2_7;
+        // i_7=0, i2_7=1 -> A<B
+        gt_flag F;
+        G P.cmp_gt_end;
+    E;
+    
+    // Бит 6
+    IF i_6;
+        IF i2_6;
+        E;
+        gt_flag T;
+        G P.cmp_gt_end;
+    E;
+    IF i2_6;
+        gt_flag F;
+        G P.cmp_gt_end;
+    E;
+    
+    // Бит 5
+    IF i_5;
+        IF i2_5;
+        E;
+        gt_flag T;
+        G P.cmp_gt_end;
+    E;
+    IF i2_5;
+        gt_flag F;
+        G P.cmp_gt_end;
+    E;
+    
+    // Бит 4
+    IF i_4;
+        IF i2_4;
+        E;
+        gt_flag T;
+        G P.cmp_gt_end;
+    E;
+    IF i2_4;
+        gt_flag F;
+        G P.cmp_gt_end;
+    E;
+    
+    // Бит 3
+    IF i_3;
+        IF i2_3;
+        E;
+        gt_flag T;
+        G P.cmp_gt_end;
+    E;
+    IF i2_3;
+        gt_flag F;
+        G P.cmp_gt_end;
+    E;
+    
+    // Бит 2
+    IF i_2;
+        IF i2_2;
+        E;
+        gt_flag T;
+        G P.cmp_gt_end;
+    E;
+    IF i2_2;
+        gt_flag F;
+        G P.cmp_gt_end;
+    E;
+    
+    // Бит 1
+    IF i_1;
+        IF i2_1;
+        E;
+        gt_flag T;
+        G P.cmp_gt_end;
+    E;
+    IF i2_1;
+        gt_flag F;
+        G P.cmp_gt_end;
+    E;
+    
+    // Бит 0
+    IF i_0;
+        IF i2_0;
+        E;
+        gt_flag T;
+        G P.cmp_gt_end;
+    E;
+    IF i2_0;
+        gt_flag F;
+        G P.cmp_gt_end;
+    E;
+    
+    // Все биты равны
+    gt_flag F;
+
+P.cmp_gt_end;
+    RET E;
+
+
+FUNC cmp_lt;
+    // Сравнение от старшего бита к младшему (обратная логика gt)
+    // Бит 7
+    IF i2_7;
+        IF i_7;
+            // Оба 1 - равны, проверяем дальше
+        E;
+        // i2_7=1, i_7=0 -> A<B
+        lt_flag T;
+        G P.cmp_lt_end;
+    E;
+    // i2_7=0
+    IF i_7;
+        // i2_7=0, i_7=1 -> A>B
+        lt_flag F;
+        G P.cmp_lt_end;
+    E;
+    
+    // Бит 6
+    IF i2_6;
+        IF i_6;
+        E;
+        lt_flag T;
+        G P.cmp_lt_end;
+    E;
+    IF i_6;
+        lt_flag F;
+        G P.cmp_lt_end;
+    E;
+    
+    // Бит 5
+    IF i2_5;
+        IF i_5;
+        E;
+        lt_flag T;
+        G P.cmp_lt_end;
+    E;
+    IF i_5;
+        lt_flag F;
+        G P.cmp_lt_end;
+    E;
+    
+    // Бит 4
+    IF i2_4;
+        IF i_4;
+        E;
+        lt_flag T;
+        G P.cmp_lt_end;
+    E;
+    IF i_4;
+        lt_flag F;
+        G P.cmp_lt_end;
+    E;
+    
+    // Бит 3
+    IF i2_3;
+        IF i_3;
+        E;
+        lt_flag T;
+        G P.cmp_lt_end;
+    E;
+    IF i_3;
+        lt_flag F;
+        G P.cmp_lt_end;
+    E;
+    
+    // Бит 2
+    IF i2_2;
+        IF i_2;
+        E;
+        lt_flag T;
+        G P.cmp_lt_end;
+    E;
+    IF i_2;
+        lt_flag F;
+        G P.cmp_lt_end;
+    E;
+    
+    // Бит 1
+    IF i2_1;
+        IF i_1;
+        E;
+        lt_flag T;
+        G P.cmp_lt_end;
+    E;
+    IF i_1;
+        lt_flag F;
+        G P.cmp_lt_end;
+    E;
+    
+    // Бит 0
+    IF i2_0;
+        IF i_0;
+        E;
+        lt_flag T;
+        G P.cmp_lt_end;
+    E;
+    IF i_0;
+        lt_flag F;
+        G P.cmp_lt_end;
+    E;
+    
+    // Все биты равны
+    lt_flag F;
+
+P.cmp_lt_end;
+    RET E;
+
+
+FUNC cmp_neq;
+    // Просто инвертируем eq
+    CALL cmp_eq;
+    neq_flag N eq_flag;
+    RET E;
+
+
+P.cmp_lib_close;

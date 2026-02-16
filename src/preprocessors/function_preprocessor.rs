@@ -1,6 +1,7 @@
 use crate::tokens::RawToken;
+use crate::error::{Result, BooplError};
 
-pub fn expand(tokens: Vec<Vec<RawToken>>) -> Vec<Vec<RawToken>> {
+pub fn expand(tokens: Vec<Vec<RawToken>>) -> Result<Vec<Vec<RawToken>>> {
     let mut fp = Data::new();
     fp.expand(tokens)
 }
@@ -30,7 +31,7 @@ impl Data {
         }
     }
 
-    fn expand(&mut self, tokens: Vec<Vec<RawToken>>) -> Vec<Vec<RawToken>> {
+    fn expand(&mut self, tokens: Vec<Vec<RawToken>>) -> Result<Vec<Vec<RawToken>>> {
         let mut out_vec: Vec<Vec<RawToken>> = Vec::new();
 
         out_vec.push(vec![RawToken::LabelPD(self.return_point_name.to_string(), 0)]);
@@ -39,67 +40,81 @@ impl Data {
             match line.as_slice() {
 
                 // FUNC func_a;
-                [RawToken::Keyword(s, l_n), RawToken::Number(n, l_n2)] if s == "FUNC" => {
-                    if !self.is_in_func && self.func_name.is_some() {
-                        eprintln!("функция '{}' без RET", self.func_name.as_ref().unwrap_or(&"не определена".to_string()));
-                        std::process::exit(1);
+                [RawToken::Keyword(s, l_n), RawToken::Number(n, _)] if s == "FUNC" => {
+                    if self.is_in_func {
+                        return Err(BooplError::new(
+                            format!("вложенные функции запрещены (предыдущая: '{}')", 
+                                self.func_name.as_ref().unwrap_or(&"unknown".to_string())),
+                            *l_n
+                        ));
                     }
+                    
                     self.func_name = Some(n.to_string());
                     self.is_in_func = true;
                     self.local_p_index += 1;
 
                     out_vec.push(self._go_func_close(*l_n));
-                    out_vec.push(vec![RawToken::LabelP(self.func_name.clone().unwrap_or("не определена".to_string()), *l_n)]);
-
+                    out_vec.push(vec![RawToken::LabelP(self.func_name.clone().unwrap(), *l_n)]);
                     out_vec.push(self._add_write_pointer(*l_n));
                 }
+                
                 // CALL func_a;
-                [RawToken::Keyword(s, l_n), RawToken::Number(n, l_n2)] if s == "CALL" => {
-
+                [RawToken::Keyword(s, l_n), RawToken::Number(n, _)] if s == "CALL" => {
                     self.ident_index += 1;
-                    
                     out_vec.push(self._add_pre_func_l(*l_n));
                     out_vec.push(self._add_goto(n, *l_n));
                     out_vec.push(self._add_post_func_l(*l_n));
                 }
 
-                [RawToken::Keyword(s, l_n), RawToken::Keyword(s2, l_n2)] if s == "RET" && s2 == "E" => {
+                // RET E;
+                [RawToken::Keyword(s, l_n), RawToken::Keyword(s2, _)] if s == "RET" && s2 == "E" => {
+                    if !self.is_in_func {
+                        return Err(BooplError::new("RET вне функции", *l_n));
+                    }
                     out_vec.push(self._add_return_func(*l_n));
                     out_vec.push(self._func_close(*l_n));
                     self.is_in_func = false;
                     self.func_name = None;
                 }
 
+                // RET;
                 [RawToken::Keyword(s, l_n)] if s == "RET" => {
-                    if self.is_in_func {
-                        out_vec.push(self._add_return_func(*l_n));
-                    } else {
-                        eprintln!("\n RET не в функции ({})", l_n); 
-                        std::process::exit(1);
+                    if !self.is_in_func {
+                        return Err(BooplError::new("RET вне функции", *l_n));
                     }
+                    out_vec.push(self._add_return_func(*l_n));
                 }
 
-
-
+                // Остальные токены (проверка на ошибочные RET/FUNC/CALL)
                 _ => {
                     for token in line {
                         match token {
                             RawToken::Keyword(s, l_n) if s == "RET" || s == "FUNC" || s == "CALL" => {
-                                eprintln!("препроцессор функций: не удалось оброботать {:?} ({})", line, l_n);
-                                std::process::exit(1);
+                                return Err(BooplError::new(
+                                    format!("не удалось обработать {:?}", line), 
+                                    *l_n
+                                ));
                             }
-
                             _ => {}
                         }
                     }
                     out_vec.push(line.clone());
                 }
-                }
-            
+            }
         }
 
-        out_vec
+        // Проверка в конце файла!
+        if self.is_in_func {
+            return Err(BooplError::new(
+                format!("функция '{}' не имеет RET в конце файла", 
+                    self.func_name.as_ref().unwrap()),
+                0 // или последняя строка, если сохраняете
+            ));
+        }
+
+        Ok(out_vec)
     }
+
 
     // сохроняем перед вызовом внутри функции
     // PD.local PD.R 

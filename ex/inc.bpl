@@ -37,9 +37,9 @@ P.loop;
         IFG eq_flag P.end;
     E;
 
-    //P var_{15..0}; P N;
+    P var_{15..0}; P N;
 
 G P.loop;
 
 P.end;
-P var_{15..0}; P N;
+

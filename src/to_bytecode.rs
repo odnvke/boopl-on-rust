@@ -114,10 +114,6 @@ fn process_line(tokens: Vec<Token>, ident_name_map: &IdentNameMap) -> Result<(Ve
         [Token::Keyword(s, l_n), Token::Keyword(s2, _)] 
                 if s == "DEBUG" && s2 == "BP" => Ok((vec![700], *l_n)),
 
-        // DEBUG BP 10;
-        [Token::Keyword(s, l_n), Token::Keyword(s2, _), Token::Number(n, _)] 
-                if s == "DEBUG" && s2 == "BP" => Ok((vec![701, *n], *l_n)),
-
         // DEBUG STOP;        
         [Token::Keyword(s, l_n), Token::Keyword(s2, _)] 
                 if s == "DEBUG" && s2 == "STOP" => Ok((vec![730], *l_n)),

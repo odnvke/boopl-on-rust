@@ -1,0 +1,7 @@
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
+     Running `target\debug\leng1.exe tests/golden\error\syntax.bpl`
+
+   >>  !    >>  ! несуществующая ячейка invalid_token  (1)
+
+
+error: process didn't exit successfully: `target\debug\leng1.exe tests/golden\error\syntax.bpl` (exit code: 1)

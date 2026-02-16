@@ -1,16 +1,17 @@
 use crate::tokens::RawToken;
+use crate::error::Result;
 
-pub fn else_processing(tokens: Vec<Vec<RawToken>>) -> Vec<Vec<RawToken>> {
+pub fn else_processing(tokens: Vec<Vec<RawToken>>) -> Result<Vec<Vec<RawToken>>> {
     let mut label_counter = 0;
-    process_tokens(&tokens, &mut label_counter)
+    Ok( process_tokens(&tokens, &mut label_counter)? )
 }
 
-fn process_tokens(tokens: &[Vec<RawToken>], label_id: &mut i32) -> Vec<Vec<RawToken>> {
+fn process_tokens(tokens: &[Vec<RawToken>], label_id: &mut i32) -> Result<Vec<Vec<RawToken>>> {
     let mut result = Vec::new();
     let mut i = 0;
     while i < tokens.len() {
         if is_if_with_else(tokens, i) {
-            let (block, new_i) = process_chain(tokens, i, label_id);
+            let (block, new_i) = process_chain(tokens, i, label_id)?;
             result.extend(block);
             i = new_i;
         } else {
@@ -18,7 +19,7 @@ fn process_tokens(tokens: &[Vec<RawToken>], label_id: &mut i32) -> Vec<Vec<RawTo
             i += 1;
         }
     }
-    result
+    Ok(result)
 }
 
 fn is_if(line: &[RawToken]) -> bool {
@@ -67,7 +68,7 @@ fn get_line_num(line: &[RawToken]) -> i32 {
     }).unwrap_or(0)
 }
 
-fn process_chain(tokens: &[Vec<RawToken>], start: usize, label_id: &mut i32) -> (Vec<Vec<RawToken>>, usize) {
+fn process_chain(tokens: &[Vec<RawToken>], start: usize, label_id: &mut i32) -> Result<(Vec<Vec<RawToken>>, usize)> {
     let current_end_label_id = *label_id;
     *label_id += 1;
     let end_label = format!("__close_else_{}", current_end_label_id);
@@ -147,7 +148,7 @@ fn process_chain(tokens: &[Vec<RawToken>], start: usize, label_id: &mut i32) -> 
         
         // Рекурсивно обрабатываем тело блока для вложенных условий
         let body_slice = &tokens[*body_start..*body_end];
-        let processed_body = process_tokens(body_slice, label_id);
+        let processed_body = process_tokens(body_slice, label_id)?;
         result.extend(processed_body);
         
         if !is_last {
@@ -169,5 +170,5 @@ fn process_chain(tokens: &[Vec<RawToken>], start: usize, label_id: &mut i32) -> 
         }
     }
     
-    (result, i)
+    Ok((result, i))
 }
